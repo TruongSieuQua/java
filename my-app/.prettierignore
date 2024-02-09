@@ -1,0 +1,6 @@
+.yarn
+.next
+certificates
+public
+dist
+node_modules
