@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    ports:
+      - 9443:9443
+      volumes:
+        - data:/data/portaner
+        - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+volumes:
+  data:
+
+services:
+  mongo:
+    image: mongo:7.0
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=123456a@
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodata:/data/mongodb
+
+volumes:
+  mongodata:
+    driver: local

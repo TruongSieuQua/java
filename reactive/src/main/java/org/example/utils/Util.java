@@ -42,4 +42,12 @@ public class Util {
 	public static Subscriber<Object> subscriber(String name) {
 		return new DefaultSubscriber(name);
 	}
+
+	public static void sleepMillis(int millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

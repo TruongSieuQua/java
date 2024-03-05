@@ -2,14 +2,18 @@ package org.example.sec03;
 
 import org.example.sec03.helper.NameProducer;
 import org.example.utils.Util;
-import reactor.core.publisher.Flux;
 
 public class Lec08FluxPush {
 	public static void main(String[] args) {
 		NameProducer nameProducer = new NameProducer();
 
-		Flux.create(nameProducer)
-			.subscribe(Util.subscriber());
+		// Flux push is single-thread so not a thread safe
+		// Flux.create(nameProducer)
+		//		.subscribe(Util.subscriber());
+
+		// Flux create is thread safe
+		// Flux.create(nameProducer)
+		//		.subscribe(Util.subscriber());
 
 		Runnable runnable = nameProducer::produce;
 

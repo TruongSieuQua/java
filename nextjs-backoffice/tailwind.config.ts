@@ -1,0 +1,66 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+	darkMode: 'class',
+	content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+			textColor: {
+				default: "var(--text-default)",
+				heading: "var(--text-heading)",
+				primary: "var(--text-primary)",
+				"primary-hover": "var(--text-primary-hover)",
+				secondary: "var(--text-secondary)",
+				disabled: "var(--text-disabled)",
+				"on-disabled": "var(--text-on-disabled)",
+				"on-action": "var(--text-on-action)",
+				highlight: "var(--text-highlight)",
+				success: "var(--text-success)",
+				info: "var(--text-information)",
+				warning: "var(--text-warning)",
+				error: "var(--text-error)",
+			},
+			backgroundColor: {
+				default: "var(--surface-default)",
+				primary: "var(--surface-primary)",
+				secondary: "var(--surface-secondary)",
+				disabled: "var(--surface-disabled)",
+				"disabled-selected": "var(--surface-disabled-selected)",
+				highlight: "var(--surface-highlight)",
+				success: "var(--surface-success)",
+				info: "var(--surface-information)",
+				warning: "var(--surface-warning)",
+				error: "var(--surface-error)",
+				"on-action-1": "var(--surface-on-action)",
+				"on-action-hover-1": "var(--surface-on-action-hover)",
+				"on-action-2": "var(--surface-on-action-2)",
+				"on-action-hover-2": "var(--surface-on-action-hover-2)",
+				modal: "var(--surface-modal)",
+				"alert-success": "var(--surface-alert-success)",
+				"alert-info": "var(--surface-alert-information)",
+				"alert-warning": "var(--surface-alert-warning)",
+				"alert-error": "var(--surface-alert-error)",
+			},
+			borderColor: {
+				default: "var(--border-default)",
+				primary: "var(--border-primary)",
+				secondary: "var(--border-secondary)",
+				disabled: "var(--border-disabled)",
+				highlight: "var(--border-highlight)",
+				success: "var(--border-success)",
+				info: "var(--border-information)",
+				warning: "var(--border-warning)",
+				error: "var(--border-error)",
+				action: "var(--border-action)",
+				"action-hover": "var(--border-action-hover)",
+				focus: "var(--border-focus)",
+			}
+    },
+  },
+  plugins: [],
+};
+export default config;

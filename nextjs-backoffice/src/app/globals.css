@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+	lightest: 100
+	lighter: 400
+	light: 500
+	main: 600
+	dark: 700
+	darker: 800
+	darkest: 950
+
+*/
+@layer base{
+	:root {
+		--primary-lightest: 198, 74%, 95%;
+		--primary-lighter: 214, 100%, 78%;
+		--primary-light: 214, 97%, 66%;
+		--primary: 214 97% 55%;
+		--primary-dark: 214, 100%, 39%;
+		--primary-darker: 214, 88%, 22%;
+		--primary-darkest: 214, 62%, 10%;
+
+		--secondary-lighter: 186, 73%, 85%;
+		--secondary-light: 186, 57%, 59%;
+		--secondary: 186, 71%, 39%;
+		--secondary-dark: 186, 45%, 36%;
+		--secondary-darker: 186, 46%, 25%;
+
+		--highlight-lighter: 250, 88%, 97%;
+		--highlight-light: 250, 71%, 75%;
+		--highlight: 250, 60%, 65%;
+		--highlight-dark: 250, 38%, 50%;
+		--highlight-darker: 251, 38%, 28%;
+
+		--success-lighter: 157, 28%, 90%;
+		--success-light: 157, 58%, 54%;
+		--success: 157, 65%, 40%;
+		--success-dark: 157, 58%, 27%;
+		--success-darker: 157, 56%, 22%;
+		--success-darkest: 157, 18%, 17%;
+
+		--information-lighter: 204, 100%, 92%;
+		--information-light: 204, 100%, 52%;
+		--information: 204, 100%, 35%;
+		--information-dark: 204, 100%, 28%;
+		--information-darker: 204, 100%, 21%;
+
+		--warning-lighter: 45, 100%, 92%;
+		--warning-light: 45, 76%, 52%;
+		--warning: 45, 100%, 35%;
+		--warning-dark: 45, 78%, 28%;
+		--warning-darker: 45, 78%, 21%;
+		--warning-darkest: 45, 66%, 11%;
+
+		--danger-lighter: 7, 29%, 92%;
+		--danger-light: 7, 94%, 68%;
+		--danger: 7, 76%, 55%;
+		--danger-dark: 7, 74%, 39%;
+		--danger-darker: 7, 61%, 23%;
+		--danger-darkest: 7, 31%, 16%;
+
+		--neutral-lightest: 0, 0%, 95%;
+		--neutral-lighter: 215, 11%, 88%;
+		--neutral-light: 215, 13%, 57%;
+		--neutral: 215, 13%, 52%;
+		--neutral-dark: 215, 23%, 36%;
+		--neutral-darker: 215, 11%, 16%;
+		--neutral-darkest: 0, 0%, 7%;
+
+		--white: 0, 0%, 100%;
+		--black: 0, 0%, 0%;
+		--transparent: 0, 0%, 100%, 0;
+	}
+
+	.light{
+		--text-heading: hsl(var(--black));
+		--text-default: hsl(var(--neutral-darkest));
+		--text-primary: hsl(var(--primary));
+		--text-primary-hover: hsl(var(--primary-dark));
+		--text-secondary: hsl(var(--secondary));
+		--text-disabled: hsl(var(--neutral));
+		--text-on-disabled: hsl(var(--neutral-darker));
+		--text-on-action: hsl(var(--white));
+		--text-highlight: hsl(var(--highlight));
+		--text-success: hsl(var(--success-dark));
+		--text-information: hsl(var(--information));
+		--text-warning: hsl(var(--warning-darker));
+		--text-error: hsl(var(--danger-dark));
+
+		--surface-default: hsl(var(--white));
+		--surface-primary: hsl(var(--white));
+		--surface-secondary: hsl(var(--neutral-lightest));
+		--surface-highlight: hsl(var(--highlight-lighter));
+		--surface-success: hsl(var(--success-lighter));
+		--surface-information: hsl(var(--information-lighter));
+		--surface-warning: hsl(var(--warning-lighter));
+		--surface-danger: hsl(var(--danger-lighter));
+		--surface-disabled: hsl(var(--neutral-lightest));
+		--surface-disabled-selected: hsl(var(--neutral));
+		--surface-on-action-1: hsl(var(--primary));
+		--surface-on-action-hover-1: hsl(var(--primary-dark));
+		--surface-on-action-2: hsl(var(--transparent));
+		--surface-on-action-hover-2: hsl(var(--primary-lightest));
+		--surface-model: hsla(var(--black), 0.75);
+		--alert-success: hsl(var(--success-light));
+		--alert-information: hsl(var(--information-light));
+		--alert-warning: hsl(var(--warning-light));
+		--alert-error: hsl(var(--danger-light));
+
+		--border-primary: hsl(var(--neutral-lighter));
+		--border-secondary: hsl(var(--secondary));
+		--border-highlight: hsl(var(--highlight));
+		--border-success: hsl(var(--success));
+		--border-information: hsl(var(--information));
+		--border-warning: hsl(var(--warning));
+		--border-error: hsl(var(--danger));
+		--border-disabled: hsl(var(--neutral));
+		--border-action: hsl(var(--primary));
+		--border-action-hover: hsl(var(--primary-dark));
+		--border-focus: hsl(var(--primary));
+	}
+
+	.dark{
+
+		--text-heading: hsl(var(--white));
+		--text-default: hsl(var(--neutral-white));
+		--text-primary: hsl(var(--primary-lighter));
+		--text-primary-hover: hsl(var(--primary-light));
+		--text-secondary: hsl(var(--secondary-lighter));
+		--text-disabled: hsl(var(--neutral));
+		--text-on-disabled: hsl(var(--neutral-lighter));
+		--text-on-action: hsl(var(--neutral-darkest));
+		--text-highlight: hsl(var(--highlight));
+		--text-success: hsl(var(--success));
+		--text-information: hsl(var(--information));
+		--text-warning: hsl(var(--warning));
+		--text-error: hsl(var(--danger));
+
+		--surface-default: hsl(var(--neutral-darkest));
+		--surface-primary: hsl(var(--neutral-darkest));
+		--surface-secondary: hsl(var(--neutral-darker));
+		--surface-highlight: hsl(var(--highlight-lighter));
+		--surface-success: hsl(var(--success-darkest));
+		--surface-information: hsl(var(--information-darkest));
+		--surface-warning: hsl(var(--warning-darkest));
+		--surface-danger: hsl(var(--danger-darkest));
+		--surface-disabled: hsl(var(--neutral-darker));
+		--surface-disabled-selected: hsl(var(--neutral));
+		--surface-on-action-1: hsl(var(--primary-lighter));
+		--surface-on-action-hover-1: hsl(var(--primary-lightest));
+		--surface-on-action-2: hsl(var(--transparent));
+		--surface-on-action-hover-2: hsl(var(--primary-darker));
+		--surface-model: hsla(var(--white), 0.5);
+		--alert-success: hsl(var(--success-dark));
+		--alert-information: hsl(var(--information-dark));
+		--alert-warning: hsl(var(--warning));
+		--alert-error: hsl(var(--danger));
+
+		--border-default: hsl(var(--neutral-dark));
+		--border-primary: hsl(var(--neutral-dark));
+		--border-secondary: hsl(var(--secondary-light));
+		--border-highlight: hsl(var(--highlight));
+		--border-success: hsl(var(--success));
+		--border-information: hsl(var(--information));
+		--border-warning: hsl(var(--warning));
+		--border-error: hsl(var(--danger));
+		--border-disabled: hsl(var(--neutral));
+		--border-action: hsl(var(--primary-light));
+		--border-action-hover: hsl(var(--primary-lighter));
+		--border-focus: hsl(var(--white));
+
+	}
+
+	body{
+		color: hsl(var(--text-default));
+		background-color: hsl(var(--surface-default));
+	}
+
+	div{
+		box-sizing: border-box;
+	}
+
+	h1, h2, h3, h4, h5, h6{
+		color: hsl(var(--text-heading));
+	}
+}
+
