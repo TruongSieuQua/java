@@ -1,11 +1,11 @@
-import { cva } from "cva";
+import { tv } from "tailwind-variants";
 
 interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   content?: string;
 }
 
 export function Badge() {
-  const ButtonVariants = cva(
+  const ButtonVariants = tv(
     {
 			base: "inline-flex items-center justify-center",
       variants: {

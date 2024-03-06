@@ -1,4 +1,4 @@
-import { cva } from "cva";
+import { tv } from "tailwind-variants";
 
 // intent will be used as a prop which will only accepts these // values
 type Intent =
@@ -12,23 +12,18 @@ type Intent =
 
 type ButtonVariantsProps = {
   intent?: Intent;
-  // could pass types for other things as variants like size, roundness, border
+
 };
 
-// Combining the button variant props along with other props
-// the button component will accept like children, custom
-// class names and rest of the props.
 type ButtonProps = ButtonVariantsProps & {
   customClassNames?: string;
   children: React.ReactNode;
   [key: string]: any;
 };
 
-// This will be used to check the types we will pass for the
-// configuration created by cva() method
 type ButtonVariantsFunction = (props: ButtonVariantsProps) => string;
 
-const ButtonVariants: ButtonVariantsFunction = cva(
+const ButtonVariants: ButtonVariantsFunction = tv(
   {
 		base: "transition-colors duration-150 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none",
     variants: {

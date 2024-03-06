@@ -1,7 +1,6 @@
-import { VariantProps, cva } from "cva";
+import { VariantProps, tv } from 'tailwind-variants';
 
-export type BaseVariantsProps = VariantProps<typeof baseVariants>;
-export const baseVariants = cva({
+const baseVariantsConfig = {
 	base: '',
 	variants:{
 		position: {
@@ -12,8 +11,8 @@ export const baseVariants = cva({
 			sticky: 'sticky'
 		},
 		shrink: {
-			"0": 'flex-shrink-0',
-			"1": 'flex-shrink-1'
+			"0": 'shrink-0',
+			"1": 'shrink'
 		},
 		grow: {
 			"0": 'flex-grow-0',
@@ -36,4 +35,8 @@ export const baseVariants = cva({
 			max: 'h-max'
 		},
 	}
-})
+}
+
+export type BaseVariantsProps = VariantProps<typeof baseVariants>;
+export const baseVariants = tv(baseVariantsConfig);
+export const baseVariantKeys = Object.keys(baseVariantsConfig.variants);
