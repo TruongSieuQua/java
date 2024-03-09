@@ -5,13 +5,12 @@ create table users (
     primary key (id)
 );
 
-create table user_transaction(
+create table transactions(
     id bigint auto_increment,
-    userId bigint,
+    user_id bigint,
     amount int,
     transaction_date timestamp,
-    foreign key (userId) references users (id) on delete cascade,
-    primary key (id)
+    foreign key (user_id) references users (id) on delete cascade
 );
 
 insert into users

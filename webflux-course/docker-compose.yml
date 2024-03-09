@@ -3,26 +3,72 @@ version: '3.8'
 services:
   portainer:
     image: portainer/portainer-ce:latest
+    container_name: portainer
     ports:
       - 9443:9443
-      volumes:
-        - data:/data/portaner
-        - /var/run/docker.sock:/var/run/docker.sock
-    restart: unless-stopped
-volumes:
-  data:
-
-services:
-  mongo:
-    image: mongo:7.0
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=123456a@
-    ports:
-      - 27017:27017
     volumes:
-      - mongodata:/data/mongodb
+      - portainerdata:/data/portaner
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+  
+  # mongo:
+  #   image: mongo
+  #   container_name: mongodb
+  #   ports:
+  #     - 27017:27017
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=admin
+  #     - MONGO_INITDB_ROOT_PASSWORD=123456a@
+  #   volumes:
+  #     - mongodata:/data/mongodb
+  #   restart: unless-stopped
+    
+  # mongo-express:
+  #   image: mongo-express
+  #   container_name: mongo-express
+  #   ports:
+  #     - 8081:8081
 
+  # mysql:
+  #   image: mysql
+  #   container_name: mysql
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: admin123
+  #     MYSQL_DATABASE: testdb
+  #   volumes:
+  #     - mysqldata: /var/lib/mysql
+  #   restart: unless-stopped
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123456a@
+      - POSTGRES_DB=userdb
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@truong.com
+      - PGADMIN_DEFAULT_PASSWORD=123456a@
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - 9000:80
+
+    
 volumes:
+  portainerdata:
+  postgresdata:
+  pgadmin:
   mongodata:
-    driver: local
+
+
