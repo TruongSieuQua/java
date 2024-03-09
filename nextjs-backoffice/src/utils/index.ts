@@ -1,1 +1,1 @@
-export {extractClassFromProps} from './extract-props';
+export {extractTvProps} from './extract-tv-props';

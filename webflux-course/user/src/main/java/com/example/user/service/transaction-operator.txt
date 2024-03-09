@@ -1,0 +1,29 @@
+DatabaseClient databaseClient = DatabaseClient.create(connectionFactory);
+
+TransactionalOperator transactionalOperator = TransactionalOperator
+        .create(new R2dbcTransactionManager(connectionFactory));
+
+transactionalOperator.execute(tx -> {
+
+    Mono<Void> insert = databaseClient.execute("INSERT INTO legoset VALUES(…)")
+            .then();
+
+    Mono<Long> select = databaseClient.execute("SELECT COUNT(*) FROM legoset")
+            .as(Long.class)
+            .fetch()
+            .first();
+
+    return insert.then(select.handle((count, sink) -> {
+
+        if(count > 10) {
+            tx.setRollbackOnly();
+        }
+
+    }));
+}).as(StepVerifier::create).verifyComplete();
+
+otable aspects here are:
+
+We're using TransactionalOperator instead of @Transactional.
+ - The code in .handle() calls setRollbackOnly() to roll back the transaction.
+ - Using @Transactional, you would typically use exceptions to signal a rollback condition.

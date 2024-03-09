@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import {
   SideBar,
   SideBarBottom,
+  SideBarMenu,
   SideBarMenuItem,
   SideBarTop,
 } from "@/components/sidebar";
@@ -25,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head></head>
       <body className={inter.className}>
         <ClientProvider>
@@ -33,15 +34,19 @@ export default function RootLayout({
             <Box>
               <SideBar>
                 <SideBarTop>
-                  <SideBarMenuItem Icon={FaHome} title="Home" badgeContent="5" />
-                  <SideBarMenuItem Icon={FaHome} title="Home" />
-                  <SideBarMenuItem Icon={FaHome} title="Home" />
-                  <SideBarMenuItem Icon={FaHome} title="Home" />
+                  <SideBarMenu>
+										<SideBarMenuItem Icon={FaHome} title="Home" badgeContent="5" />
+										<SideBarMenuItem Icon={FaHome} title="Home" />
+										<SideBarMenuItem Icon={FaHome} title="Home" />
+										<SideBarMenuItem Icon={FaHome} title="Home" />
+									</SideBarMenu>
                 </SideBarTop>
                 <SideBarBottom>
+								<SideBarMenu>
+									<SideBarMenuItem Icon={FaHome} title="Home" />
                   <SideBarMenuItem Icon={FaHome} title="Home" />
-                  <SideBarMenuItem Icon={FaHome} title="Home" />
-                </SideBarBottom>
+									</SideBarMenu>
+								</SideBarBottom>
               </SideBar>
             </Box>
             <Box className="flex-grow">

@@ -1,16 +1,17 @@
-package com.example.product;
+package com.example.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
+import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 import org.springframework.web.reactive.config.EnableWebFlux;
 
-@EnableWebFlux
 @SpringBootApplication
-public class ProductApplication {
+@EnableWebFlux
+@EnableR2dbcRepositories
+public class UserApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ProductApplication.class, args);
+		SpringApplication.run(UserApplication.class, args);
 	}
 
 }

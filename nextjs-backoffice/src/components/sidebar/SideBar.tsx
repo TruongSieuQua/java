@@ -1,3 +1,6 @@
+"use client";
+
+import {useState} from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import { ReactNode } from "react";
@@ -58,7 +61,7 @@ function SideBarTop({ children }: { children: ReactNode }) {
 function SideBarBottom({ children }: { children: ReactNode }) {
   return (
     <Box className="h-fit px-4">
-      <Box className="border-t-2">
+      <Box className="border-t-2 pt-1">
         {children}
       </Box>
     </Box>
@@ -66,10 +69,9 @@ function SideBarBottom({ children }: { children: ReactNode }) {
 }
 
 function SideBarMenu({children}: {children: ReactNode}){
-
-	return <Flex direction="column">
+	return <ul className="space-y-2 font-medium">
 		{children}
-	</Flex>
+	</ul>
 }
 
 function SideBarMenuItem({
@@ -80,7 +82,8 @@ function SideBarMenuItem({
 }: SideBarLinkProps) {
 
 	return (
-    <Link href={href} legacyBehavior>
+    <li>
+		<Link href={href} legacyBehavior>
       <Flex
         align="center"
         gap="3"
@@ -90,6 +93,7 @@ function SideBarMenuItem({
         <span className="flex-grow ms-3">{title}</span>
       </Flex>
     </Link>
+		</li>
   );
 }
 
@@ -123,4 +127,4 @@ function SideBarAccordionContent({children} : {children: ReactNode}){
 	);
 }
 
-export { SideBar, SideBarTop, SideBarBottom, SideBarMenuItem };
+export { SideBar, SideBarTop, SideBarBottom, SideBarMenu, SideBarMenuItem };

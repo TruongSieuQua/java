@@ -15,8 +15,8 @@ const baseVariantsConfig = {
 			"1": 'shrink'
 		},
 		grow: {
-			"0": 'flex-grow-0',
-			"1": 'flex-grow-1'
+			"0": 'grow-0',
+			"1": 'grow'
 		},
 		width: {
 			auto: 'w-auto',

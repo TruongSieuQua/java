@@ -1,12 +1,12 @@
 
 import { VariantProps, tv } from "tailwind-variants";
 import {baseVariants, baseVariantKeys} from "./Base";
-import { extractClassFromProps } from "@/utils";
+import { extractTvProps } from "@/utils";
 
 interface FlexProps extends VariantProps<typeof flexVariants>, React.HTMLAttributes<HTMLDivElement> {}
 
 const config = {
-	extends: baseVariants,
+	extend: baseVariants,
 	base: 'flex',
 	variants: {
 		direction: {
@@ -52,7 +52,7 @@ export const flexVariantsKeys = Object.keys(config.variants).concat(baseVariantK
 
 export const Flex = (props: FlexProps) => {
 
-		const { className, children, ...rest } = extractClassFromProps(props, ...flexVariantsKeys);
+		const { tvProps, className, children, ...rest } = extractTvProps(props, ...flexVariantsKeys);
 
-  return <div className={className} {...rest }>{children}</div>;
+  return <div className={flexVariants({...tvProps, className})} {...rest }>{children}</div>;
 };

@@ -4,6 +4,7 @@ import com.example.product.dto.ProductDto;
 import com.example.product.repository.ProductRepository;
 import com.example.product.util.ProductMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Range;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -22,6 +23,12 @@ public class ProductService {
 
     public Mono<ProductDto> getProductById(String id){
         return productRepository.findById(id).map(productMapper::toProductDto);
+    }
+
+    public Flux<ProductDto> getProductByPriceRange(int min, int max){
+        return productRepository
+                .findByPriceBetween(Range.closed(min, max))
+                .map(productMapper::toProductDto);
     }
 
     public Mono<ProductDto> insertProduct(Mono<ProductDto> productDtoMono){
