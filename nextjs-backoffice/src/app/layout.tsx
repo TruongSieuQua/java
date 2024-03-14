@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
 import {
   SideBar,
-  SideBarBottom,
+  SideBarContent,
+  SideBarFooter,
+  SideBarHeader,
   SideBarMenu,
   SideBarMenuItem,
-  SideBarTop,
 } from "@/components/sidebar";
 import ClientProvider from "./client-provider";
 import { FaHome } from "react-icons/fa";
 import { Box, Flex } from "@/components/ui/layout";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,24 +34,55 @@ export default function RootLayout({
       <body className={inter.className}>
         <ClientProvider>
           <Flex>
-            <Box>
-              <SideBar>
-                <SideBarTop>
-                  <SideBarMenu>
-										<SideBarMenuItem Icon={FaHome} title="Home" badgeContent="5" />
-										<SideBarMenuItem Icon={FaHome} title="Home" />
-										<SideBarMenuItem Icon={FaHome} title="Home" />
-										<SideBarMenuItem Icon={FaHome} title="Home" />
-									</SideBarMenu>
-                </SideBarTop>
-                <SideBarBottom>
-								<SideBarMenu>
-									<SideBarMenuItem Icon={FaHome} title="Home" />
-                  <SideBarMenuItem Icon={FaHome} title="Home" />
-									</SideBarMenu>
-								</SideBarBottom>
-              </SideBar>
-            </Box>
+            <SideBar>
+              <SideBarHeader>
+                <Link href={"/admin/dashboard"} className="inline-block">
+                  <Flex direction="row" align="center" gap={"2"}>
+                    <Image
+                      src="https://cdn.icon-icons.com/icons2/2699/PNG/512/atlassian_jira_logo_icon_170511.png"
+                      alt="Logo"
+                      width={32}
+                      height={32}
+                    ></Image>
+                    <h1 className="text-[28px] leading-9 font-bold text-heading">
+                      Charmpy
+                    </h1>
+                  </Flex>
+                </Link>
+              </SideBarHeader>
+              <SideBarContent>
+                <SideBarMenu>
+                  <SideBarMenuItem href="/admin/dashboard">
+                    <FaHome />
+                    <span>Dashboard</span>
+                  </SideBarMenuItem>
+                  <SideBarMenuItem href="/admin/customers">
+                    <FaHome />
+                    <span>Customers</span>
+                  </SideBarMenuItem>
+                  <SideBarMenuItem href="/admin/products">
+                    <FaHome />
+                    <span>Product</span>
+                  </SideBarMenuItem>
+									<SideBarMenuItem href="/admin/orders">
+                    <FaHome />
+                    <span>Orders</span>
+                  </SideBarMenuItem>
+                </SideBarMenu>
+              </SideBarContent>
+              <SideBarFooter>
+                <SideBarMenu>
+                  <SideBarMenuItem href="/admin/profile">
+                    <FaHome />
+                    <span>Profile</span>
+                  </SideBarMenuItem>
+                  <SideBarMenuItem href="/admin/settings">
+                    <FaHome />
+                    <span>Settings</span>
+                  </SideBarMenuItem>
+                </SideBarMenu>
+              </SideBarFooter>
+            </SideBar>
             <Box className="flex-grow">
               <Suspense>
                 <main>{children}</main>

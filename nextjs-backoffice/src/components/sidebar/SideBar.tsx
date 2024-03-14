@@ -1,130 +1,78 @@
 "use client";
 
-import {useState} from 'react';
+import { Children, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ReactNode } from "react";
-import { IconType } from "react-icons";
-import { usePathname } from 'next/navigation'
 import { Box, Flex } from "../ui/layout";
-
+import { cn } from "@/utils/cn";
 
 interface SideBarProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-interface SideBarLinkProps
+interface SideBarHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface SideBarContentProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface SideBarFooterProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface SideBarMenuProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface SideBarMenuItemProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  Icon?: IconType;
-  title?: string;
-	badgeContent?: string;
+  href: string;
 }
 
-function SideBar({ children }: SideBarProps) {
+export function SideBar({ children }: SideBarProps) {
   return (
     <Flex
       direction="column"
       className="w-[19.5rem] h-screen border-r-2 py-6 relative"
     >
-      <Flex direction="column" grow="1">
-        <Link href={"/dashboard"} className="inline-block ml-6 mb-6">
-          <Flex direction={"row"} align="center" gap={"2"}>
-            <Image
-              src="https://cdn.icon-icons.com/icons2/2699/PNG/512/atlassian_jira_logo_icon_170511.png"
-              alt="Logo"
-              width={32}
-              height={32}
-            ></Image>
-            <Heading>Champy</Heading>
-          </Flex>
-        </Link>
-        <Box className="flex-grow relative">
-          <Flex direction="column" className="absolute top-0 bottom-0 w-full">
-            {children}
-          </Flex>
-        </Box>
+      <Flex direction="column" className="absolute top-0 bottom-0 w-full">
+        {children}
       </Flex>
     </Flex>
   );
 }
 
-function Heading({children}: {children: ReactNode}){
-	return <h1 className="text-[28px] leading-9 font-bold text-heading">{children}</h1>
+export function SideBarHeader({ children, className }: SideBarHeaderProps) {
+  return <Box className={cn("p-4 h-16", className)}>{children}</Box>;
 }
 
-function SideBarTop({ children }: { children: ReactNode }) {
+export function SideBarContent({ children, className }: SideBarContentProps) {
   return (
-    <Box className="flex-grow px-4 overflow-y-scroll">
-      <Box>{children}</Box>
+    <Box className="flex-grow relative">
+      <Flex direction="column" className="absolute top-0 bottom-0 w-full">
+        <Box className={cn("flex-grow px-4 overflow-y-scroll", className)}>
+          <Box>{children}</Box>
+        </Box>
+      </Flex>
     </Box>
   );
 }
 
-function SideBarBottom({ children }: { children: ReactNode }) {
+export function SideBarFooter({ children }: SideBarFooterProps) {
   return (
     <Box className="h-fit px-4">
-      <Box className="border-t-2 pt-1">
-        {children}
-      </Box>
+      <Box className="border-t-2 pt-1 pb-2">{children}</Box>
     </Box>
   );
 }
 
-function SideBarMenu({children}: {children: ReactNode}){
-	return <ul className="space-y-2 font-medium">
-		{children}
-	</ul>
+export function SideBarMenu({ children, className }: SideBarMenuProps) {
+  return <ul className={cn("space-y-2 font-medium", className)}>{children}</ul>;
 }
 
-function SideBarMenuItem({
-  Icon,
-  title,
-	badgeContent,
-  href = "/admin/articles",
-}: SideBarLinkProps) {
-
-	return (
-    <li>
-		<Link href={href} legacyBehavior>
-      <Flex
-        align="center"
-        gap="3"
-        className="p-2 rounded-lg hover:bg-on-action-hover-2"
-      >
-        {Icon && <Icon className="w-5 h-5"/>}
-        <span className="flex-grow ms-3">{title}</span>
-      </Flex>
-    </Link>
-		</li>
-  );
-}
-
-function SideBarAccordion({ children }: { children: ReactNode }) {
+export function SideBarMenuItem({
+  children,
+  href,
+  className,
+}: SideBarMenuItemProps) {
   return (
-    <Box className="">
-      {children}
-    </Box>
+    <li>
+      <Link href={href} legacyBehavior>
+        <Flex
+          align="center"
+          gap="3"
+          className={cn("p-2 rounded-lg hover:bg-on-action-hover-2", className)}
+        >
+          {children}
+        </Flex>
+      </Link>
+    </li>
   );
 }
-
-function SideBarAccordionTrigger({Icon, title, badgeContent} : SideBarLinkProps){
-	return (
-		<button
-			type="button"
-			className="flex items-center w-full p-2"
-		>
-			{Icon && <Icon className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />}
-			<span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
-				{title}
-			</span>
-		</button>
-	);
-}
-
-function SideBarAccordionContent({children} : {children: ReactNode}){
-	return (
-		<div className="flex flex-col">
-			{children}
-		</div>
-	);
-}
-
-export { SideBar, SideBarTop, SideBarBottom, SideBarMenu, SideBarMenuItem };
