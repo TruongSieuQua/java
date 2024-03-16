@@ -1,4 +1,4 @@
-package com.example.webflux;
+package com.example.webflux.webclient;
 
 import com.example.webflux.dto.MultiplyRequestDto;
 import com.example.webflux.dto.Response;
@@ -8,7 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-public class Lec04HeadersTest extends BaseTest {
+public class Lec08AttributesTest extends BaseTest {
 
     @Autowired
     private WebClient webClient;
@@ -19,11 +19,8 @@ public class Lec04HeadersTest extends BaseTest {
                 .post()
                 .uri("reactive-math/multiply")
                 .bodyValue(buildRequestDto(5, 2))
-                .headers(h -> {
-                    System.out.println("Set header someKey - someVal");
-                    h.set("someKey", "someVal");
-                })
-                //.headers(h -> h.setBasicAuth("username", "password"))
+                //.attribute("auth", "basic")
+                .attribute("auth", "oauth")
                 .retrieve()
                 .bodyToMono(Response.class)
                 .doOnNext(System.out::println);

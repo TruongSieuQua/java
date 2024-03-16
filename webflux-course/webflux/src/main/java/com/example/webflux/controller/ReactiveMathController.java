@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("reactive-math")
-class ReactiveMathController {
+public class ReactiveMathController {
 
     @Autowired
     private ReactiveMathService mathService;

@@ -1,4 +1,4 @@
-package com.example.webflux;
+package com.example.webflux.webclient;
 
 import com.example.webflux.dto.Response;
 import org.junit.jupiter.api.Test;
