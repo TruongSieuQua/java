@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Box, Flex } from "../ui/layout";
 import { cn } from "@/utils/cn";
+import { twMerge } from "tailwind-merge";
 
 interface SideBarProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface SideBarHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -16,11 +17,11 @@ interface SideBarMenuItemProps
   href: string;
 }
 
-export function SideBar({ children }: SideBarProps) {
+export function SideBar({ children, className }: SideBarProps) {
   return (
     <Flex
       direction="column"
-      className="w-[19.5rem] h-screen border-r-2 py-6 relative"
+      className={cn("w-[19.5rem] h-screen border-r-2 py-6 relative", className)}
     >
       <Flex direction="column" className="absolute top-0 bottom-0 w-full">
         {children}

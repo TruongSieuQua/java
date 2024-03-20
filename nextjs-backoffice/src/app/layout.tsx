@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
 import {
@@ -15,8 +15,9 @@ import ClientProvider from "./client-provider";
 import { FaHome } from "react-icons/fa";
 import { Box, Flex } from "@/components/ui/layout";
 import Link from "next/link";
+import { Input } from "@/components/ui/form";
 
-const inter = Inter({ subsets: ["latin"] });
+const font = Roboto({ subsets: ["vietnamese"], weight: ["300", "500", "700"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -31,10 +32,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <head></head>
-      <body className={inter.className}>
+      <body className={font.className}>
         <ClientProvider>
           <Flex>
-            <SideBar>
+            <SideBar className="bg-secondary">
               <SideBarHeader>
                 <Link href={"/admin/dashboard"} className="inline-block">
                   <Flex direction="row" align="center" gap={"2"}>
@@ -80,12 +81,15 @@ export default function RootLayout({
                     <FaHome />
                     <span>Settings</span>
                   </SideBarMenuItem>
+									<div>
+										<Input type="text" size="md" required/>
+									</div>
                 </SideBarMenu>
               </SideBarFooter>
             </SideBar>
             <Box className="flex-grow">
               <Suspense>
-                <main>{children}</main>
+                <main className="p-2">{children}</main>
               </Suspense>
             </Box>
           </Flex>

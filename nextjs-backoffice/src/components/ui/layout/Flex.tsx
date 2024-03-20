@@ -3,8 +3,6 @@ import { VariantProps, tv } from "tailwind-variants";
 import {baseVariants, baseVariantKeys} from "./Base";
 import { extractTvProps } from "@/utils";
 
-interface FlexProps extends VariantProps<typeof flexVariants>, React.HTMLAttributes<HTMLDivElement> {}
-
 const config = {
 	extend: baseVariants,
 	base: 'flex',
@@ -46,13 +44,15 @@ const config = {
 		}
 	},
 };
-export const flexVariants = tv(config);
+const flexVariants = tv(config);
+type FlexVariantsType = VariantProps<typeof flexVariants>;
+const flexVariantsKeys = Object.keys(config.variants).concat(baseVariantKeys);
 
-export const flexVariantsKeys = Object.keys(config.variants).concat(baseVariantKeys);
+export interface FlexProps extends FlexVariantsType, React.HTMLAttributes<HTMLDivElement> {}
 
 export const Flex = (props: FlexProps) => {
 
-		const { tvProps, className, children, ...rest } = extractTvProps(props, ...flexVariantsKeys);
+	const { tvProps, className, children, ...rest } = extractTvProps<FlexProps, FlexVariantsType>(props, ...flexVariantsKeys);
 
   return <div className={flexVariants({...tvProps, className})} {...rest }>{children}</div>;
 };

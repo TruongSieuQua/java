@@ -16,17 +16,18 @@ const boxVariantsConfig = {
     },
   },
 };
-
-export const boxVariants = tv(boxVariantsConfig);
-export const boxVariantsKey = Object.keys(boxVariantsConfig.variants).concat(
+const boxVariants = tv(boxVariantsConfig);
+type boxVariantsType = VariantProps<typeof boxVariants>
+const boxVariantsKey = Object.keys(boxVariantsConfig.variants).concat(
   baseVariantKeys,
 );
-interface BoxProps
-  extends VariantProps<typeof boxVariants>,
+
+export interface BoxProps
+  extends boxVariantsType,
     React.HTMLAttributes<HTMLDivElement> {}
 
 export function Box( props : BoxProps) {
-  const {tvProps, className, children, ...rest } = extractTvProps<BoxProps>(props, ...boxVariantsKey);
+  const {tvProps, className, children, ...rest } = extractTvProps<BoxProps, boxVariantsType>(props, ...boxVariantsKey);
 
   return (
     <div
