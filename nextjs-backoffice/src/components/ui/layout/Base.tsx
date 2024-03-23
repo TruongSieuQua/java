@@ -1,6 +1,6 @@
 import { VariantProps, tv } from 'tailwind-variants';
 
-const baseVariantsConfig = {
+export const baseVariants = tv({
 	base: '',
 	variants:{
 		position: {
@@ -35,8 +35,6 @@ const baseVariantsConfig = {
 			max: 'h-max'
 		},
 	}
-}
-
+});
 export type BaseVariantsProps = VariantProps<typeof baseVariants>;
-export const baseVariants = tv(baseVariantsConfig);
-export const baseVariantKeys = Object.keys(baseVariantsConfig.variants);
+export const baseVariantKeys = ["position", "shrink", "grow", "width", "height"];

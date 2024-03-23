@@ -1,9 +1,9 @@
-
+import { forwardRef } from "react";
 import { VariantProps, tv } from "tailwind-variants";
 import {baseVariants, baseVariantKeys} from "./Base";
 import { extractTvProps } from "@/utils";
 
-const config = {
+const flexVariants = tv({
 	extend: baseVariants,
 	base: 'flex',
 	variants: {
@@ -43,16 +43,15 @@ const config = {
 			reverse: 'flex-wrap-reverse'
 		}
 	},
-};
-const flexVariants = tv(config);
+});
 type FlexVariantsType = VariantProps<typeof flexVariants>;
-const flexVariantsKeys = Object.keys(config.variants).concat(baseVariantKeys);
+const flexVariantsKeys = ["direction", "gap", "justify", "align", "wrap"].concat(baseVariantKeys);
 
 export interface FlexProps extends FlexVariantsType, React.HTMLAttributes<HTMLDivElement> {}
 
-export const Flex = (props: FlexProps) => {
+export const Flex = forwardRef((props: FlexProps, ref) => {
 
 	const { tvProps, className, children, ...rest } = extractTvProps<FlexProps, FlexVariantsType>(props, ...flexVariantsKeys);
 
   return <div className={flexVariants({...tvProps, className})} {...rest }>{children}</div>;
-};
+});

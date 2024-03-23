@@ -72,22 +72,32 @@
 		--white: 0, 0%, 100%;
 		--black: 0, 0%, 0%;
 		--transparent: 0, 0%, 100%, 0;
+
+		--muted-opacity: 0.8
 	}
 
 	html{
 		--text-heading: hsl(var(--black));
 		--text-default: hsl(var(--neutral-darkest));
+		--text-muted-default: hsl(var(--neutral-darkest), var(--muted-opacity));
 		--text-primary: hsl(var(--primary));
 		--text-primary-hover: hsl(var(--primary-dark));
+		--text-muted-primary: hsl(var(--primary), var(--muted-opacity));
 		--text-secondary: hsl(var(--secondary));
+		--text-secondary-hover: hsl(var(--secondary-dark));
+		--text-muted-secondary: hsl(var(--secondary), var(--muted-opacity));
 		--text-disabled: hsl(var(--neutral));
 		--text-on-disabled: hsl(var(--neutral-darker));
 		--text-on-action: hsl(var(--white));
 		--text-highlight: hsl(var(--highlight));
 		--text-success: hsl(var(--success-dark));
+		--text-muted-success: hsl(var(--success-dark), var(--muted-opacity));
 		--text-information: hsl(var(--information));
+		--text-muted-information: hsl(var(--information), var(--muted-opacity));
 		--text-warning: hsl(var(--warning-darker));
+		--text-muted-warning: hsl(var(--warning-darker), var(--muted-opacity));
 		--text-error: hsl(var(--danger-dark));
+		--text-muted-error: hsl(var(--danger-dark), var(--muted-opacity));
 
 		--surface-default: hsl(var(--white));
 		--surface-primary: hsl(var(--white));
@@ -124,18 +134,26 @@
 
 	html.dark{
 		--text-default: hsl(var(--neutral-lighter));
+		--text-muted-default: hsl(var(--neutral-lighter), var(--muted-opacity));
 		--text-heading: hsl(var(--neutral-lightest));
 		--text-primary: hsl(var(--primary-lighter));
 		--text-primary-hover: hsl(var(--primary-light));
+		--text-primary-muted: hsl(var(--primary-lighter), var(--muted-opacity));
 		--text-secondary: hsl(var(--secondary-lighter));
+		--text-secondary-hover: hsl(var(--secondary-light));
+		--text-secondary-muted: hsl(var(--secondary-lighter), var(--muted-opacity));
 		--text-disabled: hsl(var(--neutral));
 		--text-on-disabled: hsl(var(--neutral-lighter));
 		--text-on-action: hsl(var(--neutral-darkest));
 		--text-highlight: hsl(var(--highlight));
 		--text-success: hsl(var(--success));
+		--text-muted-success: hsl(var(--success), var(--muted-opacity));
 		--text-information: hsl(var(--information));
+		--text-muted-information: hsl(var(--information), var(--muted-opacity));
 		--text-warning: hsl(var(--warning));
+		--text-muted-warning: hsl(var(--warning), var(--muted-opacity));
 		--text-error: hsl(var(--danger));
+		--text-muted-error: hsl(var(--danger), var(--muted-opacity));
 
 		--surface-default: hsl(var(--neutral-darkest));
 		--surface-primary: hsl(var(--neutral-darkest));

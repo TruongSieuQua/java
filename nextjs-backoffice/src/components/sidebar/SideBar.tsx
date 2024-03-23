@@ -1,10 +1,7 @@
 "use client";
 
-import { Children, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Box, Flex } from "../ui/layout";
-import { cn } from "@/utils/cn";
 import { twMerge } from "tailwind-merge";
 
 interface SideBarProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -21,7 +18,7 @@ export function SideBar({ children, className }: SideBarProps) {
   return (
     <Flex
       direction="column"
-      className={cn("w-[19.5rem] h-screen border-r-2 py-6 relative", className)}
+      className={twMerge("w-[19.5rem] h-screen border-r-2 py-6 relative", className)}
     >
       <Flex direction="column" className="absolute top-0 bottom-0 w-full">
         {children}
@@ -31,14 +28,14 @@ export function SideBar({ children, className }: SideBarProps) {
 }
 
 export function SideBarHeader({ children, className }: SideBarHeaderProps) {
-  return <Box className={cn("p-4 h-16", className)}>{children}</Box>;
+  return <Box className={twMerge("p-4 h-16", className)}>{children}</Box>;
 }
 
 export function SideBarContent({ children, className }: SideBarContentProps) {
   return (
     <Box className="flex-grow relative">
       <Flex direction="column" className="absolute top-0 bottom-0 w-full">
-        <Box className={cn("flex-grow px-4 overflow-y-scroll", className)}>
+        <Box className={twMerge("flex-grow px-4 overflow-y-scroll", className)}>
           <Box>{children}</Box>
         </Box>
       </Flex>
@@ -55,7 +52,7 @@ export function SideBarFooter({ children }: SideBarFooterProps) {
 }
 
 export function SideBarMenu({ children, className }: SideBarMenuProps) {
-  return <ul className={cn("space-y-2 font-medium", className)}>{children}</ul>;
+  return <ul className={twMerge("space-y-2 font-medium", className)}>{children}</ul>;
 }
 
 export function SideBarMenuItem({
@@ -69,7 +66,7 @@ export function SideBarMenuItem({
         <Flex
           align="center"
           gap="3"
-          className={cn("p-2 rounded-lg hover:bg-on-action-hover-2", className)}
+          className={twMerge("p-2 rounded-lg hover:bg-on-action-hover-2", className)}
         >
           {children}
         </Flex>

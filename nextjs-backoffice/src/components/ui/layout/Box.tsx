@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { VariantProps, tv } from "tailwind-variants";
 import { baseVariants, baseVariantKeys } from "./Base";
 import { extractTvProps } from "@/utils";
@@ -16,9 +17,9 @@ const boxVariantsConfig = {
     },
   },
 };
-const boxVariants = tv(boxVariantsConfig);
 type boxVariantsType = VariantProps<typeof boxVariants>
-const boxVariantsKey = Object.keys(boxVariantsConfig.variants).concat(
+const boxVariants = tv(boxVariantsConfig);
+const boxVariantsKey = ["display"].concat(
   baseVariantKeys,
 );
 
@@ -26,7 +27,7 @@ export interface BoxProps
   extends boxVariantsType,
     React.HTMLAttributes<HTMLDivElement> {}
 
-export function Box( props : BoxProps) {
+export const Box = forwardRef(( props : BoxProps, ref) => {
   const {tvProps, className, children, ...rest } = extractTvProps<BoxProps, boxVariantsType>(props, ...boxVariantsKey);
 
   return (
@@ -37,4 +38,4 @@ export function Box( props : BoxProps) {
       {children}
     </div>
   );
-}
+});
