@@ -40,7 +40,7 @@ interface InputProps
       keyof InputVariantsType
     > {}
 
-export const Input = forwardRef((props: InputProps, ref) => {
+const Input = forwardRef((props: InputProps, ref) => {
   const { tvProps, className, ...rest } = extractTvProps<
     InputProps,
     InputVariantsType
@@ -50,3 +50,7 @@ export const Input = forwardRef((props: InputProps, ref) => {
     <input className={inputVariants({ ...tvProps, className })} {...rest} />
   );
 })
+
+Input.displayName = "Input";
+
+export { Input };

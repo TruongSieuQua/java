@@ -47,11 +47,11 @@ const flexVariants = tv({
 type FlexVariantsType = VariantProps<typeof flexVariants>;
 const flexVariantsKeys = ["direction", "gap", "justify", "align", "wrap"].concat(baseVariantKeys);
 
-export interface FlexProps extends FlexVariantsType, React.HTMLAttributes<HTMLDivElement> {}
+export interface FlexProps extends FlexVariantsType, React.ComponentPropsWithoutRef<"div"> {}
 
-export const Flex = forwardRef((props: FlexProps, ref) => {
+export const Flex = (props: FlexProps) => {
 
 	const { tvProps, className, children, ...rest } = extractTvProps<FlexProps, FlexVariantsType>(props, ...flexVariantsKeys);
 
   return <div className={flexVariants({...tvProps, className})} {...rest }>{children}</div>;
-});
+};

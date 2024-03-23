@@ -7,7 +7,7 @@ const cspHeader = `
 	upgrade-insecure-requests;
 `;
 
-const nextConfig = {
+const nextConfig = ({
 	images: {
     remotePatterns: [
       {
@@ -16,6 +16,6 @@ const nextConfig = {
       },
     ],
   }
-};
+});
 
 export default nextConfig;

@@ -25,9 +25,9 @@ const boxVariantsKey = ["display"].concat(
 
 export interface BoxProps
   extends boxVariantsType,
-    React.HTMLAttributes<HTMLDivElement> {}
+    React.ComponentPropsWithoutRef<"div"> {}
 
-export const Box = forwardRef(( props : BoxProps, ref) => {
+export const Box = ( props : BoxProps) => {
   const {tvProps, className, children, ...rest } = extractTvProps<BoxProps, boxVariantsType>(props, ...boxVariantsKey);
 
   return (
@@ -38,4 +38,4 @@ export const Box = forwardRef(( props : BoxProps, ref) => {
       {children}
     </div>
   );
-});
+};

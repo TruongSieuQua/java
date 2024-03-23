@@ -26,7 +26,7 @@ export async function generateMetadata({ params: { lng } }: {
 interface LoginProps extends LanguageProps {}
 
 export default async function Login({ params: { lang } }: LoginProps) {
-  const { t, i18n } = await useTranslation(lang, namespaces);
+  const { t } = await useTranslation(lang, namespaces);
 
   return (
     <TranslationsProvider namespaces={namespaces} lang={lang}>

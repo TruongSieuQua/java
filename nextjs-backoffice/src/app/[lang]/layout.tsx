@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Roboto } from "next/font/google";
 import "../globals.css";
 import { Suspense } from "react";
 import ClientProvider from "./client-provider";
-import { FaHome } from "react-icons/fa";
-import { Box, Flex } from "@/components/ui/layout";
-import { Input } from "@/components/ui/form";
 import { LanguageProps } from "@/i18n";
 import { languages } from "../../i18n/settings";
 

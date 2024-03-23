@@ -10,8 +10,8 @@ import {
   FormSubmit,
   Input,
 } from "@/components/ui/form";
+import { Text } from "@/components/ui/text";
 import { Controller, useForm } from "react-hook-form";
-import { parse } from "valibot";
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import {LoginData, LoginSchema} from "@/schema";
 import { BiSolidJoystickButton } from "react-icons/bi";
@@ -68,7 +68,7 @@ export default function LoginForm(){
 	<FormSubmit asChild>
 		<Button type="submit">
 			<BiSolidJoystickButton />
-			{t("submit")}
+			<Text>{t("submit")}</Text>
 		</Button>
 	</FormSubmit>
 </Form>

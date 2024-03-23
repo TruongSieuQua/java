@@ -100,13 +100,20 @@
 		--text-muted-error: hsl(var(--danger-dark), var(--muted-opacity));
 
 		--surface-default: hsl(var(--white));
+		--surface-default-hover: hsl(var(--neutral-lightest));
 		--surface-primary: hsl(var(--white));
+		--surface-primary-hover: hsl(var(--primary-lightest));
 		--surface-secondary: hsl(var(--neutral-lightest));
+		--surface-secondary-hover: hsl(var(--secondary-lighter));
 		--surface-highlight: hsl(var(--highlight-lighter));
 		--surface-success: hsl(var(--success-lighter));
+		--surface-success-hover: hsl(var(--success-light));
 		--surface-information: hsl(var(--information-lighter));
+		--surface-information-hover: hsl(var(--information-light));
 		--surface-warning: hsl(var(--warning-lighter));
+		--surface-warning-hover: hsl(var(--warning-light));
 		--surface-danger: hsl(var(--danger-lighter));
+		--surface-danger-hover: hsl(var(--danger-light));
 		--surface-disabled: hsl(var(--neutral-lightest));
 		--surface-disabled-selected: hsl(var(--neutral));
 		--surface-on-action-1: hsl(var(--primary));
@@ -130,6 +137,16 @@
 		--border-action: hsl(var(--primary));
 		--border-action-hover: hsl(var(--primary-dark));
 		--border-focus: hsl(var(--primary));
+
+		--shadow-opacity: 0.5;
+		--shadow-default: hsl(var(--surface-default, var(--shadow-opacity)));
+		--shadow-primary: hsl(var(--surface-primary, var(--shadow-opacity)));
+		--shadow-secondary: hsl(var(--surface-secondary, var(--shadow-opacity)));
+		--shadow-highlight: hsl(var(--surface-highlight, var(--shadow-opacity)));
+		--shadow-success: hsl(var(--surface-success, var(--shadow-opacity)));
+		--shadow-information: hsl(var(--surface-information, var(--shadow-opacity)));
+		--shadow-warning: hsl(var(--surface-warning, var(--shadow-opacity)));
+		--shadow-error: hsl(var(--surface-danger, var(--shadow-opacity)));
 	}
 
 	html.dark{
@@ -156,13 +173,20 @@
 		--text-muted-error: hsl(var(--danger), var(--muted-opacity));
 
 		--surface-default: hsl(var(--neutral-darkest));
+		--surface-default-hover: hsl(var(--neutral-darker));
 		--surface-primary: hsl(var(--neutral-darkest));
+		--surface-primary-hover: hsl(var(--primary-darker));
 		--surface-secondary: hsl(var(--neutral-darker));
+		--surface-secondary-hover: hsl(var(--secondary-dark));
 		--surface-highlight: hsl(var(--highlight-lighter));
 		--surface-success: hsl(var(--success-darkest));
+		--surface-success-hover: hsl(var(--success-darker));
 		--surface-information: hsl(var(--information-darkest));
+		--surface-information-hover: hsl(var(--information-darker));
 		--surface-warning: hsl(var(--warning-darkest));
+		--surface-warning-hover: hsl(var(--warning-darker));
 		--surface-danger: hsl(var(--danger-darkest));
+		--surface-danger-hover: hsl(var(--danger-darker));
 		--surface-disabled: hsl(var(--neutral-darker));
 		--surface-disabled-selected: hsl(var(--neutral));
 		--surface-on-action-1: hsl(var(--primary-lighter));
@@ -188,6 +212,15 @@
 		--border-action-hover: hsl(var(--primary-lighter));
 		--border-focus: hsl(var(--white));
 
+		--shadow-opacity: 0.5;
+		--shadow-default: hsl(var(--surface-default, var(--shadow-opacity)));
+		--shadow-primary: hsl(var(--surface-primary, var(--shadow-opacity)));
+		--shadow-secondary: hsl(var(--surface-secondary, var(--shadow-opacity)));
+		--shadow-highlight: hsl(var(--surface-highlight, var(--shadow-opacity)));
+		--shadow-success: hsl(var(--surface-success, var(--shadow-opacity)));
+		--shadow-information: hsl(var(--surface-information, var(--shadow-opacity)));
+		--shadow-warning: hsl(var(--surface-warning, var(--shadow-opacity)));
+		--shadow-error: hsl(var(--surface-danger, var(--shadow-opacity)));
 	}
 
 	body{
