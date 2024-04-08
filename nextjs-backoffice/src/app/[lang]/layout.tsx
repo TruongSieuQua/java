@@ -27,8 +27,7 @@ export default function RootLayout({
 }: Readonly<RootLayoutProps>) {
 
 	return (
-    <html lang={lang} className="dark">
-      <head></head>
+    <html lang={lang} data-theme="dark">
       <body className={font.className}>
         <ClientProvider>
               <Suspense>

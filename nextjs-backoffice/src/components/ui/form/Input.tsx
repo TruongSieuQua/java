@@ -1,33 +1,39 @@
 "use client";
 
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 import { extractTvProps } from "@/utils";
 import { twMerge } from "tailwind-merge";
 import { VariantProps, tv } from "tailwind-variants";
 
 const inputVariants = tv({
-  base: "block w-full border-[1px] focus-visible:outline-none \
-	hover:border-hover \
-	focus:border-focus \
-	disabled:bg-disabled",
+  base: "input",
   variants: {
     size: {
-      xs: "px-3 text-xs leading-7 rounded-sm",
-			sm: "px-3 text-sm leading-8 rounded-sm",
-      md: "px-5 text-base leading-9 rounded-md",
-      lg: "px-5 text-lg leading-11 rounded-lg",
+      xs: "input-xs px-3 leading-7",
+			sm: "input-sm leading-8",
+      md: "px-5 leading-9",
+      lg: "input-lg px-5 leading-11",
     },
 		color: {
-			default: "bg-default border-default",
-			success: "bg-success border-success",
-			info: "bg-info border-info",
-			warning: "bg-warning border-warning",
-			error: "bg-error border-error",
+			none: "",
+			default: "input-bordered",
+			primary: "input-primary",
+			accent: "input-accent",
+			success: "input-success",
+			info: "input-info",
+			warning: "input-warning",
+			error: "input-error",
+			ghost: "input-ghost",
+		},
+		width:{
+			fit: "max-w-xs",
+			full: "w-full",
 		}
   },
 	defaultVariants: {
 		size: "md",
 		color: "default",
+		width: "fit",
 	}
 });
 type InputVariantsType = VariantProps<typeof inputVariants>;
@@ -38,13 +44,19 @@ interface InputProps
     Omit<
       React.InputHTMLAttributes<HTMLInputElement>,
       keyof InputVariantsType
-    > {}
+    > {
+			children?: React.ReactNode;
+		}
 
 const Input = forwardRef((props: InputProps, ref) => {
-  const { tvProps, className, ...rest } = extractTvProps<
+  const { tvProps, className, children, ...rest } = extractTvProps<
     InputProps,
     InputVariantsType
   >(props, ...inputVariantKeys);
+
+	if(children){
+		return (<label className={inputVariants({ ...tvProps, className })}>{children}</label>)
+	}
 
   return (
     <input className={inputVariants({ ...tvProps, className })} {...rest} />
