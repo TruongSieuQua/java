@@ -10,7 +10,6 @@ import org.example.rsocket.dto.RequestDto;
 import org.example.rsocket.dto.ResponseDto;
 import org.example.rsocket.util.ObjectUtil;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import reactor.core.publisher.Flux;
@@ -22,11 +21,12 @@ import java.time.Duration;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS) // @BeforeAll, @AfterAll run one time when instance initial
 public class Lec01RSocketTest {
 
+
     private RSocket rSocker;
 
     @BeforeAll
     public void setup(){
-        // Create client socket connect to server socket "localhost:6565"
+        // client socket ( object represent server socket ) by connect to server "localhost:6565"
         this.rSocker = RSocketConnector.create()
                 .connect(TcpClientTransport.create("localhost", 6565))
                 // block till it connect completely to server
@@ -48,8 +48,10 @@ public class Lec01RSocketTest {
 
     @Test
     public void fireAndForget(){
-        // client socket fire a payload to server
+        // Create payload
         Payload payload = ObjectUtil.toPayload(new RequestDto(5));
+
+        // call client socket fireAndForget
         Mono<Void> mono = this.rSocker.fireAndForget(payload);
 
         // Mono nothing happens util you subscribe
