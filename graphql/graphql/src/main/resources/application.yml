@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: graphql
+
+  graphql:
+    schema:
+      locations:
+        - classpath:graphql
+    path: /graphql
+    graphiql:
+      enabled: true #for test only not in prod
+      path: /graphiql
