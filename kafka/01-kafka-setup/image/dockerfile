@@ -1,0 +1,25 @@
+FROM alpine:3.19
+
+RUN apk update
+
+RUN apk add bash
+
+RUN apk add openjdk17-jre
+
+RUN wget https://dlcdn.apache.org/kafka/3.7.0/kafka_2.13-3.7.0.tgz -O kafka.tgz
+
+RUN mkdir -p /kafka
+
+RUN tar -xzf kafka.tgz -C /kafka --strip-components=1
+
+RUN rm kafka.tgz
+
+RUN mv /kafka /opt/kafka
+
+ENV PATH="${PATH}:/opt/kafka/bin"
+
+WORKDIR /learning-kafka
+
+ADD runner.sh runner.sh
+
+CMD ["/bin/bash", "runner.sh"]
