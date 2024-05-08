@@ -1,0 +1,18 @@
+kafka-metadata-quorum.sh --bootstrap-server  localhost:9092 describe --status
+
+kafka-topics.sh --bootstrap-server localhost:9092 --topic order-events --create --partitions 2 --replication-factor 3
+
+kafka-topics.sh --list --bootstrap-server localhost:9092
+
+kafka-topics.sh --bootstrap-server localhost:9092 --topic order-events --describe
+
+kafka-topics.sh --delete --topic order-events --bootstrap-server localhost:9092
+
+kafka-topics.sh --bootstrap-server localhost:9092 --topic order-events --create --replication-factor 3 \
+--partitions 2 --config min.insync.replicas=2
+
+min.insync.replicas = 2 // default is 1 that means ensure message write to at least two leader and another replica before send ack message to client
+
+enable.idempotence=true // default it will prevent write old message (rely on sequenceId) in case of client didn't receive ack message
+
+We have to make producer set message-id to message before write (or send) to kafka and consumer need to save message-id it already receive to database // it will prevent consumer process old message in case of kafka didn't receive ack message
