@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.logo {
+  font-family: 'Calligraffitti', cursive;
+  font-weight: 700;
+  font-size: 1rem;
+  text-shadow: -15px 5px 20px #ced0d3;
+  letter-spacing: 0.1em;
+  text-align: center;
+  color: #F9f1cc;
+  text-shadow: 0.5px 0.5px 0px #FFB650,
+    1px 1px 0px #FFD662,
+    1.5px 1.5px 0px  #FF80BF,
+    2px 2px 0px #EF5097,
+    2.5px 2.5px 0px #6868AC,
+    3px 3px 0px #90B1E0;
+}
+
+.line{
+	position: relative;
+	width: 100%;
+	height: 1px;
+	margin: 36px 0;
+	background-color: oklch(var(--nc));
+}
+
+.line::before {
+	content: 'OR';
+	padding: 0 0.75rem;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: oklch(var(--bc));
+	background-color: oklch(var(--b1));
+}
