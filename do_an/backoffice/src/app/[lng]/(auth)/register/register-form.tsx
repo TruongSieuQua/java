@@ -9,6 +9,8 @@ import {
   Form,
   FormSubmit,
   Input,
+  InputTextLabel,
+  InputIcon,
 } from "@/components/ui/form";
 import { Text } from "@/components/ui/typography";
 import { Controller, useForm } from "react-hook-form";
@@ -18,6 +20,9 @@ import { BiSolidJoystickButton } from "react-icons/bi";
 import { PageProps } from "@/interface";
 import { useTranslation } from "@/i18n/client";
 import clsx from "clsx";
+import { TfiUser } from "react-icons/tfi";
+import { SiGmail } from "react-icons/si";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 interface RegisterFormProps extends PageProps {}
 
@@ -45,16 +50,17 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
-      <div className="flex gap-4">
+      <div className="grid grid-cols-2 gap-4">
         <Controller
           control={control}
           name={"firstName"}
           render={({ field, fieldState: { isDirty, error } }) => (
             <FormField name="firstName">
-              <FormLabel>{t("first_name")}</FormLabel>
               <FormControl>
-                <Input
+                <InputIcon
                   {...field}
+                  icon={<TfiUser />}
+                  placeholder={t("first_name")}
                   color={!isDirty ? "primary" : !error ? "success" : "error"}
                 />
               </FormControl>
@@ -71,10 +77,11 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
           name={"lastName"}
           render={({ field, fieldState: { isDirty, error } }) => (
             <FormField name="lastName">
-              <FormLabel>{t("last_name")}</FormLabel>
               <FormControl>
-                <Input
+                <InputIcon
                   {...field}
+                  icon={<TfiUser />}
+                  placeholder={t("last_name")}
                   color={!isDirty ? "primary" : !error ? "success" : "error"}
                 />
               </FormControl>
@@ -92,11 +99,12 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
         name={"email"}
         render={({ field, fieldState: { isDirty, error } }) => (
           <FormField name="email">
-            <FormLabel>{t("email")}</FormLabel>
             <FormControl>
-              <Input
-                type="email"
+              <InputIcon
                 {...field}
+                type="email"
+                icon={<SiGmail />}
+                placeholder={t("email")}
                 color={!isDirty ? "primary" : !error ? "success" : "error"}
               />
             </FormControl>
@@ -114,11 +122,12 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
         render={({ field, fieldState: { isDirty, error } }) => {
           return (
             <FormField name="password">
-              <FormLabel>{t("password")}</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
+                <InputIcon
                   {...field}
+                  type="password"
+                  icon={<RiLockPasswordLine />}
+                  placeholder={t("password")}
                   color={!isDirty ? "primary" : !error ? "success" : "error"}
                 />
               </FormControl>
@@ -138,16 +147,13 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
         render={({ field, fieldState: { isDirty, error } }) => {
           return (
             <FormField name="confirmedPassword">
-              <FormLabel>{t("confirmed_password")}</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
+                <InputIcon
                   {...field}
-                  className={clsx("input-bordered", {
-                    "input-primary": !isDirty,
-                    "input-success": isDirty && !error,
-                    "input-error": isDirty && error,
-                  })}
+                  type="password"
+                  icon={<RiLockPasswordLine />}
+                  placeholder={t("confirmed_password")}
+                  color={!isDirty ? "primary" : !error ? "success" : "error"}
                 />
               </FormControl>
               {errors.confirmedPassword?.message && (
@@ -159,16 +165,6 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
           );
         }}
       />
-
-      {/* <div className="flex justify-between text-sm mb-4">
-        <div>
-          <label className="label cursor-pointer space-x-2">
-            <input type="checkbox" defaultChecked className="checkbox" />
-            <span className="label-text whitespace-nowrap">Remember me</span>
-          </label>
-        </div>
-        <Button className="btn-link">{t("forgot-password")}</Button>
-      </div> */}
 
       <FormSubmit asChild>
         <Button type="submit" className="btn-primary">

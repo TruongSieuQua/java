@@ -17,7 +17,8 @@ import { LoginData, LoginSchema } from "@/schema";
 import { BiSolidJoystickButton } from "react-icons/bi";
 import { PageProps } from "@/interface";
 import { useTranslation } from "@/i18n/client";
-import clsx from "clsx";
+import NextLink from "next/link";
+import { LinkText } from "@/components/ui/link";
 
 interface LoginFormProps extends PageProps {}
 
@@ -52,11 +53,7 @@ export default function LoginForm({ params: { lng } }: LoginFormProps) {
               <Input
                 type="email"
                 {...field}
-                className={clsx("input-bordered", {
-									"input-primary": !isDirty,
-									"input-success": isDirty && !error,
-									"input-error": isDirty && error
-								})}
+                color={!isDirty ? "primary" : !error ? "success" : "error"}
               />
             </FormControl>
             {errors.email?.message && (
@@ -78,11 +75,7 @@ export default function LoginForm({ params: { lng } }: LoginFormProps) {
                 <Input
                   type="password"
                   {...field}
-									className={clsx("input-bordered", {
-										"input-primary": !isDirty,
-										"input-success": isDirty && !error,
-										"input-error": isDirty && error
-									})}
+									color={!isDirty ? "primary" : !error ? "success" : "error"}
                 />
               </FormControl>
               {errors.password?.message && (
@@ -102,7 +95,9 @@ export default function LoginForm({ params: { lng } }: LoginFormProps) {
             <span className="label-text whitespace-nowrap">Remember me</span>
           </label>
         </div>
-        <Button className="btn-link">{t("forgot-password")}</Button>
+				<NextLink href={`/${lng}/forgot-password`}>
+						<LinkText>{t("forgot-password")}</LinkText>
+					</NextLink>
       </div>
 
       <FormSubmit asChild>

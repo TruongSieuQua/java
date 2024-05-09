@@ -1,12 +1,9 @@
 "use client";
 
 import React, { forwardRef } from "react";
-import { extractTvProps } from "@/utils";
-import { twMerge } from "tailwind-merge";
 import { VariantProps, tv } from "tailwind-variants";
-import clsx from "clsx";
 
-const inputVariants = tv({
+const input = tv({
   base: "input",
   variants: {
     size: {
@@ -15,10 +12,10 @@ const inputVariants = tv({
       md: "input-md",
       lg: "input-lg",
     },
-		border: {
-			true: "input-bordered",
-			false: ""
-		},
+    border: {
+      true: "input-bordered",
+      false: "",
+    },
     color: {
       default: "",
       primary: "input-primary",
@@ -38,67 +35,95 @@ const inputVariants = tv({
   defaultVariants: {
     size: "md",
     border: true,
-		color: "default",
+    color: "default",
     width: "full",
   },
 });
-type InputVariantsType = VariantProps<typeof inputVariants>;
+const inputWithText = tv({
+	extend: input,
+	base: "input input-bordered flex items-center gap-2"
+})
+const inputWithIcon = tv({
+	extend: input,
+	base: "input input-bordered flex items-center gap-2"
+})
 
-/*
- * InputWrapper is a wrapper component for input elements.
- * It is used to style the input element with the correct border and padding.
-*/
-interface InputWrapperProps
-  extends Omit<
-      React.LabelHTMLAttributes<HTMLLabelElement>,
-      keyof InputVariantsType
-    >,
-    InputVariantsType {
-  children: React.ReactNode;
-}
-
-function InputWrapper({
-  size,
-  color,
-  width,
-  className,
-  children,
-  ...rest
-}: InputWrapperProps) {
-  return (
-    <label className={inputVariants({ size, color, width, className })} {...rest}>
-      {children}
-    </label>
-  );
-}
-
-/*
- * Input is a component that renders an input element.
- * It accepts all the props that an input element accepts.
-*/
+type InputVariantsType = VariantProps<typeof input>;
 interface InputProps
   extends Omit<
       React.InputHTMLAttributes<HTMLInputElement>,
       keyof InputVariantsType
     >,
-    InputVariantsType {
-			asChild?: boolean;
-		}
+    InputVariantsType {}
 
+/*
+ * Input is a component that renders an input element.
+ * It accepts all the props that an input element accepts.
+ */
 const Input = forwardRef(
-  ({ size, color, width, className, asChild, ...rest }: InputProps, ref) => {
-    if(asChild){
-			return <input className={clsx("grow", className)} {...rest} />
-		}
-		return (
+  ({ size, color, width, className, ...rest }: InputProps, ref) => {
+    return (
       <input
-        className={inputVariants({ size, color, width, className })}
+        className={input({ size, color, width, className })}
         {...rest}
       />
     );
   },
 );
 
+/*
+ * InputTextLabel is a component that renders a label element inside input.
+ */
+interface InputTextLabelProps extends InputProps {
+  label: string;
+}
+
+export function InputTextLabel({
+  size,
+  color,
+  width,
+  className,
+  children,
+  label,
+  ...rest
+}: InputTextLabelProps) {
+  return (
+    <label
+      className={inputWithText({ size, color, width, className })}
+    >
+      {label}
+      <input className="grow" {...rest} />
+    </label>
+  );
+}
+
+/*
+* InputIcon is a component that renders an icon inside input.
+*/
+interface InputIconProps extends InputProps {
+	icon: React.ReactNode;
+	iconPosition?: "left" | "right";
+}
+export function InputIcon({
+  size,
+  color,
+  width,
+  className,
+  children,
+	icon,
+  iconPosition="left",
+  ...rest
+}: InputIconProps) {
+  return (
+    <label
+      className={inputWithIcon({ size, color, width, className })}
+    >
+      {iconPosition === "left" && icon}
+      <input className="grow" {...rest} />
+			{iconPosition === "right" && icon}
+    </label>
+  );
+}
 Input.displayName = "Input";
 
 export { Input };

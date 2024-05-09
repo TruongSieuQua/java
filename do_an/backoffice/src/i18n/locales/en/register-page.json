@@ -9,8 +9,9 @@
   "confirmed_password": "Confirmed Password",
   "google-register": "Register with Google",
   "facebook-register": "Register with Facebook",
-  "already_have_account": "Already have account?",
   "google_register": "Register with Google",
   "facebook_register": "Register with Facebook",
-  "submit": "Register"
+  "submit": "Register",
+  "already_have_account": "Already have account?",
+  "login_now": "Login Now!"
 }

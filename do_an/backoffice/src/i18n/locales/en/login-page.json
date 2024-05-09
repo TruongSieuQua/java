@@ -8,6 +8,6 @@
   "google-login": "Login with Google",
   "facebook-login": "Login with Facebook",
   "forgot-password": "Forgot Password?",
-  "register": "Register",
-  "register-link": "Don't have an account? Register here."
+  "don't_have_account": "Don't have an account?",
+  "register_now": "Register now!"
 }

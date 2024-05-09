@@ -15,7 +15,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params: { lng } }:PageProps) {
   if (languages.indexOf(lng) < 0) lng = fallbackLng
-  const { t } = await useTranslation(lng, 'layout')
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+	const { t } = await useTranslation(lng, 'layout')
   return {
     title: t('title'),
     content: t('description'),
