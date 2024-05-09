@@ -55,11 +55,7 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
               <FormControl>
                 <Input
                   {...field}
-                  className={clsx("input-bordered", {
-                    "input-primary": !isDirty,
-                    "input-success": isDirty && !error,
-                    "input-error": isDirty && error,
-                  })}
+                  color={!isDirty ? "primary" : !error ? "success" : "error"}
                 />
               </FormControl>
               {errors.firstName?.message && (
@@ -79,11 +75,7 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
               <FormControl>
                 <Input
                   {...field}
-                  className={clsx("input-bordered", {
-                    "input-primary": !isDirty,
-                    "input-success": isDirty && !error,
-                    "input-error": isDirty && error,
-                  })}
+                  color={!isDirty ? "primary" : !error ? "success" : "error"}
                 />
               </FormControl>
               {errors.lastName?.message && (
@@ -105,11 +97,7 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
               <Input
                 type="email"
                 {...field}
-                className={clsx("input-bordered", {
-                  "input-primary": !isDirty,
-                  "input-success": isDirty && !error,
-                  "input-error": isDirty && error,
-                })}
+                color={!isDirty ? "primary" : !error ? "success" : "error"}
               />
             </FormControl>
             {errors.email?.message && (
@@ -131,11 +119,7 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
                 <Input
                   type="password"
                   {...field}
-                  className={clsx("input-bordered", {
-                    "input-primary": !isDirty,
-                    "input-success": isDirty && !error,
-                    "input-error": isDirty && error,
-                  })}
+                  color={!isDirty ? "primary" : !error ? "success" : "error"}
                 />
               </FormControl>
               {errors.password?.message && (
