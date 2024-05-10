@@ -1,0 +1,21 @@
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        // Read input until there is no more input
+        String line;
+        while ((line = reader.readLine()) != null) {
+            // Process the input
+            // For example, if the input is integers separated by space
+            StringTokenizer tokenizer = new StringTokenizer(line);
+            while (tokenizer.hasMoreTokens()) {
+                int n = Integer.parseInt(tokenizer.nextToken());
+                // Process n
+                System.out.println(n);
+            }
+        }
+
+        // Don't forget to close the reader
+        reader.close();
+    }
+}
