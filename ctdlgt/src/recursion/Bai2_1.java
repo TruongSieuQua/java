@@ -31,7 +31,6 @@ public class Bai2_1 {
     }
 
     public static void main(String[] args) throws IOException {
-        long startTime = System.currentTimeMillis();
         Input in = input();
         int n = in.cases.length;
         String[] rs = new String[n];
@@ -40,7 +39,5 @@ public class Bai2_1 {
             rs[i]=String.format("%s: %c", s, largestChar(s, s.length()));
         }
         System.out.println(String.join("\n", rs));
-        long endTime = System.currentTimeMillis();
-        System.out.println("Time: " + (endTime-startTime));
     }
 }

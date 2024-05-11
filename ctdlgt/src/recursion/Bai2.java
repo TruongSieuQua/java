@@ -43,7 +43,7 @@ public class Bai2 {
         for (int i = 0; i < rs.length; i++) {
             rs[i]=String.format("%s: %s", in.cases[i], cache.get(in.cases[i]));
         }
-        System.out.println(String.join("\n", rs));
+        System.out.print(String.join("\n", rs));
         long endTime = System.currentTimeMillis();
         System.out.println("Time: " + (endTime - startTime));
     }

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Bai1 {
-
     static int input() throws IOException {
         BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(r.readLine());
