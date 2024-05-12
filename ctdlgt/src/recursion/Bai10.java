@@ -1,6 +1,8 @@
 package recursion;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Bai10 {
@@ -25,14 +27,36 @@ public class Bai10 {
         return ins;
     }
 
-    static double solution(double x, int n){
-        double[] rs = caculateYi(x, n)
+    static class Solution{
+        // cache yi = x^i/i!
+        private static Map<Double, Double> cache = new HashMap<>();
+
+        static double caculateYi(double x, int i){
+            if(cache.containsKey(i)){
+                return cache.get(i);
+            }
+            double yi;
+            if(i <= 1){
+                yi = x;
+            }else{
+                yi=(x/i)*caculateYi(x, i-1);
+            }
+            cache.put(x, yi);
+            return yi;
+        }
+
+        static double solve(double x, int i){
+            if(i == 0) return 0;
+            else{
+                return caculateYi(x, i) + solve(x, i-1);
+            }
+        }
     }
 
     public static void main(String[] args) throws IOException {
         Input[] ins = input();
         for (Input in: ins) {
-            System.out.printf("%.8f%n", solution(in.x, in.n));
+            System.out.printf("%.8f%n", Solution.solve(in.x, in.n));
         }
     }
 }

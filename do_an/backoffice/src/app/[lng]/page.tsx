@@ -3,9 +3,7 @@ import {useTranslation} from '@/i18n';
 import { PageProps } from "@/interface";
 import Link from "next/link";
 
-interface HomePageProps extends PageProps {
-
-}
+interface HomePageProps extends PageProps {}
 
 export default async function Home({params: {lng}}: HomePageProps) {
   const {t} = await useTranslation(lng, ["hello-world-page"]);

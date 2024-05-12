@@ -49,8 +49,8 @@ const buttonVariantKeys = ["size", "rounded", "width", "color", "variant"];
 export interface ButtonProps
   extends ButtonVariantsType,
     Omit<
-      // React.ButtonHTMLAttributes<HTMLButtonElement>,
-			React.ComponentPropsWithoutRef<"button">,
+      React.ButtonHTMLAttributes<HTMLButtonElement>,
+			// React.ComponentPropsWithoutRef<"button">,
       keyof ButtonVariantsType
     > {}
 export function Button(props: ButtonProps): JSX.Element {

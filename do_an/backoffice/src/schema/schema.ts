@@ -1,4 +1,4 @@
-import { letter, number, special } from "@/utils/regex";
+import { name, password } from "@/utils/regex";
 import {
   custom,
   email,
@@ -21,25 +21,12 @@ export const PasswordSchema = string([
   toTrimmed(),
   minLength(8, "password_min_length"),
   maxLength(50, "password_max_length"),
-  custom(
-    (password) =>
-      /[a-z]/.test(password) &&
-      /[A-Z]/.test(password) &&
-      /[0-9]/.test(password) &&
-      /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password),
-    "weak_password",
-  ),
+  custom((p) => password.test(p), "weak_password"),
 ]);
 
 export const NameSchema = string([
   toTrimmed(),
   minLength(2, "name_min_length"),
   maxLength(50, "name_max_length"),
-  custom(
-    (name) =>
-      new RegExp(`^([${letter}${number}]+[ ])*[${letter}${number}]+$`).test(
-        name,
-      ),
-    "name_alpha_only",
-  ),
+  custom((n) => name.test(n), "name_alpha_only"),
 ]);
