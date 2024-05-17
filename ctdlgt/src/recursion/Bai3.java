@@ -3,7 +3,6 @@ package recursion;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.stream.Stream;
 
 public class Bai3 {
     static class Input{
@@ -46,16 +45,12 @@ public class Bai3 {
     }
     public static void main(String[] args) throws IOException{
         Input in= input();
-        int longestStrLen = Stream.of(in.cases).map(String::length).max(Integer::compareTo).get();
         int n = in.cases.length;
-        String[] rs = new String[n];
-
         for (int i = 0; i < n; i++) {
-            rs[i] = String.format("%"+ longestStrLen +"s: %d",
+            System.out.println(String.format("%s: %d",
                     in.cases[i],
                     (solution(in.cases[i], in.cases[i].length())).freq
-            );
+            ));
         }
-        System.out.println(String.join("\n", rs));
     }
 }

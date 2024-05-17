@@ -19,6 +19,6 @@ export const letter = (function regex() {
   return letter;
 })();
 export const number = /0-9/;
-export const special = /!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?/;
+export const special = /!@#$%^&*()-+/;
 export const name =  new RegExp(`^([${letter}${number}]+[ ])*[${letter}${number}]+$`);
-export const password = new RegExp(`^(?=.*[${letter}])(?=.*[${number}])(?=.*${special}).+$`);
+export const password = new RegExp(`^(?=.*[${letter}])(?=.*[${number}])(?=.*[${special}]).+$`);

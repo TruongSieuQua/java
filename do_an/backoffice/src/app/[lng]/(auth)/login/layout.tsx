@@ -26,7 +26,7 @@ export default async function Layout({
 					/>
 				</div>
 			</div>
-			<div className="h-screen overflow-y-scroll lg:col-span-5 xl:col-span-4 2xl:col-span-3">
+			<div className="h-screen overflow-y-auto lg:col-span-5 xl:col-span-4 2xl:col-span-3">
 				<div className="flex flex-col px-16 pt-12 pb-6">
 					<div className="flex justify-between items-center">
 						<Link href="/" className="logo">Charmpy</Link>

@@ -3,7 +3,6 @@ package generation;
 import java.util.Scanner;
 
 public class QL_Bai7 {
-
     static int[] input(){
         Scanner sc = new Scanner(System.in);
         int n=sc.nextInt();
@@ -46,10 +45,10 @@ public class QL_Bai7 {
 
     static void printPermutation(int[] permutation){
         int n = permutation.length;
-        for (int j : permutation) {
-            System.out.printf("  %d", j);
+        for(int i=0; i<n-1; i++) {
+            System.out.printf("%d  ", permutation[i]);
         }
-        System.out.println();
+        System.out.println(permutation[n-1]);
     }
 
     public static void main(String[] args) {
@@ -59,8 +58,6 @@ public class QL_Bai7 {
         for (int i=0; i < ins[0]; i++){
             chars[i] = 1+i;
         }
-
         solution(chars, ins[1]);
     }
-
 }

@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.logo {
+  font-family: 'Calligraffitti', cursive;
+  font-weight: 700;
+  font-size: 1rem;
+  text-shadow: -15px 5px 20px #ced0d3;
+  letter-spacing: 0.1em;
+  text-align: center;
+  color: #F9f1cc;
+  text-shadow: 0.5px 0.5px 0px #FFB650,
+    1px 1px 0px #FFD662,
+    1.5px 1.5px 0px  #FF80BF,
+    2px 2px 0px #EF5097,
+    2.5px 2.5px 0px #6868AC,
+    3px 3px 0px #90B1E0;
+}
+
+.line{
+	position: relative;
+	width: 100%;
+	height: 1px;
+	margin: 36px 0;
+	background-color: oklch(var(--nc));
+}
+
+.line::before {
+	content: 'OR';
+	padding: 0 0.75rem;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: oklch(var(--bc));
+	background-color: oklch(var(--b1));
+}
+
+.hide-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+
+  &::-webkit-scrollbar {
+    width: 1px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+}
+
+.classic-9 {
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 40px;
+  color:#0000;
+  overflow:hidden;
+  animation:c9 5s infinite cubic-bezier(0.3,1,0,1);
+}
+@keyframes c9 {
+  0%  {text-shadow: 0    0 #000, 11ch 0 green, 22ch 0 red, 33ch 0 blue,44ch 0 #000}
+  25% {text-shadow:-11ch 0 #000,  0ch 0 green, 11ch 0 red, 22ch 0 blue,33ch 0 #000}
+  50% {text-shadow:-22ch 0 #000,-11ch 0 green,  0ch 0 red, 11ch 0 blue,22ch 0 #000}
+  75% {text-shadow:-33ch 0 #000,-22ch 0 green,-11ch 0 red,  0ch 0 blue,11ch 0 #000}
+  100%{text-shadow:-44ch 0 #000,-33ch 0 green,-22ch 0 red,-11ch 0 blue, 0ch 0 #000}
+}

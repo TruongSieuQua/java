@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "./globals.scss";
 import { PageProps } from "@/interface";
-import { dir } from 'i18next'
+import { dir, t } from 'i18next'
 import { languages, fallbackLng } from '@/i18n/settings'
 import { useTranslation } from '@/i18n'
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,14 +27,17 @@ interface RootLayoutProps extends PageProps{
   children: React.ReactNode;
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params: {lng}
 }: Readonly<RootLayoutProps>) {
+	const { t } = await useTranslation(lng, 'layout')
   return (
     <html lang={lng} dir={dir(lng)} data-theme="light">
       <body className={inter.className}>
-		{children}
+		<Suspense fallback={<Loading/>} >
+			{children}
+		</Suspense>
 		</body>
     </html>
   );

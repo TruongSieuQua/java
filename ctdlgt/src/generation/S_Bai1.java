@@ -2,7 +2,7 @@ package generation;
 
 import java.util.Scanner;
 
-public class BinaryGeneration {
+public class S_Bai1 {
 
     static int input(){
         Scanner sc = new Scanner(System.in);

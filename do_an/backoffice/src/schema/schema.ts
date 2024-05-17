@@ -19,7 +19,7 @@ export const EmailSchema = string([
 
 export const PasswordSchema = string([
   toTrimmed(),
-  minLength(8, "password_min_length"),
+  minLength(6, "password_min_length"),
   maxLength(50, "password_max_length"),
   custom((p) => password.test(p), "weak_password"),
 ]);

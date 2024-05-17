@@ -1,6 +1,5 @@
 package generation;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class QL_Bai5 {
@@ -55,5 +54,4 @@ public class QL_Bai5 {
         }
         solution(chars, ins[1]);
     }
-
 }
