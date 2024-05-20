@@ -1,5 +1,5 @@
-import { LanguageSwitcher } from "@/components/lang-switcher";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageSwitcher } from "@/components/ui/lang-switcher";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { PageProps } from "@/interface";
 import Image from "next/image";
 import Link from "next/link";

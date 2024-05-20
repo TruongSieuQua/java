@@ -1,0 +1,39 @@
+////////////////////////////////////////////////////////////////////////////
+// CAI DAT
+////////////////////////////////////////////////////////////////////////////
+   B1: Cai docker
+   B2: Cai docker-compose
+	apt install docker-compose
+
+   B3: Cap quyen su dung docker
+	sudo groupadd docker
+	sudo usermod -aG docker $USER
+	getent group docker
+	
+   B4: Vao thu muc chua file "docker-compose.yml"
+   	Click chuot phai chon "Open in terminal"
+   
+   B4: Tao thu muc chua data
+	mkdir ./magento_database && sudo chmod 777 ./magento_database
+
+   B5: Chay ung dung	
+	docker-compose up
+	
+   B6: Doi 5 phut sau do vao "localhost" hoac "localhost/admin"
+
+//////////////////////////////////////////////////////////////////////////
+// Cac lan sau chay ung dung
+//////////////////////////////////////////////////////////////////////////
+  Chi can vao thu muc chua file "docker-compose.yml"
+  Click chuot phai chon "Open in terminal" roi nhap
+	sudo docker-compose up
+	
+////////////////////////
+Trang "localhost/admin"
+	TK: admin
+	MK: password1
+
+Trang client "localhost"
+	Tao tai khoan o goc tren ben phai
+	
+
