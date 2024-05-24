@@ -44,6 +44,7 @@ export default async function RootLayout({
         <Suspense fallback={<Loading />}>
           <ClientProvider>{children}</ClientProvider>
         </Suspense>
+				<div id="portal"></div>
       </body>
     </html>
   );

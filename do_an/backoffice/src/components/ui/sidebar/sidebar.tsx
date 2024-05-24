@@ -27,7 +27,7 @@ export function SideBar({children}: SideBarProps) {
       {isSideBarOpen && (
         <div
           className={clsx(
-            "animate__animated animate__slideInLeft z-50 h-screen overflow-x-hidden bg-base-100 sm:fixed sm:inset-0 md:static md:w-80",
+            "z-50 h-screen overflow-x-hidden bg-base-100 sm:fixed sm:inset-0 md:static md:w-80",
           )}
         >
           <div className="grid-row-2 sticky top-0 z-10 grid w-full gap-y-2 bg-base-100 bg-opacity-90 px-2 py-3 backdrop-blur ">

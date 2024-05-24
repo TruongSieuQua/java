@@ -1,9 +1,12 @@
 "use client";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
+import { useEffect, useRef, useState } from "react";
+import { VariantProps, tv } from "tailwind-variants";
 
+// sm:w-[var(--radix-navigation-menu-viewport-width)]
 export function Navigation({ children }: NavigationMenu.NavigationMenuProps) {
   return (
-    <NavigationMenu.Root className="relative z-10 flex w-full justify-center">
+    <NavigationMenu.Root className="relative z-[1] flex justify-center">
       {children}
     </NavigationMenu.Root>
   );
@@ -13,10 +16,10 @@ export function NavigationList({
   children,
 }: NavigationMenu.NavigationMenuProps) {
   return (
-    <NavigationMenu.List className="m-0 flex list-none bg-base-100 p-1 hover:bg-red-300">
+    <NavigationMenu.List className="center shadow-blackA4 m-0 flex list-none rounded-[6px] bg-white p-1 shadow-[0_2px_10px]">
       {children}
-			<NavigationMenu.Indicator className="top-full w-96 h-3 z-10 flex items-end justify-center overflow-hidden transition-[width,transform_250ms_ease]">
-				<div className="relative top-[20%] h-3 w-3 -left-1/4 rotate-[45deg] border-l border-t border-neutral-content bg-base-100" />
+      <NavigationMenu.Indicator className="data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut top-full z-[1] flex h-[10px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease]">
+        <div className="relative top-[70%] h-[10px] w-[10px] rotate-[45deg] rounded-tl-[2px] bg-white" />
       </NavigationMenu.Indicator>
     </NavigationMenu.List>
   );
@@ -25,11 +28,7 @@ export function NavigationList({
 export function NavigationItem({
   children,
 }: NavigationMenu.NavigationMenuItemProps) {
-  return (
-    <NavigationMenu.Item className="relative">
-      {children}
-    </NavigationMenu.Item>
-  );
+  return <NavigationMenu.Item className="relative">{children}</NavigationMenu.Item>;
 }
 
 export function NavigationItemTrigger({
@@ -38,46 +37,86 @@ export function NavigationItemTrigger({
   return (
     <NavigationMenu.Trigger
       asChild
-      className="group flex items-center justify-between"
+      className="flex items-center justify-between"
     >
       {children}
     </NavigationMenu.Trigger>
   );
 }
 
+const content = tv({
+	base: "absolute sm:w-auto bg-green-200",
+	variants: {
+		placement: {
+			left: "left-0",
+			center: "left-1/2 -translate-x-1/2",
+			right: "right-0"
+		}
+	},
+	defaultVariants: {}
+})
 export function NavigationItemContent({
   children,
-}: NavigationMenu.NavigationMenuContentProps) {
+	className
+}: NavigationMenu.NavigationMenuContentProps & VariantProps<typeof content>) {
+  const [top, setTop] = useState(0);
+  const [left, setLeft] = useState(0);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const adjustDropdownPosition = () => {
+      if (!dropdownRef.current) return;
+
+      const rect = dropdownRef.current.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      console.log(rect)
+      console.log(viewportWidth)
+      console.log(viewportHeight)
+
+      let newTop = rect.top;
+      let newLeft = rect.left;
+
+      // Adjust if dropdown is out of viewport on the right side
+      if (rect.right > viewportWidth) {
+        newLeft -= (rect.right - viewportWidth);
+      }
+
+      // Adjust if dropdown is out of viewport on the left side
+      if (rect.left < 0) {
+        newLeft = 0;
+      }
+
+      // Adjust if dropdown is out of viewport on the bottom side
+      if (rect.bottom > viewportHeight) {
+        newTop -= (rect.bottom - viewportHeight);
+      }
+
+      // Adjust if dropdown is out of viewport on the top side
+      if (rect.top < 0) {
+        newTop = 0;
+      }
+
+      setTop(newTop);
+      setLeft(newLeft);
+    };
+
+    adjustDropdownPosition();
+    window.addEventListener('resize', adjustDropdownPosition);
+
+    return () => {
+      window.removeEventListener('resize', adjustDropdownPosition);
+    };
+  }, [dropdownRef]);
+
   return (
-    <NavigationMenu.Content className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-full rounded-lg border border-neutral-content bg-base-100 p-5 sm:w-auto">
+    <NavigationMenu.Content
+      ref={dropdownRef}
+      style={{ top: `${top}px`, left: `${left}px`}}
+      className={`absolute top-full left-1/2 -translate-x-1/2 sm:w-auto bg-green-200 transition-[left,top,transform_500ms_ease] ${className}`}
+    >
       {children}
     </NavigationMenu.Content>
   );
 }
-
-// interface ListItemProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-//   children: React.ReactNode;
-// }
-
-// const ListItem = forwardRef<HTMLAnchorElement, ListItemProps>(
-//   ({ className, children, title, ...props }, forwardedRef) => (
-//     <li>
-//       <NavigationMenu.Link asChild>
-//         <a
-//           className={clsx(
-//             "focus:shadow-violet7 hover:bg-mauve3 block select-none rounded-[6px] p-3 text-[15px] leading-none no-underline outline-none transition-colors focus:shadow-[0_0_0_2px]",
-//             className,
-//           )}
-//           {...props}
-//           ref={forwardedRef}
-//         >
-//           <div className="text-violet12 mb-[5px] font-medium leading-[1.2]">
-//             {title}
-//           </div>
-//           <p className="text-mauve11 leading-[1.4]">{children}</p>
-//         </a>
-//       </NavigationMenu.Link>
-//     </li>
-//   ),
-// );
-// ListItem.displayName = "ListItem";
