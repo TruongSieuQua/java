@@ -1,122 +1,225 @@
 "use client";
-import * as NavigationMenu from "@radix-ui/react-navigation-menu";
-import { useEffect, useRef, useState } from "react";
-import { VariantProps, tv } from "tailwind-variants";
+import {
+  createContext,
+  useContext,
+  ReactNode,
+  CSSProperties,
+  useState,
+  HTMLAttributes,
+  DetailedHTMLProps,
+  useRef,
+  MutableRefObject,
+} from "react";
+import {
+  ExtendedRefs,
+  autoUpdate,
+  useFloating,
+  useHover,
+  useInteractions,
+  UseFloatingOptions,
+  offset,
+  safePolygon,
+  FloatingArrow,
+  arrow,
+  shift,
+  ReferenceType,
+  FloatingContext,
+  FloatingArrowProps,
+} from "@floating-ui/react";
+import { Slot, Slottable } from "@radix-ui/react-slot";
+import { createPortal } from "react-dom";
+import clsx from "clsx";
 
-// sm:w-[var(--radix-navigation-menu-viewport-width)]
-export function Navigation({ children }: NavigationMenu.NavigationMenuProps) {
-  return (
-    <NavigationMenu.Root className="relative z-[1] flex justify-center">
-      {children}
-    </NavigationMenu.Root>
-  );
+interface Navigation extends HTMLAttributes<HTMLDivElement> {}
+export function Navigation({ children, ...rest }: Navigation) {
+  return <div {...rest}>{children}</div>;
 }
 
+interface NavigationList extends HTMLAttributes<HTMLUListElement> {}
 export function NavigationList({
   children,
-}: NavigationMenu.NavigationMenuProps) {
+  className,
+  ...rest
+}: NavigationList) {
   return (
-    <NavigationMenu.List className="center shadow-blackA4 m-0 flex list-none rounded-[6px] bg-white p-1 shadow-[0_2px_10px]">
-      {children}
-      <NavigationMenu.Indicator className="data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut top-full z-[1] flex h-[10px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease]">
-        <div className="relative top-[70%] h-[10px] w-[10px] rotate-[45deg] rounded-tl-[2px] bg-white" />
-      </NavigationMenu.Indicator>
-    </NavigationMenu.List>
-  );
-}
-
-export function NavigationItem({
-  children,
-}: NavigationMenu.NavigationMenuItemProps) {
-  return <NavigationMenu.Item className="relative">{children}</NavigationMenu.Item>;
-}
-
-export function NavigationItemTrigger({
-  children,
-}: NavigationMenu.NavigationMenuTriggerProps) {
-  return (
-    <NavigationMenu.Trigger
-      asChild
-      className="flex items-center justify-between"
+    <ul
+      className={clsx(
+        "menu menu-vertical rounded-box lg:menu-horizontal",
+        className,
+      )}
+      {...rest}
     >
       {children}
-    </NavigationMenu.Trigger>
+    </ul>
   );
 }
 
-const content = tv({
-	base: "absolute sm:w-auto bg-green-200",
-	variants: {
-		placement: {
-			left: "left-0",
-			center: "left-1/2 -translate-x-1/2",
-			right: "right-0"
-		}
-	},
-	defaultVariants: {}
-})
-export function NavigationItemContent({
-  children,
-	className
-}: NavigationMenu.NavigationMenuContentProps & VariantProps<typeof content>) {
-  const [top, setTop] = useState(0);
-  const [left, setLeft] = useState(0);
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
+interface NavigationListItem extends HTMLAttributes<HTMLLIElement> {}
+export function NavigationListItem({ children, ...rest }: NavigationListItem) {
+  return <li {...rest}>{children}</li>;
+}
 
-  useEffect(() => {
-    const adjustDropdownPosition = () => {
-      if (!dropdownRef.current) return;
 
-      const rect = dropdownRef.current.getBoundingClientRect();
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
+declare type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
+interface NavigationMenuContextType {
+  isOpen: boolean;
+  refs: ExtendedRefs<ReferenceType>;
+  floatingStyles: CSSProperties;
+  context: Prettify<FloatingContext<ReferenceType>>;
+  getReferenceProps: (
+    userProps?: React.HTMLProps<Element>,
+  ) => Record<string, unknown>;
+  getFloatingProps: (
+    userProps?: React.HTMLProps<HTMLElement>,
+  ) => Record<string, unknown>;
+  arrowRef: MutableRefObject<SVGSVGElement | null>;
+}
 
-      console.log(rect)
-      console.log(viewportWidth)
-      console.log(viewportHeight)
+/* *********************************************************************************
+ * Global variables
+ * *********************************************************************************
+ */
+const NavigationMenuContext = createContext<NavigationMenuContextType | undefined>(undefined);
+const OFFSET = 10;
+const ARROW_WIDTH = 10;
+const ARROW_HEIGHT = 10;
 
-      let newTop = rect.top;
-      let newLeft = rect.left;
+const useNavigationMenuContext = () => {
+  const context = useContext(NavigationMenuContext);
+  if (!context) {
+    throw new Error("useMenuContext must be used within a MenuProvider");
+  }
+  return context;
+};
 
-      // Adjust if dropdown is out of viewport on the right side
-      if (rect.right > viewportWidth) {
-        newLeft -= (rect.right - viewportWidth);
-      }
-
-      // Adjust if dropdown is out of viewport on the left side
-      if (rect.left < 0) {
-        newLeft = 0;
-      }
-
-      // Adjust if dropdown is out of viewport on the bottom side
-      if (rect.bottom > viewportHeight) {
-        newTop -= (rect.bottom - viewportHeight);
-      }
-
-      // Adjust if dropdown is out of viewport on the top side
-      if (rect.top < 0) {
-        newTop = 0;
-      }
-
-      setTop(newTop);
-      setLeft(newLeft);
-    };
-
-    adjustDropdownPosition();
-    window.addEventListener('resize', adjustDropdownPosition);
-
-    return () => {
-      window.removeEventListener('resize', adjustDropdownPosition);
-    };
-  }, [dropdownRef]);
+/*
+ * *********************************************************************************
+ * MenuProvider
+ * *********************************************************************************
+ */
+interface MenuProviderProps extends UseFloatingOptions {
+  children: ReactNode;
+}
+const MenuProvider = ({ children, ...rest }: MenuProviderProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const arrowRef = useRef(null);
+  const { refs, floatingStyles, context } = useFloating({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+    middleware: [
+      offset(OFFSET),
+      shift(),
+      arrow({element: arrowRef,})
+    ],
+    whileElementsMounted: autoUpdate,
+    ...rest,
+  });
+  const hover = useHover(context, {
+    handleClose: safePolygon()
+  });
+  const { getReferenceProps, getFloatingProps } = useInteractions([hover]);
 
   return (
-    <NavigationMenu.Content
-      ref={dropdownRef}
-      style={{ top: `${top}px`, left: `${left}px`}}
-      className={`absolute top-full left-1/2 -translate-x-1/2 sm:w-auto bg-green-200 transition-[left,top,transform_500ms_ease] ${className}`}
+    <NavigationMenuContext.Provider
+      value={{
+        isOpen,
+        refs,
+        floatingStyles,
+        context,
+        getReferenceProps,
+        getFloatingProps,
+        arrowRef,
+      }}
     >
       {children}
-    </NavigationMenu.Content>
+    </NavigationMenuContext.Provider>
   );
+};
+
+/*
+ * *********************************************************************************
+ *  Menu
+ * *********************************************************************************
+ */
+interface NavigationMenuProps extends MenuProviderProps {}
+export const NavigationMenu = ({ children, ...rest }: NavigationMenuProps) => {
+  return <MenuProvider {...rest}>{children}</MenuProvider>;
+};
+
+/*
+ * *********************************************************************************
+ * MenuTrigger
+ * *********************************************************************************
+ */
+interface NavigationMenuTriggerProps extends HTMLAttributes<HTMLButtonElement> {
+  asChild?: boolean;
 }
+export const NavigationMenuTrigger = ({
+  asChild,
+  children,
+  ...rest
+}: NavigationMenuTriggerProps) => {
+  const { refs, getReferenceProps } = useNavigationMenuContext();
+  const Comp = asChild ? Slot : "button";
+  return (
+    <Comp ref={refs.setReference} {...getReferenceProps()} {...rest}>
+      <Slottable>{children}</Slottable>
+    </Comp>
+  );
+};
+
+/*
+ * *********************************************************************************
+ * MenuContent
+ * *********************************************************************************
+ */
+interface NavigationMenuContentProps extends HTMLAttributes<HTMLDivElement> {}
+export const NavigationMenuContent = ({ ...rest }: NavigationMenuContentProps) => {
+  const { refs, floatingStyles, getFloatingProps, isOpen, arrowRef, context } =
+    useNavigationMenuContext();
+
+  return (
+    isOpen &&
+    PortalContentWrapper({
+      ref: refs.setFloating,
+      style: floatingStyles,
+      context,
+      ...getFloatingProps(),
+      arrowRef,
+      ...rest,
+    })
+  );
+};
+
+interface PortalContentWrapperProps
+  extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  context: Prettify<FloatingContext<ReferenceType>>;
+  arrowRef: MutableRefObject<SVGSVGElement | null>;
+  arrowClassName?: string;
+}
+function PortalContentWrapper({
+  children,
+  ...rest
+}: PortalContentWrapperProps) {
+  const popupElement = document.getElementById("mn");
+  return popupElement
+    ? createPortal(<div {...rest}>{children}</div>, popupElement)
+    : null;
+}
+
+/*
+ * *********************************************************************************
+ * MenuArrow
+ * *********************************************************************************
+ */
+interface ArrowProps extends Omit<FloatingArrowProps, "context"> {}
+export const Arrow = ({
+  width = ARROW_WIDTH,
+  height = ARROW_HEIGHT,
+  ...rest
+}: ArrowProps) => {
+  const { arrowRef, context } = useNavigationMenuContext();
+  return <FloatingArrow ref={arrowRef} context={context} {...rest} />;
+};

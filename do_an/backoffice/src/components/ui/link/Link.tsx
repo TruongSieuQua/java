@@ -1,4 +1,6 @@
 import { VariantProps, tv } from "tailwind-variants";
+import NextLink from "next/link";
+import { HTMLAttributes } from "react";
 
 const link = tv({
   base: "link link-hover",
@@ -25,14 +27,18 @@ const link = tv({
 type LinkType = VariantProps<typeof link>;
 
 interface LinkProps
-  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkType>,
-    LinkType {}
+  extends Omit<HTMLAttributes<HTMLDivElement>, keyof LinkType>,
+    LinkType {
+			href: string;
+		}
 
-export function Link({ children, className, color, ...rest }: LinkProps) {
+export function Link({ children, className, href, color, ...rest }: LinkProps) {
 	return (
-    <a className={link({ color, className })} {...rest}>
-      {children}
-    </a>
+		<NextLink href={href}>
+			<div className={link({ color, className })} {...rest}>
+				{children}
+			</div>
+		</NextLink>
   );
 }
 

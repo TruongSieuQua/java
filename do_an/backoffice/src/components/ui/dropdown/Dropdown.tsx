@@ -1,26 +1,148 @@
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+"use client";
+import {
+  ExtendedRefs,
+  FloatingArrow,
+  FloatingContext,
+  FloatingOverlay,
+  ReferenceType,
+  UseFloatingOptions,
+  arrow,
+  autoUpdate,
+  flip,
+  offset,
+  shift,
+  useFloating,
+  useTransitionStyles,
+} from "@floating-ui/react";
+import { Slot, Slottable } from "@radix-ui/react-slot";
+import {
+  CSSProperties,
+  HTMLAttributes,
+  MutableRefObject,
+  createContext,
+  useContext,
+  useRef,
+  useState,
+} from "react";
+declare type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
+type DropDownContextType = {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  refs: ExtendedRefs<ReferenceType>;
+  floatingStyles: CSSProperties;
+  context: Prettify<FloatingContext<ReferenceType>>;
+  arrowRef: MutableRefObject<SVGSVGElement | null>;
+};
+/*
+ * *********************************************************************************
+ * Global variables
+ * *********************************************************************************
+ */
+const DropdownContext = createContext<DropDownContextType | undefined>(
+  undefined,
+);
+const OFFSET = 12;
+const ARROW_WIDTH = 8;
+const ARROW_HEIGHT = 8;
+const useDropdownContext = () => {
+  const context = useContext(DropdownContext);
+  if (!context) {
+    throw new Error(
+      "Dropdown compound components cannot be rendered outside the Dropdown component",
+    );
+  }
+  return context;
+};
 
-export function Dropdown({ children }: DropdownMenu.DropdownMenuProps) {
-  return <DropdownMenu.Root>{children}</DropdownMenu.Root>;
+/*
+ * *********************************************************************************
+ * DropdownProvider
+ * *********************************************************************************
+ */
+interface DropDownProviderProps extends UseFloatingOptions {
+  children: React.ReactNode;
 }
+const DropdownProvider = ({ children, ...rest }: DropDownProviderProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const arrowRef = useRef(null);
+  const { refs, floatingStyles, context, middlewareData } = useFloating({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+    middleware: [offset(OFFSET), flip(), shift(), arrow({ element: arrowRef })],
+    whileElementsMounted: autoUpdate,
+    ...rest,
+  });
 
-export function DropdownMenuTrigger({
-  children,
-}: DropdownMenu.DropdownMenuTriggerProps) {
-  return <DropdownMenu.Trigger asChild>{children}</DropdownMenu.Trigger>;
-}
-
-export function DropdownMenuContent({
-  children,
-}: DropdownMenu.DropdownMenuContentProps) {
   return (
-    <DropdownMenu.Portal>
-      <DropdownMenu.Content
-        className="data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade min-w-[220px] rounded-md bg-white p-[5px] shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform]"
-        sideOffset={5}
-      >
-        {children}
-      </DropdownMenu.Content>{" "}
-    </DropdownMenu.Portal>
+    <DropdownContext.Provider
+      value={{
+        isOpen,
+        setIsOpen,
+        refs,
+        floatingStyles,
+        context,
+        arrowRef,
+      }}
+    >
+      {children}
+    </DropdownContext.Provider>
   );
+};
+
+/*
+ * *********************************************************************************
+ * Dropdown
+ * *********************************************************************************
+ */
+interface DropdownProps extends DropDownProviderProps {}
+export const Dropdown = ({ children, ...rest }: DropdownProps) => {
+  return <DropdownProvider {...rest}>{children}</DropdownProvider>;
+};
+
+/*
+ * *********************************************************************************
+ *  DropdownTrigger
+ * *********************************************************************************
+ */
+interface DropdownTriggerProps extends HTMLAttributes<HTMLButtonElement> {
+  asChild?: boolean;
+}
+export const DropdownTrigger = ({
+  asChild,
+  children,
+  ...rest
+}: DropdownTriggerProps) => {
+  const { setIsOpen, isOpen, refs } = useDropdownContext();
+  const Comp = asChild ? Slot : "button";
+
+  return (
+    <Comp onClick={() => setIsOpen(!isOpen)} ref={refs.setReference} {...rest}>
+      <Slottable>{children}</Slottable>
+    </Comp>
+  );
+};
+
+/*
+ * *********************************************************************************
+ * DropdownContent
+ * *********************************************************************************
+ */
+interface DropdownContentProps extends HTMLAttributes<HTMLDivElement> {}
+export const DropdownContent = ({ children, ...rest }: DropdownContentProps) => {
+	const {refs, floatingStyles, context, arrowRef, isOpen, setIsOpen} = useDropdownContext();
+	return (isOpen && <>
+		<FloatingOverlay onClick={()=>setIsOpen(false)} />
+		<div ref={refs.setFloating} style={floatingStyles} {...rest}>
+				{children}
+				<FloatingArrow
+              ref={arrowRef}
+              context={context}
+              width={ARROW_WIDTH}
+              height={ARROW_HEIGHT}
+          />
+		</div>
+		</>
+	);
 }

@@ -30,7 +30,17 @@ export default function TestPage() {
               </Dropdown>
             </NavigationListItem>
             <NavigationListItem>
-              <Link href="/">Okie</Link>
+						<Dropdown>
+                <DropdownTrigger asChild>
+                  <Button>
+                    <div>Trigger</div>
+                    <PiCaretDown className="transition-transform duration-200 ease-in group-data-[state=open]:-rotate-180" />
+                  </Button>
+                </DropdownTrigger>
+                <DropdownContent className="bg-green-200">
+                  <LongContent />
+                </DropdownContent>
+              </Dropdown>
             </NavigationListItem>
           </NavigationList>
         </Navigation>
@@ -38,70 +48,44 @@ export default function TestPage() {
       <div className="mb-96 flex justify-center">
         <Navigation>
           <NavigationList>
-            <NavigationListItem>
-              <Menu>
-                <MenuTrigger asChild>
+          <NavigationListItem>
+						<Dropdown>
+                <DropdownTrigger asChild>
                   <Button>
                     <div>Trigger</div>
                     <PiCaretDown className="transition-transform duration-200 ease-in group-data-[state=open]:-rotate-180" />
                   </Button>
-                </MenuTrigger>
-                <MenuContent>
+                </DropdownTrigger>
+                <DropdownContent className="bg-green-200">
                   <LongContent />
-                </MenuContent>
-              </Menu>
+                </DropdownContent>
+              </Dropdown>
             </NavigationListItem>
             <NavigationListItem>
-              <Menu>
-                <MenuTrigger asChild>
+						<Dropdown>
+                <DropdownTrigger asChild>
                   <Button>
                     <div>Trigger</div>
                     <PiCaretDown className="transition-transform duration-200 ease-in group-data-[state=open]:-rotate-180" />
                   </Button>
-                </MenuTrigger>
-                <MenuContent>
+                </DropdownTrigger>
+                <DropdownContent className="bg-green-200">
                   <LongContent />
-                </MenuContent>
-              </Menu>
+                </DropdownContent>
+              </Dropdown>
             </NavigationListItem>
             <NavigationListItem>
-              <Menu>
-                <MenuTrigger asChild>
+						<Dropdown>
+                <DropdownTrigger asChild>
                   <Button>
                     <div>Trigger</div>
                     <PiCaretDown className="transition-transform duration-200 ease-in group-data-[state=open]:-rotate-180" />
                   </Button>
-                </MenuTrigger>
-                <MenuContent>
+                </DropdownTrigger>
+                <DropdownContent className="bg-green-200">
                   <LongContent />
-                </MenuContent>
-              </Menu>
-            </NavigationListItem>
-            <NavigationListItem>
-              <Menu>
-                <MenuTrigger asChild>
-                  <Button>
-                    <div>Trigger</div>
-                    <PiCaretDown className="transition-transform duration-200 ease-in group-data-[state=open]:-rotate-180" />
-                  </Button>
-                </MenuTrigger>
-                <MenuContent>
-                  <LongContent />
-                </MenuContent>
-              </Menu>
-            </NavigationListItem>
-            <NavigationListItem>
-              <Menu>
-                <MenuTrigger asChild>
-                  <Button>
-                    <div>Trigger</div>
-                    <PiCaretDown className="transition-transform duration-200 ease-in group-data-[state=open]:-rotate-180" />
-                  </Button>
-                </MenuTrigger>
-                <MenuContent>
-                  <LongContent />
-                </MenuContent>
-              </Menu>
+                </DropdownContent>
+              </Dropdown>
             </NavigationListItem>
           </NavigationList>
         </Navigation>
@@ -110,17 +94,29 @@ export default function TestPage() {
         <Navigation>
           <NavigationList>
             <NavigationListItem>
-              <Menu>
-                <MenuTrigger asChild>
+						<Dropdown>
+                <DropdownTrigger asChild>
                   <Button>
                     <div>Trigger</div>
                     <PiCaretDown className="transition-transform duration-200 ease-in group-data-[state=open]:-rotate-180" />
                   </Button>
-                </MenuTrigger>
-                <MenuContent>
+                </DropdownTrigger>
+                <DropdownContent className="bg-green-200">
                   <LongContent />
-                </MenuContent>
-              </Menu>
+                </DropdownContent>
+              </Dropdown>
+							</NavigationListItem><NavigationListItem>
+							<Dropdown>
+                <DropdownTrigger asChild>
+                  <Button>
+                    <div>Trigger</div>
+                    <PiCaretDown className="transition-transform duration-200 ease-in group-data-[state=open]:-rotate-180" />
+                  </Button>
+                </DropdownTrigger>
+                <DropdownContent className="bg-green-200">
+                  <LongContent />
+                </DropdownContent>
+              </Dropdown>
             </NavigationListItem>
           </NavigationList>
         </Navigation>

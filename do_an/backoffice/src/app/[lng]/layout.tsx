@@ -7,6 +7,7 @@ import { useTranslation } from "@/i18n";
 import { Suspense } from "react";
 import Loading from "./loading";
 import { ClientProvider } from "./client-provider";
+import clsx from "clsx";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,17 +35,12 @@ export default async function RootLayout({
   const { t } = await useTranslation(lng, "layout");
   return (
     <html lang={lng} dir={dir(lng)} data-theme="light">
-      <head>
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-        />
-      </head>
-      <body className={inter.className}>
-        <Suspense fallback={<Loading />}>
-          <ClientProvider>{children}</ClientProvider>
-        </Suspense>
-				<div id="portal"></div>
+      <body className={clsx("", inter.className)}>
+					<div id="mn"></div>
+					<div id="dd"></div>
+					<Suspense fallback={<Loading />}>
+						<ClientProvider>{children}</ClientProvider>
+					</Suspense>
       </body>
     </html>
   );

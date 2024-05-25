@@ -1,28 +1,36 @@
 import * as React from "react";
 import {
   useFloating,
+  autoUpdate,
+  offset,
+  flip,
+  shift,
   useClick,
   useDismiss,
   useRole,
   useInteractions,
   useMergeRefs,
+  Placement,
   FloatingPortal,
   FloatingFocusManager,
-  FloatingOverlay,
   useId
 } from "@floating-ui/react";
 
-interface DialogOptions {
+interface PopoverOptions {
   initialOpen?: boolean;
+  placement?: Placement;
+  modal?: boolean;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
 
-export function useDialog({
+export function usePopover({
   initialOpen = false,
+  placement = "bottom",
+  modal,
   open: controlledOpen,
   onOpenChange: setControlledOpen
-}: DialogOptions = {}) {
+}: PopoverOptions = {}) {
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(initialOpen);
   const [labelId, setLabelId] = React.useState<string | undefined>();
   const [descriptionId, setDescriptionId] = React.useState<
@@ -33,8 +41,19 @@ export function useDialog({
   const setOpen = setControlledOpen ?? setUncontrolledOpen;
 
   const data = useFloating({
+    placement,
     open,
-    onOpenChange: setOpen
+    onOpenChange: setOpen,
+    whileElementsMounted: autoUpdate,
+    middleware: [
+      offset(5),
+      flip({
+        crossAxis: placement.includes("-"),
+        fallbackAxisSideDirection: "end",
+        padding: 5
+      }),
+      shift({ padding: 5 })
+    ]
   });
 
   const context = data.context;
@@ -42,7 +61,7 @@ export function useDialog({
   const click = useClick(context, {
     enabled: controlledOpen == null
   });
-  const dismiss = useDismiss(context, { outsidePressEvent: "mousedown" });
+  const dismiss = useDismiss(context);
   const role = useRole(context);
 
   const interactions = useInteractions([click, dismiss, role]);
@@ -53,17 +72,18 @@ export function useDialog({
       setOpen,
       ...interactions,
       ...data,
+      modal,
       labelId,
       descriptionId,
       setLabelId,
       setDescriptionId
     }),
-    [open, setOpen, interactions, data, labelId, descriptionId]
+    [open, setOpen, interactions, data, modal, labelId, descriptionId]
   );
 }
 
 type ContextType =
-  | (ReturnType<typeof useDialog> & {
+  | (ReturnType<typeof usePopover> & {
       setLabelId: React.Dispatch<React.SetStateAction<string | undefined>>;
       setDescriptionId: React.Dispatch<
         React.SetStateAction<string | undefined>
@@ -71,40 +91,45 @@ type ContextType =
     })
   | null;
 
-const DialogContext = React.createContext<ContextType>(null);
+const PopoverContext = React.createContext<ContextType>(null);
 
-export const useDialogContext = () => {
-  const context = React.useContext(DialogContext);
+export const usePopoverContext = () => {
+  const context = React.useContext(PopoverContext);
 
   if (context == null) {
-    throw new Error("Dialog components must be wrapped in <Dialog />");
+    throw new Error("Popover components must be wrapped in <Popover />");
   }
 
   return context;
 };
 
-export function Dialog({
+export function Popover({
   children,
-  ...options
+  modal = false,
+  ...restOptions
 }: {
   children: React.ReactNode;
-} & DialogOptions) {
-  const dialog = useDialog(options);
+} & PopoverOptions) {
+  // This can accept any props as options, e.g. `placement`,
+  // or other positioning options.
+  const popover = usePopover({ modal, ...restOptions });
   return (
-    <DialogContext.Provider value={dialog}>{children}</DialogContext.Provider>
+    <PopoverContext.Provider value={popover}>
+      {children}
+    </PopoverContext.Provider>
   );
 }
 
-interface DialogTriggerProps {
+interface PopoverTriggerProps {
   children: React.ReactNode;
   asChild?: boolean;
 }
 
-export const DialogTrigger = React.forwardRef<
+export const PopoverTrigger = React.forwardRef<
   HTMLElement,
-  React.HTMLProps<HTMLElement> & DialogTriggerProps
->(function DialogTrigger({ children, asChild = false, ...props }, propRef) {
-  const context = useDialogContext();
+  React.HTMLProps<HTMLElement> & PopoverTriggerProps
+>(function PopoverTrigger({ children, asChild = false, ...props }, propRef) {
+  const context = usePopoverContext();
   const childrenRef = (children as any).ref;
   const ref = useMergeRefs([context.refs.setReference, propRef, childrenRef]);
 
@@ -124,6 +149,7 @@ export const DialogTrigger = React.forwardRef<
   return (
     <button
       ref={ref}
+      type="button"
       // The user can style the trigger based on the state
       data-state={context.open ? "open" : "closed"}
       {...context.getReferenceProps(props)}
@@ -133,41 +159,40 @@ export const DialogTrigger = React.forwardRef<
   );
 });
 
-export const DialogContent = React.forwardRef<
+export const PopoverContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLProps<HTMLDivElement>
->(function DialogContent(props, propRef) {
-  const { context: floatingContext, ...context } = useDialogContext();
+>(function PopoverContent({ style, ...props }, propRef) {
+  const { context: floatingContext, ...context } = usePopoverContext();
   const ref = useMergeRefs([context.refs.setFloating, propRef]);
 
   if (!floatingContext.open) return null;
 
   return (
     <FloatingPortal>
-      <FloatingOverlay className="Dialog-overlay" lockScroll>
-        <FloatingFocusManager context={floatingContext}>
-          <div
-            ref={ref}
-            aria-labelledby={context.labelId}
-            aria-describedby={context.descriptionId}
-            {...context.getFloatingProps(props)}
-          >
-            {props.children}
-          </div>
-        </FloatingFocusManager>
-      </FloatingOverlay>
+      <FloatingFocusManager context={floatingContext} modal={context.modal}>
+        <div
+          ref={ref}
+          style={{ ...context.floatingStyles, ...style }}
+          aria-labelledby={context.labelId}
+          aria-describedby={context.descriptionId}
+          {...context.getFloatingProps(props)}
+        >
+          {props.children}
+        </div>
+      </FloatingFocusManager>
     </FloatingPortal>
   );
 });
 
-export const DialogHeading = React.forwardRef<
+export const PopoverHeading = React.forwardRef<
   HTMLHeadingElement,
   React.HTMLProps<HTMLHeadingElement>
->(function DialogHeading({ children, ...props }, ref) {
-  const { setLabelId } = useDialogContext();
+>(function PopoverHeading(props, ref) {
+  const { setLabelId } = usePopoverContext();
   const id = useId();
 
-  // Only sets `aria-labelledby` on the Dialog root element
+  // Only sets `aria-labelledby` on the Popover root element
   // if this component is mounted inside it.
   React.useLayoutEffect(() => {
     setLabelId(id);
@@ -176,38 +201,42 @@ export const DialogHeading = React.forwardRef<
 
   return (
     <h2 {...props} ref={ref} id={id}>
-      {children}
+      {props.children}
     </h2>
   );
 });
 
-export const DialogDescription = React.forwardRef<
+export const PopoverDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLProps<HTMLParagraphElement>
->(function DialogDescription({ children, ...props }, ref) {
-  const { setDescriptionId } = useDialogContext();
+>(function PopoverDescription(props, ref) {
+  const { setDescriptionId } = usePopoverContext();
   const id = useId();
 
-  // Only sets `aria-describedby` on the Dialog root element
+  // Only sets `aria-describedby` on the Popover root element
   // if this component is mounted inside it.
   React.useLayoutEffect(() => {
     setDescriptionId(id);
     return () => setDescriptionId(undefined);
   }, [id, setDescriptionId]);
 
-  return (
-    <p {...props} ref={ref} id={id}>
-      {children}
-    </p>
-  );
+  return <p {...props} ref={ref} id={id} />;
 });
 
-export const DialogClose = React.forwardRef<
+export const PopoverClose = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
->(function DialogClose(props, ref) {
-  const { setOpen } = useDialogContext();
+>(function PopoverClose(props, ref) {
+  const { setOpen } = usePopoverContext();
   return (
-    <button type="button" {...props} ref={ref} onClick={() => setOpen(false)} />
+    <button
+      type="button"
+      ref={ref}
+      {...props}
+      onClick={(event) => {
+        props.onClick?.(event);
+        setOpen(false);
+      }}
+    />
   );
 });

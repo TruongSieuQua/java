@@ -1,3 +1,3 @@
 // export * from './navbar';
-export * from './navbar1';
+export * from './navbar';
 

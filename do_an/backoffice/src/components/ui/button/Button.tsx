@@ -1,14 +1,16 @@
+"use client"
 import { extractTvProps } from "@/utils";
+import { forwardRef } from "react";
 import { VariantProps, tv } from "tailwind-variants";
 
 const buttonVariants = tv({
   base: "btn min-w-max",
   variants: {
 		size: {
-			xs: "btn-xs px-3 py-2",
-			sm: "btn-sm px-3 py-2",
-			md: "px-5 py-2.5",
-			lg: "btn-lg px-5 py-3",
+			xs: "btn-xs",
+			sm: "btn-sm",
+			md: "btn-md",
+			lg: "btn-lg",
 		},
 		rounded:{
 			none: "",
@@ -42,6 +44,7 @@ const buttonVariants = tv({
   },
   defaultVariants: {
 		width: "full",
+		size: "md",
   },
 });
 type ButtonVariantsType = VariantProps<typeof buttonVariants>;
@@ -53,12 +56,13 @@ export interface ButtonProps
 			// React.ComponentPropsWithoutRef<"button">,
       keyof ButtonVariantsType
     > {}
-export function Button(props: ButtonProps): JSX.Element {
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const { tvProps, className, children, type="button", ...rest } = extractTvProps<ButtonProps, ButtonVariantsType>(props, ...buttonVariantKeys);
 
 	return (
-    <button className={buttonVariants({...tvProps, className})} {...rest} type={type}>
+    <button ref={ref} className={buttonVariants({...tvProps, className})} {...rest} type={type}>
       {children}
     </button>
   );
-}
+});
+Button.displayName = "Button";
