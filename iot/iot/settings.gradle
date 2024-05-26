@@ -1,5 +1,10 @@
 rootProject.name = 'iot'
-include 'environment'
-include 'sensors'
-include 'app'
+
+include 'actuator'
+include 'lib'
+
+include 'forest:forest-client'
+findProject(':forest:forest-client')?.name = 'forest-client'
+include 'forest:forest-server'
+findProject(':forest:forest-server')?.name = 'forest-server'
 
