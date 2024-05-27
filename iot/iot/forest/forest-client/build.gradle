@@ -3,11 +3,6 @@ plugins{
 }
 
 dependencies {
-    implementation(project(':lib'))
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation 'org.springframework.kafka:spring-kafka'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'io.projectreactor:reactor-test'
-    testImplementation 'org.springframework.kafka:spring-kafka-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // https://mvnrepository.com/artifact/io.projectreactor/reactor-core
+    implementation 'io.projectreactor:reactor-core:3.6.6'
 }
