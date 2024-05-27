@@ -32,18 +32,8 @@ public class Forest {
     }
 
     public Flux<Double> temperatureStream() {
-        return Flux.create(emitter -> {
-            while (true) {
-                double newTemperature = calculateTemperature();
-                emitter.next(newTemperature);
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    emitter.error(e);
-                    break;
-                }
-            }
-        }, FluxSink.OverflowStrategy.BUFFER);
+        return Flux.interval(Duration.ofSeconds(1))
+                .map(i -> calculateTemperature());
     }
 
     private double calculateTemperature() {
@@ -58,8 +48,6 @@ public class Forest {
                 temperature -= random.nextDouble() * 3 + 1;
                 if (temperature < baseTemperature - 2) {
                     temperature = baseTemperature - 2;
-                } else if (temperature > baseTemperature + 2) {
-                    temperature = baseTemperature + 2;
                 }
                 break;
         }
@@ -73,8 +61,9 @@ public class Forest {
                 .doOnNext(temp -> System.out.println("Forest State: " + forest.state + ", Temperature: " + temp))
                 .subscribe();
 
-       Flux.just(0)
-               .delayElements(Duration.ofSeconds(5000))
-               .doOnComplete(()-> forest.setState("extinguish")).subscribe();
+       Flux.interval(Duration.ofSeconds(5))
+               .doOnNext((i)-> forest.setState("extinguish")).subscribe();
+
+       Thread.sleep(10000);
     }
 }

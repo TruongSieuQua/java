@@ -4,18 +4,19 @@ import com.tjn.dto.ForestResponse;
 import com.tjn.service.ForestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("forests")
 public class ForestController {
     private final ForestService forestService;
 
-    @GetMapping("/{forestName}/temperature-stream")
-    public Flux<ForestResponse> getTemperatureStream(@PathVariable String forestName) {
+    @GetMapping(value = "/stream/{forestName}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<ForestResponse> getTemperatureStream(@PathVariable("forestName") String forestName) {
         return forestService.getTemperatureStream(forestName);
     }
 

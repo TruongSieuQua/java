@@ -26,9 +26,9 @@ public class ForestService {
         Forest two = new Forest("2", 24);
         Forest three = new Forest("3", 40);
         this.db = Map.of(
-                "1", one,
-                "2", two,
-                "3", three
+                one.getName(), one,
+                two.getName(), two,
+                three.getName(), three
         );
     }
 
@@ -59,6 +59,4 @@ public class ForestService {
             return Mono.error(e);  // Return an error if state change is invalid
         }
     }
-
-
 }
