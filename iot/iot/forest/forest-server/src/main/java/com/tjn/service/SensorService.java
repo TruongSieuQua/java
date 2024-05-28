@@ -8,6 +8,7 @@ import com.tjn.mapper.SensorMapper;
 import com.tjn.model.Sensor;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -31,7 +32,7 @@ public class SensorService {
 
     private final ServiceUrlConfig serviceUrlConfig;
 
-    private Sinks.Many<SensorResponse> sink;
+    private final Sinks.Many<SensorResponse> sink = Sinks.many().multicast().directBestEffort();
 
     @PostConstruct
     public void init(){
@@ -44,6 +45,7 @@ public class SensorService {
                 s2.getId(), s2,
                 s3.getId(), s3
         );
+        sensorDataToSink();
     }
 
     private void sensorDataToSink(){
@@ -73,9 +75,7 @@ public class SensorService {
     }
 
     public Flux<SensorResponse> fetchTemperatureStreamAndSendToKafka() {
-        this.sink = Sinks.many().multicast().onBackpressureBuffer();
-        sensorDataToSink();
-        return sink.asFlux();
+        return Flux.from(sink.asFlux());
     }
 
     public Mono<SensorDto> update(Integer id, SensorDto req){
