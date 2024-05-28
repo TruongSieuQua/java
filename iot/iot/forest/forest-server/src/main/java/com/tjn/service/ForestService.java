@@ -22,9 +22,9 @@ public class ForestService {
 
     @PostConstruct
     public void init(){
-        Forest one = new Forest("1", 30);
-        Forest two = new Forest("2", 24);
-        Forest three = new Forest("3", 40);
+        Forest one = new Forest("f1", 30);
+        Forest two = new Forest("f2", 20);
+        Forest three = new Forest("f3", 40);
         this.db = Map.of(
                 one.getName(), one,
                 two.getName(), two,

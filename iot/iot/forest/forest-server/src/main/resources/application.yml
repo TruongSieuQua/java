@@ -1,0 +1,10 @@
+server:
+  port:
+    8080
+spring:
+  application:
+    name: forest-server
+
+tjn:
+  service:
+    forest: 'http://localhost:8080'
