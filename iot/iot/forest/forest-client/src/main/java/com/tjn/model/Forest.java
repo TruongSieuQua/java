@@ -2,7 +2,6 @@ package com.tjn.model;
 
 import lombok.Data;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.FluxSink;
 
 import java.time.Duration;
 import java.util.Random;
@@ -13,8 +12,6 @@ public class Forest {
     private String state;
     private Double temperature;
     private double baseTemperature;
-
-    private final Random random = new Random();
 
     public Forest(String name, double baseTemperature) {
         this.name = name;
@@ -39,31 +36,36 @@ public class Forest {
     private double calculateTemperature() {
         switch (state) {
             case "normal":
-                temperature = baseTemperature + random.nextDouble() * 4 - 2;
+                if (temperature > baseTemperature + 2) {
+                    temperature -= Math.random();
+                } else if (temperature < baseTemperature - 2) {
+                    temperature += Math.random();
+                } else {
+                    temperature = baseTemperature + Math.random() * 4 - 2;
+                }
                 break;
             case "fired":
-                temperature += random.nextDouble() * 3 + 1;
+                temperature += Math.random() * 3 + 1;
                 break;
             case "extinguish":
-                temperature -= random.nextDouble() * 3 + 1;
-                if (temperature < baseTemperature - 2) {
-                    temperature = baseTemperature - 2;
+                temperature -= Math.random() * 3 + 1;
+                if (temperature < 25) {
+                    this.state = "normal";
                 }
                 break;
         }
         return temperature;
     }
-
-    public static void main(String[] args) throws InterruptedException {
-        Forest forest = new Forest("Amazon", 25.0);
-        forest.setState("fired");
-        forest.temperatureStream()
-                .doOnNext(temp -> System.out.println("Forest State: " + forest.state + ", Temperature: " + temp))
-                .subscribe();
-
-       Flux.interval(Duration.ofSeconds(5))
-               .doOnNext((i)-> forest.setState("extinguish")).subscribe();
-
-       Thread.sleep(10000);
-    }
+//    public static void main(String[] args) throws InterruptedException {
+//        Forest forest = new Forest("Amazon", 25.0);
+//        forest.setState("fired");
+//        forest.temperatureStream()
+//                .doOnNext(temp -> System.out.println("Forest State: " + forest.state + ", Temperature: " + temp))
+//                .subscribe();
+//
+//        Flux.interval(Duration.ofSeconds(5))
+//                .doOnNext((i) -> forest.setState("extinguish")).subscribe();
+//
+//        Thread.sleep(10000);
+//    }
 }

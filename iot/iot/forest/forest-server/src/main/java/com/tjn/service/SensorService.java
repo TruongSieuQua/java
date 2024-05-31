@@ -6,25 +6,25 @@ import com.tjn.dto.SensorDto;
 import com.tjn.dto.SensorResponse;
 import com.tjn.mapper.SensorMapper;
 import com.tjn.model.Sensor;
+import com.tjn.model.ValueHolder;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
+import reactor.core.scheduler.Schedulers;
 
 import java.net.URI;
-import java.time.Duration;
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class SensorService {
 
-    private Map<Integer, Sensor>  db;
+    private Map<Integer, Sensor> db;
 
     private final SensorMapper sensorMapper;
 
@@ -32,11 +32,15 @@ public class SensorService {
 
     private final ServiceUrlConfig serviceUrlConfig;
 
-    private final Sinks.Many<SensorResponse> sink = Sinks.many().multicast().directBestEffort();
+    private final TemperatureSensorJsonProducer sensorProducer;
+
+    private final Sinks.Many<SensorResponse> sink = Sinks.many().replay().latest();
+
+    private final Sinks.Many<ValueHolder<Sensor>> sensorEventSink = Sinks.many().replay().latest();
 
     @PostConstruct
-    public void init(){
-        Sensor s1 = new Sensor(1, false,"f1");
+    public void init() {
+        Sensor s1 = new Sensor(1, false, "f1");
         Sensor s2 = new Sensor(2, false, "f2");
         Sensor s3 = new Sensor(3, false, "f3");
 
@@ -46,46 +50,58 @@ public class SensorService {
                 s3.getId(), s3
         );
         sensorDataToSink();
+        startDataStream();
     }
 
-    private void sensorDataToSink(){
-        Flux.interval(Duration.ofSeconds(1))
-                .flatMap(tick -> Flux.fromIterable(db.values()))
-                .distinctUntilChanged(Sensor::getState)
+    private void sensorDataToSink() {
+        Flux.fromIterable(db.values())
                 .filter(Sensor::getState)
-                .flatMap(this::startDataStream)
-                .subscribe(sink::tryEmitNext);
+                .subscribe();
     }
-    private Flux<SensorResponse> startDataStream(Sensor sensor) {
-        final URI url = UriComponentsBuilder
-                .fromHttpUrl(serviceUrlConfig.forest())
-                .path("/forests/stream/{forestName}")
-                .buildAndExpand(sensor.getForestName())
-                .toUri();
-        return webClient.get()
-                .uri(url)
-                .retrieve()
-                .bodyToFlux(ForestResponse.class)
-                .map(fr -> new SensorResponse(
-                        sensor.getId(),
-                        System.currentTimeMillis(),
-                        sensor.getForestName(),
-                        fr.temperature()
-                ));
+
+    private void startDataStream() {
+        sensorEventSink.asFlux()
+                .filter((ses) ->
+                        ses.getPreviousValue().getState() != ses.getValue().getState() && ses.getValue().getState())
+                .map(ValueHolder::getValue)
+                .flatMap(sensor -> {
+                    final URI url = UriComponentsBuilder
+                            .fromHttpUrl(serviceUrlConfig.forest())
+                            .path("/forests/stream/{forestName}")
+                            .buildAndExpand(sensor.getForestName())
+                            .toUri();
+                    return webClient.get()
+                            .uri(url)
+                            .retrieve()
+                            .bodyToFlux(ForestResponse.class)
+                            .map(fr -> new SensorResponse(
+                                    sensor.getId(),
+                                    System.currentTimeMillis(),
+                                    sensor.getForestName(),
+                                    fr.temperature()
+                            ))
+                            .doOnNext(sensorProducer::sendJsonMessage)
+                            .takeUntil(response -> !sensor.getState());
+                })
+                .subscribeOn(Schedulers.boundedElastic())
+                .subscribe(sink::tryEmitNext);
+        ;
     }
 
     public Flux<SensorResponse> fetchTemperatureStreamAndSendToKafka() {
-        return Flux.from(sink.asFlux());
+        return sink.asFlux();
     }
 
-    public Mono<SensorDto> update(Integer id, SensorDto req){
+    public Mono<SensorDto> update(Integer id, SensorDto req) {
         return Mono.fromSupplier(() -> db.get(id))
                 .flatMap(s -> {
                     if (s == null) {
                         return Mono.error(new RuntimeException(String.format("Sensor %d is not found!", req.id())));
                     }
-                    s.setState(req.state());
-                    s.setForestName(req.forestName());
+                    var prev = s.makeCopy();
+                    sensorMapper.updateSensor(req, s);
+                    System.out.println(s);
+                    sensorEventSink.tryEmitNext(new ValueHolder<>(prev, s));
                     return Mono.just(sensorMapper.toSensorDto(s));
                 });
     }

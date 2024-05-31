@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("sensors")
@@ -23,9 +24,9 @@ public class SensorController {
         return sensorService.fetchTemperatureStreamAndSendToKafka();
     }
 
-    @PutMapping("/{id}")
-    public Mono<ResponseEntity<SensorDto>> updateState(@PathVariable("id") Integer id, @RequestBody SensorDto req){
-         return sensorService.update(id, req)
-                 .map(s -> ResponseEntity.status(HttpStatus.OK).body(s));
+    @PatchMapping("/{id}")
+    public Mono<ResponseEntity<SensorDto>> updateState(@PathVariable("id") Integer id, @RequestBody SensorDto req) {
+        return sensorService.update(id, req)
+                .map(s -> ResponseEntity.ok().body(s));
     }
 }

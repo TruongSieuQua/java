@@ -1,6 +1,7 @@
 package com.tjn.service;
 
 import com.tjn.dto.ForestResponse;
+import com.tjn.dto.UpdateForestStateDto;
 import com.tjn.mapper.ForestMapper;
 import com.tjn.model.Forest;
 import jakarta.annotation.PostConstruct;
@@ -21,7 +22,7 @@ public class ForestService {
 
 
     @PostConstruct
-    public void init(){
+    public void init() {
         Forest one = new Forest("f1", 30);
         Forest two = new Forest("f2", 20);
         Forest three = new Forest("f3", 40);
@@ -32,7 +33,7 @@ public class ForestService {
         );
     }
 
-    public Flux<ForestResponse> getTemperatureStream(String forestName){
+    public Flux<ForestResponse> getTemperatureStream(String forestName) {
         Forest forest = this.db.get(forestName);
         if (forest == null) {
             return Flux.error(new IllegalArgumentException("Forest not found: " + forestName));
@@ -45,18 +46,16 @@ public class ForestService {
                 });
     }
 
-    public Mono<Void> changeState(String forestName, String newState) {
-        Forest forest = this.db.get(forestName);
-
-        if (forest == null) {
-            return Mono.error(new IllegalArgumentException("Forest not found: " + forestName));
-        }
-
-        try {
-            forest.changeState(newState);
-            return Mono.empty();  // Indicate successful completion
-        } catch (IllegalArgumentException e) {
-            return Mono.error(e);  // Return an error if state change is invalid
-        }
+    public Mono<Forest> changeState(String forestName, UpdateForestStateDto req) {
+        return Mono.fromSupplier(() -> {
+            Forest forest = this.db.get(forestName);
+            if (forest == null) {
+                throw new IllegalArgumentException("Forest not found: " + forestName);
+            }
+            forest.changeState(req.state());
+            System.out.println("changeState jdkjaskdmkmsd");
+            System.out.println(forest);
+            return forest;
+        });
     }
 }

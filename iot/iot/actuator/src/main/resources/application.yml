@@ -1,10 +1,9 @@
 server:
-  port:
-    8080
+  port: 8081
+
 spring:
   application:
-    name: forest-server
-
+    name: actuator-service
   rabbitmq:
     port: 5672
     username: guest
@@ -20,6 +19,10 @@ rabbitmq:
   queue:
     sensorTemperature:
       name: sensor_temperature_queue
+    actuatorState:
+      name: actuator_state_queue
   routing:
     sensorTemperature:
       key: sensor_temperature_routing_key
+    actuatorState:
+      key: actuator_state_routing_key
