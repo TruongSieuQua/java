@@ -1,10 +1,10 @@
 package generation;
 
-import java.util.*;
-import java.util.stream.IntStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class QL_Bai3_1 {
-
 
         static int input(){
             Scanner sc = new Scanner(System.in);
@@ -13,33 +13,43 @@ public class QL_Bai3_1 {
             return n;
         }
 
-        static void backtrack(Stack<Integer> rs, int idx, int n){
-            if(rs.size()==n){
+        static void backtrack(List<Integer> arr, int k, int n, List<Integer> rs){
+            if(k == n){
                 printPermutation(rs);
-            }else{
-                for(int i=)
+                return;
+            }
+
+            for (int i = 0; i < arr.size(); i++) {
+                rs.add(arr.remove(i));
+
+                backtrack(arr, k+1, n, rs);
+
+                arr.add(i, rs.remove(rs.size()-1));
             }
         }
 
         static void solution(int n){
-            Stack<Integer> rs = new Stack<>();
-            Queue<Integer> nums = new ArrayDeque<>();
-            for(int i=1; i<=n; i++){
-                nums.add(i);
+            ArrayList<Integer> arr = new ArrayList<>(n);
+            for(int i=0; i<n; i++){
+               arr.add(n-i);
             }
-            backtrack(rs, 0, n, list);
+            ArrayList<Integer> rs = new ArrayList<>(n);
+            backtrack(arr, 0, n, rs);
         }
 
-        static void printPermutation(Stack<Integer> rs){
-            rs.forEach((num -> {
-                System.out.printf("%3d", num);
-            }));
+        static void printPermutation(List<Integer> arr){
+            arr.forEach(i -> System.out.printf("  %d", i));
             System.out.println();
         }
 
         public static void main(String[] args) {
-            int n = input();
+
+            long startTime = System.currentTimeMillis();
+//            int n = input();
+            int n = 6;
             solution(n);
+            long endTime = System.currentTimeMillis();
+            System.out.println("Time executed: " + (endTime - startTime));
         }
-    }
+}
 

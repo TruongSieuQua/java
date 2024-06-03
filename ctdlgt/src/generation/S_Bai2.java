@@ -1,66 +1,82 @@
 package generation;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class S_Bai2 {
 
-    static int input(){
-        Scanner sc = new Scanner(System.in);
-        int n=sc.nextInt();
-        sc.close();
-        return n;
-    }
+    static List<Integer> input(){
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
 
-    static void printCombination(int[] rs){
-        for(int i = 0; i < rs.length; i++) {
-            System.out.printf("%3d", rs[i]);
+        List<Integer> permutation = new ArrayList<>();
+        for (int i = n; i >= 1; i--) {
+            permutation.add(i);
         }
-        System.out.println();
+        scanner.close();
+        return permutation;
     }
 
-    static void swap(int[] rs, int i, int j){
-        rs[i] = rs[i] + rs[j];
-        rs[j] = rs[i]-rs[j];
-        rs[i] = rs[i]-rs[j];
-    }
-    private static void reverse(int[] array, int start, int end) {
-        while (start < end) {
-            swap(array, start, end);
-            start++;
-            end--;
-        }
-    }
-    static void solution(int n, int k){
-        int[] rs = new int[k];
-        for (int i = 0; i < k; i++) {
-            rs[i] = k-i;
-        }
-        while(true){
-            printCombination(rs);
-
-            // 5 4 3 2 1 => 5 4 3 1 2 => 5 4 2 3 1 => 5 4 2 1 3 => 5 4 1 3 2 => 5 4 1 2 3 => 5 3 4 2 1
-            // Tim vt[i] > vt[i+1] => vt[j tu cuoi] < vt[i] => swap(i, j) => reverse(i+1, n-1)
-
-            int i,j;
-            for(i=n-2; i>=0; i--){
-                if(rs[i] > rs[i+1]){
-                    break;
-                }
+    private static void output(List<List<Integer>> permutations){
+        for (List<Integer> perm : permutations) {
+            for (int num : perm) {
+                System.out.print("  " + num);
             }
-            if(i==-1) break;
-
-            for(j=n-1; j>=0; j--){
-                if(rs[j] < rs[i]){
-                    break;
-                }
-            }
-            swap(rs, i, j);
-            reverse(rs, i+1, n-1);
+            System.out.println();
         }
+    }
+
+    private static void generation(List<Integer> permutation, List<List<Integer>> permutations){
+        do {
+            permutations.add(new ArrayList<>(permutation));
+        } while (nextPermutation(permutation));
+    }
+
+    // Hàm sinh hoán vị tiếp theo
+    private static boolean nextPermutation(List<Integer> perm) {
+        int n = perm.size();
+        int i = n - 2;
+
+        // Tim vi tri i sao cho perm[i] > per[i+1]
+        while (i >= 0 && perm.get(i) < perm.get(i + 1)) {
+            i--;
+        }
+
+        // Neu khong con hoan vi
+        if (i < 0) {
+            return false;
+        }
+
+        int j = n - 1;
+
+        // Tim vi tri perm[j] lon nhat < perm[i]
+        while (perm.get(j) > perm.get(i)) {
+            j--;
+        }
+
+        // Doi cho perm[j] va perm[i]
+        Collections.swap(perm, i, j);
+
+        // Sap xep bang cach dao nguoc tu doan i+1 den cuoi
+        int left = i + 1;
+        int right = n - 1;
+        while (left < right) {
+            Collections.swap(perm, left, right);
+            left++;
+            right--;
+        }
+
+        return true;
     }
 
     public static void main(String[] args) {
-        int n = input();
-        solution(n, n);
+        List<Integer> permutation = input();
+        List<List<Integer>> permutations = new ArrayList<>();
+
+        generation(permutation, permutations);
+
+        output(permutations);
     }
 }

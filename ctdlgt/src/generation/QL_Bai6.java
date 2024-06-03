@@ -11,54 +11,39 @@ public class QL_Bai6 {
         sc.close();
         return new int[]{n, k};
     }
-    /*
-     *  0 0 0 0 0 0
-            + + + +
-        6 - 4 + idx + 1
-        i: 0 -> 0 1 2 < 3
-        i: 1 -> 0 1 2 3 < 4
-     */
-    static void backtrack(int[] chars, int[] permutation, int idx, boolean[] used){
-        if(idx == permutation.length){
-            printPermutation(permutation);
+
+    // 1 2 3 4 5 6
+    // 0 1 2  // len = 4
+    static void backtrack(int[] arr, int n, int k, int p, int start, int[] rs){
+        if(p == k){
+            printPermutation(rs);
             return;
-        }else{
-            for(int j=idx; j <= chars.length-permutation.length+idx; j++){
-                if(used[j]){
-                    continue;
-                }
-                used[j]=true;
-                permutation[idx] = chars[j];
-
-                backtrack(chars, permutation, idx+1, used);
-
-                permutation[idx] = '\0';
-                used[j]=false;
-            }
+        }
+        for(int i=start; i <= n-(k-p); i++){
+                rs[p] = arr[i];
+                backtrack(arr, n, k, p+1, i+1, rs);
         }
     }
 
-    static void solution(int[] chars, int n){
-        boolean[] used = new boolean[chars.length];
-        int[] permutation = new int[n];
-        backtrack(chars, permutation, 0, used);
+    static void solution(int n, int k){
+        int[] arr = new int[n];
+        int[] rs = new int[k];
+        for(int i=0; i < n; i++){
+            arr[i] = i+1;
+        }
+       backtrack(arr, n, k, 0, 0, rs);
     }
 
-    static void printPermutation(int[] permutation){
-        int n = permutation.length;
-        for(int j=0;j<n-1;j++) {
-            System.out.printf("%d  ", permutation[j]);
+    static void printPermutation(int[] perm){
+        int len = perm.length;
+        for(int i=0; i < len-1; i++){
+            System.out.print(perm[i] + "  ");
         }
-        System.out.println(permutation[n-1]);
+        System.out.println(perm[len-1]);
     }
 
     public static void main(String[] args) {
         int[] ins = input();
-
-        int[] chars = new int[ins[0]];
-        for (int i=0; i < ins[0]; i++){
-            chars[i] = 1+i;
-        }
-        solution(chars, ins[1]);
+        solution(ins[0], ins[1]);
     }
 }

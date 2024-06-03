@@ -1,58 +1,65 @@
 package generation;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class QL_Bai4 {
 
-    static int[] input(){
-        Scanner sc = new Scanner(System.in);
-        int n=sc.nextInt();
-        int[] chars = new int[n];
-        for(int i=0; i<n; i++) {
-            chars[i] = sc.nextInt();
-        }
-        sc.close();
-        return chars;
-    }
+    public static void generatePermutations(int[] nums) {
+        List<List<Integer>> allPermutations = new ArrayList<>();
+        backtrack(nums, 0, allPermutations);
 
-    static void backtrack(int[] chars, int[] permutation, int idx, boolean[] used){
-        if(idx == permutation.length){
-            printPermutation(permutation);
-            return;
-        }else{
-            for(int j=0; j < chars.length; j++){
-                if(used[j]){
-                    continue;
+        Collections.sort(allPermutations, (a, b) -> {
+            for (int i = 0; i < a.size(); i++) {
+                if (!a.get(i).equals(b.get(i))) {
+                    return a.get(i) - b.get(i);
                 }
-                used[j]=true;
-                permutation[idx] = chars[j];
-
-                backtrack(chars, permutation, idx+1, used);
-
-                permutation[idx] = '\0';
-                used[j]=false;
             }
+            return 0;
+        });
+
+        for (List<Integer> perm : allPermutations) {
+            for (int num : perm) {
+                System.out.print(num + " ");
+            }
+            System.out.println();
         }
     }
 
-    static void solution(int[] chars, int n){
-        Arrays.sort(chars);
-        boolean[] used = new boolean[chars.length];
-        int[] permutation = new int[n];
-        backtrack(chars, permutation, 0, used);
+    private static void backtrack(int[] nums, int k, List<List<Integer>> allPermutations) {
+        if (k == nums.length) {
+            List<Integer> currentPermutation = new ArrayList<>();
+            for (int i : nums) {
+                currentPermutation.add(i);
+            }
+            allPermutations.add(currentPermutation);
+            return;
+        }
+
+        for (int i = k; i < nums.length; i++) {
+            swap(nums, k, i);
+            backtrack(nums, k + 1, allPermutations);
+            swap(nums, k, i);
+        }
     }
 
-    static void printPermutation(int[] permutation){
-        int n = permutation.length;
-        for (int i = 0; i < n; i++) {
-            System.out.printf(" %d", permutation[i]);
-        }
-        System.out.println();
+    private static void swap(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
     }
 
     public static void main(String[] args) {
-        int[] chars = input();
-        solution(chars, chars.length);
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = scanner.nextInt();
+        }
+        scanner.close();
+
+        generatePermutations(nums);
     }
 }
