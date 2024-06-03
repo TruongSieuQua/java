@@ -2,7 +2,7 @@ package divide;
 
 import java.util.Scanner;
 
-public class DQ_Bai1 {
+public class DQ_Bai2 {
     static int[] input(){
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
@@ -21,22 +21,23 @@ public class DQ_Bai1 {
         System.out.println(rs[n-1]);
     }
     static void merge(int[] arr, int l, int r, int[] temp){
-        int mid = (l+r)/2;
-        int i=l, j=mid+1, idx=l;
+        int m = (l+r)/2;
+        int i=l, j=m+1, idx=l;
 
-        while(i <= mid && j<=r){
+        while(i<=m && j<=r){
             if(arr[i] <= arr[j]){
-                temp[idx] = arr[i];
-                i++;
-            }else{
                 temp[idx] = arr[j];
                 j++;
+            }else{
+                temp[idx] = arr[i];
+                i++;
             }
             idx++;
         }
-        if(i <= mid){
-            System.arraycopy(arr, i, temp, idx, mid-i+1);
-        }else if(j <= r){
+
+        if(i <= m){
+            System.arraycopy(arr, i, temp, idx, m-i+1);
+        } else if (j <= r) {
             System.arraycopy(arr, j, temp, idx, r-j+1);
         }
         System.arraycopy(temp, l, arr, l, r-l+1);
