@@ -29,7 +29,7 @@ public class Bai10 {
 
     static class Solution{
         // cache yi = x^i/i!
-        private static Map<Double, Double> cache = new HashMap<>();
+        private static final Map<Double, Double> cache = new HashMap<>();
 
         static double caculateYi(double x, int i){
             if(cache.containsKey(i)){

@@ -20,8 +20,8 @@ public class Bai11 {
 
     static class Solution{
 
-        private static Map<Integer, Long> xi = new HashMap<>();
-        private static Map<Integer, Long> yi = new HashMap<>();
+        private static final Map<Integer, Long> xi = new HashMap<>();
+        private static final Map<Integer, Long> yi = new HashMap<>();
 
         static long xn(int n){
             if(xi.containsKey(n)){

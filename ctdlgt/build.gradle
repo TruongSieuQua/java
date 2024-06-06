@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+allprojects {
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+tasks.withType(JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    systemProperty 'file.encoding', 'UTF-8'
+}
+
+sourceSets.main.allJava.each { file ->
+    if (file.name.endsWith('.java')) {
+        def packagePath = file.parentFile.path.replaceAll('src/main/java/', '').replaceAll('/', '.')
+        def className = file.name.replace('.java', '')
+        def fullClassName = packagePath + '.' + className
+
+        tasks.register("run${className}", JavaExec) {
+            main = fullClassName
+            classpath = sourceSets.main.runtimeClasspath
+        }
+    }
+}

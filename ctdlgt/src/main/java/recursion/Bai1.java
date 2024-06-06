@@ -22,6 +22,7 @@ public class Bai1 {
         return kq;
     }
 
+
     public static void main(String[] args) throws IOException {
         int n = input();
         String[] rs = new String[n+1];

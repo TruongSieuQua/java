@@ -47,10 +47,10 @@ public class Bai3 {
         Input in= input();
         int n = in.cases.length;
         for (int i = 0; i < n; i++) {
-            System.out.println(String.format("%s: %d",
+            System.out.printf("%s: %d%n",
                     in.cases[i],
                     (solution(in.cases[i], in.cases[i].length())).freq
-            ));
+            );
         }
     }
 }

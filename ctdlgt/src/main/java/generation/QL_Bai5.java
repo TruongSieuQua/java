@@ -15,7 +15,6 @@ public class QL_Bai5 {
     static void backtrack(int[] chars, int[] permutation, int idx, boolean[] used){
         if(idx == permutation.length){
             printPermutation(permutation);
-            return;
         }else{
             for(int j=0; j < chars.length; j++){
                 if(used[j]){
