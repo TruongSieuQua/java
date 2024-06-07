@@ -25,7 +25,7 @@ public class ForestController {
 
     @PostMapping("/{forestName}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Mono<ResponseEntity<Forest>> changeState(@PathVariable("forestName") String forestName, @RequestBody UpdateForestStateDto req) {
+    public Mono<ResponseEntity<ForestResponse>> changeState(@PathVariable("forestName") String forestName, @RequestBody UpdateForestStateDto req) {
         return forestService.changeState(forestName, req)
                 .map(forest -> ResponseEntity.status(HttpStatus.OK).body(forest));
     }

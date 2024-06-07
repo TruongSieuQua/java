@@ -46,7 +46,7 @@ public class ForestService {
                 });
     }
 
-    public Mono<Forest> changeState(String forestName, UpdateForestStateDto req) {
+    public Mono<ForestResponse> changeState(String forestName, UpdateForestStateDto req) {
         return Mono.fromSupplier(() -> {
             Forest forest = this.db.get(forestName);
             if (forest == null) {
@@ -55,7 +55,7 @@ public class ForestService {
             forest.changeState(req.state());
             System.out.println("changeState jdkjaskdmkmsd");
             System.out.println(forest);
-            return forest;
+            return forestMapper.toForestResponse(forest);
         });
     }
 }

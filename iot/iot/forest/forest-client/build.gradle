@@ -1,8 +1,7 @@
 plugins {
-    id 'org.springframework.boot'
+    id 'java-library-conventions'
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/io.projectreactor/reactor-core
     implementation 'io.projectreactor:reactor-core:3.6.6'
 }

@@ -88,9 +88,9 @@ public class SensorService {
         ;
     }
 
-    public Flux<SensorResponse> fetchTemperatureStreamAndSendToKafka() {
-        return sink.asFlux();
-    }
+//    public Flux<SensorResponse> fetchTemperatureStreamAndSendToKafka() {
+//        return sink.asFlux();
+//    }
 
     public Mono<SensorDto> update(Integer id, SensorDto req) {
         return Mono.fromSupplier(() -> db.get(id))

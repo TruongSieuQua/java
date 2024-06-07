@@ -20,35 +20,36 @@ public class DQ_Bai1 {
         }
         System.out.println(rs[n-1]);
     }
-    static void merge(int[] arr, int l, int r, int[] temp){
-        int mid = (l+r)/2;
-        int i=l, j=mid+1, idx=l;
+    static void merge(int[] arr, int l, int r, int mid, int[] temp){
+        int i = l, j = mid + 1, k = l;
 
-        while(i <= mid && j<=r){
-            if(arr[i] <= arr[j]){
-                temp[idx] = arr[i];
-                i++;
-            }else{
-                temp[idx] = arr[j];
-                j++;
+        while (i <= mid && j <= r) {
+            if (arr[i] <= arr[j]) {
+                temp[k++] = arr[i++];
+            } else {
+                temp[k++] = arr[j++];
             }
-            idx++;
         }
-        if(i <= mid){
-            System.arraycopy(arr, i, temp, idx, mid-i+1);
-        }else if(j <= r){
-            System.arraycopy(arr, j, temp, idx, r-j+1);
+
+        while (i <= mid) {
+            temp[k++] = arr[i++];
         }
-        System.arraycopy(temp, l, arr, l, r-l+1);
+
+        while (j <= r) {
+            temp[k++] = arr[j++];
+        }
+
+        for (i = l; i <= r; i++) {
+            arr[i] = temp[i];
+        }
     }
     static void divide(int[] arr, int l, int r, int[] temp){
-        if(l >= r){
-            return;
+        if (l < r) {
+            int mid = (l + r) / 2;
+            divide(arr, l, mid, temp);
+            divide(arr, mid + 1, r, temp);
+            merge(arr, l, r, mid, temp);
         }
-        int m = (l+r)/2;
-        divide(arr, l, m, temp);
-        divide(arr, m+1, r, temp);
-        merge(arr, l, r, temp);
     }
     static int[] solution(int[] arr){
         int n = arr.length;

@@ -1,0 +1,28 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: actuator-service
+  rabbitmq:
+    port: 5672
+    username: guest
+    password: guest
+
+tjn:
+  service:
+    forest: 'http://localhost:8080'
+
+rabbitmq:
+  exchange:
+    name: temperature_exchange
+  queue:
+    sensorTemperature:
+      name: sensor_temperature_queue
+    actuatorState:
+      name: actuator_state_queue
+  routing:
+    sensorTemperature:
+      key: sensor_temperature_routing_key
+    actuatorState:
+      key: actuator_state_routing_key

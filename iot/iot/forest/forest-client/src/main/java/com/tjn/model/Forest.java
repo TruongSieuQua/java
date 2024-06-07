@@ -1,5 +1,6 @@
 package com.tjn.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import reactor.core.publisher.Flux;
 
@@ -7,6 +8,7 @@ import java.time.Duration;
 import java.util.Random;
 
 @Data
+@AllArgsConstructor
 public class Forest {
     private String name;
     private String state;
