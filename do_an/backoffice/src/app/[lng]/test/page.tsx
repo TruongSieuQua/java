@@ -1,33 +1,42 @@
-"use client";
 import { Button } from "@/components/ui/button";
-import { Dropdown, DropdownContent, DropdownTrigger } from "@/components/ui/dropdown";
 import { Link } from "@/components/ui/link";
-import { Menu, MenuContent, MenuTrigger } from "@/components/ui/menu";
+import { IoIosArrowDown } from "react-icons/io";
 import {
   Navigation,
   NavigationList,
   NavigationListItem,
+	NavigationMenu,
+	NavigationMenuArrow,
+	NavigationMenuContent,
+	NavigationMenuTrigger,
 } from "@/components/ui/navbar";
-import { PiCaretDown } from "react-icons/pi";
+import {
+  Dropdown,
+  DropdownContent,
+  DropdownTrigger,
+} from "@/components/ui/dropdown";
+import { ScaleAnimation } from "@/components/animations";
 
 export default function TestPage() {
   return (
     <div className="p-2">
-      <div className="mb-96 flex justify-start">
+      <div className="mb-96 flex flex-row justify-start">
         <Navigation>
           <NavigationList>
             <NavigationListItem>
               <Dropdown>
-                <DropdownTrigger asChild>
-                  <Button>
-                    <div>Trigger</div>
-                    <PiCaretDown className="transition-transform duration-200 ease-in group-data-[state=open]:-rotate-180" />
-                  </Button>
-                </DropdownTrigger>
-                <DropdownContent className="bg-green-200">
+                <DropdownTrigger>Trigger</DropdownTrigger>
+                <DropdownContent>
                   <LongContent />
                 </DropdownContent>
               </Dropdown>
+							<NavigationMenu>
+								<NavigationMenuTrigger>Trigger</NavigationMenuTrigger>
+								<NavigationMenuContent>
+									<LongContent />
+									<NavigationMenuArrow className="fill-green-300"/>
+								</NavigationMenuContent>
+							</NavigationMenu>
             </NavigationListItem>
             <NavigationListItem>
               <Link href="/">Okie</Link>
@@ -39,88 +48,32 @@ export default function TestPage() {
         <Navigation>
           <NavigationList>
             <NavigationListItem>
-              <Menu>
-                <MenuTrigger asChild>
-                  <Button>
-                    <div>Trigger</div>
-                    <PiCaretDown className="transition-transform duration-200 ease-in group-data-[state=open]:-rotate-180" />
-                  </Button>
-                </MenuTrigger>
-                <MenuContent>
+              <Dropdown>
+                <DropdownTrigger>Trigger</DropdownTrigger>
+                <DropdownContent>
                   <LongContent />
-                </MenuContent>
-              </Menu>
+                </DropdownContent>
+              </Dropdown>
             </NavigationListItem>
             <NavigationListItem>
-              <Menu>
-                <MenuTrigger asChild>
-                  <Button>
-                    <div>Trigger</div>
-                    <PiCaretDown className="transition-transform duration-200 ease-in group-data-[state=open]:-rotate-180" />
-                  </Button>
-                </MenuTrigger>
-                <MenuContent>
-                  <LongContent />
-                </MenuContent>
-              </Menu>
-            </NavigationListItem>
-            <NavigationListItem>
-              <Menu>
-                <MenuTrigger asChild>
-                  <Button>
-                    <div>Trigger</div>
-                    <PiCaretDown className="transition-transform duration-200 ease-in group-data-[state=open]:-rotate-180" />
-                  </Button>
-                </MenuTrigger>
-                <MenuContent>
-                  <LongContent />
-                </MenuContent>
-              </Menu>
-            </NavigationListItem>
-            <NavigationListItem>
-              <Menu>
-                <MenuTrigger asChild>
-                  <Button>
-                    <div>Trigger</div>
-                    <PiCaretDown className="transition-transform duration-200 ease-in group-data-[state=open]:-rotate-180" />
-                  </Button>
-                </MenuTrigger>
-                <MenuContent>
-                  <LongContent />
-                </MenuContent>
-              </Menu>
-            </NavigationListItem>
-            <NavigationListItem>
-              <Menu>
-                <MenuTrigger asChild>
-                  <Button>
-                    <div>Trigger</div>
-                    <PiCaretDown className="transition-transform duration-200 ease-in group-data-[state=open]:-rotate-180" />
-                  </Button>
-                </MenuTrigger>
-                <MenuContent>
-                  <LongContent />
-                </MenuContent>
-              </Menu>
+              <Link href="/">Okie</Link>
             </NavigationListItem>
           </NavigationList>
         </Navigation>
       </div>
-      <div className="mb-96 flex justify-end">
+      <div className="mb-4 flex justify-end">
         <Navigation>
           <NavigationList>
             <NavigationListItem>
-              <Menu>
-                <MenuTrigger asChild>
-                  <Button>
-                    <div>Trigger</div>
-                    <PiCaretDown className="transition-transform duration-200 ease-in group-data-[state=open]:-rotate-180" />
-                  </Button>
-                </MenuTrigger>
-                <MenuContent>
+              <Dropdown>
+                <DropdownTrigger>Trigger</DropdownTrigger>
+                <DropdownContent>
                   <LongContent />
-                </MenuContent>
-              </Menu>
+                </DropdownContent>
+              </Dropdown>
+            </NavigationListItem>
+            <NavigationListItem>
+              <Link href="/">Okie</Link>
             </NavigationListItem>
           </NavigationList>
         </Navigation>
@@ -135,13 +88,12 @@ function ShortContent() {
 
 function LongContent() {
   return (
-    <ul className="one m-0 grid list-none gap-x-[10px] p-[22px] sm:w-[500px] sm:grid-cols-[0.75fr_1fr]">
+    <ul className="one m-0 grid list-none gap-x-[10px] bg-green-300 p-[22px] sm:w-[500px] sm:grid-cols-[0.75fr_1fr]">
       <li className="row-span-3 grid">
         <Link href={""}>
-          <a
+          <div
             className="focus:shadow-violet7 from-purple9 to-indigo9 flex
 				h-full w-full select-none flex-col justify-end rounded-[6px] bg-gradient-to-b p-[25px] no-underline outline-none focus:shadow-[0_0_0_2px]"
-            href="/"
           >
             <svg
               aria-hidden
@@ -160,7 +112,7 @@ function LongContent() {
             <p className="text-mauve4 text-[14px] leading-[1.3]">
               Unstyled, accessible components for React.
             </p>
-          </a>
+          </div>
         </Link>
       </li>
 

@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+	scrollbar-gutter: stable;
+	// width: 100%;
+	// overflow-x: hidden;
+}
+
 .logo {
   font-family: 'Calligraffitti', cursive;
   font-weight: 700;
@@ -68,4 +74,22 @@
   50% {text-shadow:-22ch 0 #000,-11ch 0 green,  0ch 0 red, 11ch 0 blue,22ch 0 #000}
   75% {text-shadow:-33ch 0 #000,-22ch 0 green,-11ch 0 red,  0ch 0 blue,11ch 0 #000}
   100%{text-shadow:-44ch 0 #000,-33ch 0 green,-22ch 0 red,-11ch 0 blue, 0ch 0 #000}
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

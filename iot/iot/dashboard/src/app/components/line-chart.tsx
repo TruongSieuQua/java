@@ -34,7 +34,7 @@ export const MuiLineChart = () => {
   const [chartData, setChartData] = useState<DataSet[]>([]);
 
   const temperatureStream = (setChartData: React.Dispatch<React.SetStateAction<ChartData[]>>): EventSource => {
-    const eventSource = new EventSource("http://localhost:8080/sensors");
+    const eventSource = new EventSource("http://localhost:8082/sensors");
 
     eventSource.onmessage = (event: MessageEvent) => {
       const sensorData: SensorData = JSON.parse(event.data);

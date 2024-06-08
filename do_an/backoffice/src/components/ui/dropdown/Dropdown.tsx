@@ -1,148 +1,188 @@
 "use client";
+import * as React from "react";
 import {
-  ExtendedRefs,
-  FloatingArrow,
-  FloatingContext,
-  FloatingOverlay,
-  ReferenceType,
-  UseFloatingOptions,
-  arrow,
-  autoUpdate,
-  flip,
-  offset,
-  shift,
   useFloating,
-  useTransitionStyles,
+  autoUpdate,
+  offset,
+  flip,
+  shift,
+  useClick,
+  useDismiss,
+  useRole,
+  useInteractions,
+  useMergeRefs,
+  FloatingPortal,
+  FloatingFocusManager,
+  UseFloatingOptions,
 } from "@floating-ui/react";
-import { Slot, Slottable } from "@radix-ui/react-slot";
-import {
-  CSSProperties,
-  HTMLAttributes,
-  MutableRefObject,
-  createContext,
-  useContext,
-  useRef,
-  useState,
-} from "react";
-declare type Prettify<T> = {
-  [K in keyof T]: T[K];
-} & {};
-type DropDownContextType = {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-  refs: ExtendedRefs<ReferenceType>;
-  floatingStyles: CSSProperties;
-  context: Prettify<FloatingContext<ReferenceType>>;
-  arrowRef: MutableRefObject<SVGSVGElement | null>;
-};
-/*
- * *********************************************************************************
- * Global variables
- * *********************************************************************************
- */
-const DropdownContext = createContext<DropDownContextType | undefined>(
-  undefined,
-);
-const OFFSET = 12;
-const ARROW_WIDTH = 8;
-const ARROW_HEIGHT = 8;
-const useDropdownContext = () => {
-  const context = useContext(DropdownContext);
-  if (!context) {
-    throw new Error(
-      "Dropdown compound components cannot be rendered outside the Dropdown component",
-    );
+import { AnimatePresence } from "framer-motion";
+import { ScaleAnimation } from "@/components/animations";
+import { Button } from "../button";
+
+interface DropdownOptions extends UseFloatingOptions {
+  initialOpen?: boolean;
+  modal?: boolean;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+export function useDropdown({
+  initialOpen = false,
+  placement = "bottom",
+  modal,
+  open: controlledOpen,
+  onOpenChange: setControlledOpen,
+}: DropdownOptions = {}) {
+  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(initialOpen);
+
+  const open = controlledOpen ?? uncontrolledOpen;
+  const setOpen = setControlledOpen ?? setUncontrolledOpen;
+
+  const data = useFloating({
+    placement,
+    open,
+    onOpenChange: setOpen,
+    whileElementsMounted: autoUpdate,
+    middleware: [
+      offset(5),
+      flip({
+        crossAxis: placement.includes("-"),
+        fallbackAxisSideDirection: "end",
+        padding: 5,
+      }),
+      shift({ padding: 5 }),
+    ],
+  });
+
+  const context = data.context;
+
+  const click = useClick(context, {
+    enabled: controlledOpen == null,
+  });
+  const dismiss = useDismiss(context);
+  const role = useRole(context);
+
+  const interactions = useInteractions([click, dismiss, role]);
+
+  return React.useMemo(
+    () => ({
+      open,
+      setOpen,
+      ...interactions,
+      ...data,
+      modal,
+    }),
+    [open, setOpen, interactions, data, modal],
+  );
+}
+
+type ContextType = ReturnType<typeof useDropdown> | null;
+
+const DropdownContext = React.createContext<ContextType>(null);
+
+export const useDropdownContext = () => {
+  const context = React.useContext(DropdownContext);
+
+  if (context == null) {
+    throw new Error("Dropdown components must be wrapped in <Dropdown />");
   }
+
   return context;
 };
 
-/*
- * *********************************************************************************
- * DropdownProvider
- * *********************************************************************************
- */
-interface DropDownProviderProps extends UseFloatingOptions {
+export function Dropdown({
+  children,
+  modal = false,
+  ...restOptions
+}: {
   children: React.ReactNode;
-}
-const DropdownProvider = ({ children, ...rest }: DropDownProviderProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const arrowRef = useRef(null);
-  const { refs, floatingStyles, context, middlewareData } = useFloating({
-    open: isOpen,
-    onOpenChange: setIsOpen,
-    middleware: [offset(OFFSET), flip(), shift(), arrow({ element: arrowRef })],
-    whileElementsMounted: autoUpdate,
-    ...rest,
-  });
-
+} & DropdownOptions) {
+  const dropdown = useDropdown({ modal, ...restOptions });
   return (
-    <DropdownContext.Provider
-      value={{
-        isOpen,
-        setIsOpen,
-        refs,
-        floatingStyles,
-        context,
-        arrowRef,
-      }}
-    >
+    <DropdownContext.Provider value={dropdown}>
       {children}
     </DropdownContext.Provider>
   );
-};
+}
 
-/*
- * *********************************************************************************
- * Dropdown
- * *********************************************************************************
- */
-interface DropdownProps extends DropDownProviderProps {}
-export const Dropdown = ({ children, ...rest }: DropdownProps) => {
-  return <DropdownProvider {...rest}>{children}</DropdownProvider>;
-};
-
-/*
- * *********************************************************************************
- *  DropdownTrigger
- * *********************************************************************************
- */
-interface DropdownTriggerProps extends HTMLAttributes<HTMLButtonElement> {
+interface PopoverTriggerProps {
+  children: React.ReactNode;
   asChild?: boolean;
 }
-export const DropdownTrigger = ({
-  asChild,
-  children,
-  ...rest
-}: DropdownTriggerProps) => {
-  const { setIsOpen, isOpen, refs } = useDropdownContext();
-  const Comp = asChild ? Slot : "button";
+
+export const DropdownTrigger = React.forwardRef<
+  HTMLElement,
+  React.HTMLProps<HTMLElement> & PopoverTriggerProps
+>(function DropdownTrigger({ children, asChild = false, ...props }, propRef) {
+  const { open, getReferenceProps, refs } = useDropdownContext();
+  const childrenRef = (children as any).ref;
+  const ref = useMergeRefs([refs.setReference, propRef, childrenRef]);
+
+  // `asChild` allows the user to pass any element as the anchor
+  if (asChild && React.isValidElement(children)) {
+    return React.cloneElement(
+      children,
+      getReferenceProps({
+        ref,
+        ...props,
+        ...children.props,
+        "data-state": open ? "open" : "closed",
+      }),
+    );
+  }
 
   return (
-    <Comp onClick={() => setIsOpen(!isOpen)} ref={refs.setReference} {...rest}>
-      <Slottable>{children}</Slottable>
-    </Comp>
+    <Button
+      ref={ref}
+      color={open ? "primary" : undefined}
+      data-state={open ? "open" : "closed"}
+      {...getReferenceProps(props)}
+    >
+      {children}
+    </Button>
   );
-};
+});
 
-/*
- * *********************************************************************************
- * DropdownContent
- * *********************************************************************************
- */
-interface DropdownContentProps extends HTMLAttributes<HTMLDivElement> {}
-export const DropdownContent = ({ children, ...rest }: DropdownContentProps) => {
-	const {refs, floatingStyles, context, arrowRef, isOpen, setIsOpen} = useDropdownContext();
-	return (isOpen && <>
-		<FloatingOverlay onClick={()=>setIsOpen(false)} />
-		<div ref={refs.setFloating} style={floatingStyles} {...rest}>
-				{children}
-				<FloatingArrow
-              ref={arrowRef}
-              context={context}
-              width={ARROW_WIDTH}
-              height={ARROW_HEIGHT}
-          />
-		</div>
-		</>
-	);
-}
+export const DropdownContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLProps<HTMLDivElement>
+>(function DropdownContent({ style, ...props }, propRef) {
+  const { open, context: floatingContext, ...context } = useDropdownContext();
+  const ref = useMergeRefs([context.refs.setFloating, propRef]);
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <FloatingPortal>
+          <FloatingFocusManager context={floatingContext} modal={context.modal}>
+            <div
+              ref={ref}
+              style={{ ...context.floatingStyles, ...style }}
+              {...context.getFloatingProps(props)}
+            >
+              <ScaleAnimation show={open}>{props.children}</ScaleAnimation>
+            </div>
+          </FloatingFocusManager>
+        </FloatingPortal>
+      )}
+    </AnimatePresence>
+  );
+});
+
+export const DropdownClose = React.forwardRef<
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+>(function PopoverClose(props, ref) {
+  const { setOpen } = useDropdownContext();
+  return (
+    <button
+      type="button"
+      ref={ref}
+      {...props}
+      onClick={(event) => {
+        props.onClick?.(event);
+        setOpen(false);
+      }}
+    />
+  );
+});

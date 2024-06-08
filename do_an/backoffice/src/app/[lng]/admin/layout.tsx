@@ -9,8 +9,8 @@ export default async function AdminLayout({
   params: { lng },
 }: Readonly<AdminLayoutProps>) {
   return (
-    <div className="flex min-h-screen w-screen items-center justify-between">
-      <div id="side-bar">
+    <div className="flex min-h-screen w-screen">
+      <div id="sb">
         <AdminSideBar />
       </div>
       <div className="flex-grow">

@@ -36,8 +36,6 @@ export default async function RootLayout({
   return (
     <html lang={lng} dir={dir(lng)} data-theme="light">
       <body className={clsx("", inter.className)}>
-					<div id="mn"></div>
-					<div id="dd"></div>
 					<Suspense fallback={<Loading />}>
 						<ClientProvider>{children}</ClientProvider>
 					</Suspense>
