@@ -6,11 +6,10 @@ import org.junit.jupiter.api.Test;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 public class AESTest {
     @Test
@@ -18,15 +17,20 @@ public class AESTest {
             throws NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException,
             BadPaddingException, InvalidAlgorithmParameterException, NoSuchPaddingException {
 
-        String input = "baeldung";
-        SecretKey key = AESUtil.generateKey(128);
-        IvParameterSpec ivParameterSpec = AESUtil.generateIv();
-        String algorithm = "AES/CBC/PKCS5Padding";
-        System.out.println(input);
-        String cipherText = AESUtil.encrypt(algorithm, input, key, ivParameterSpec);
-        System.out.println(cipherText);
-        String plainText = AESUtil.decrypt(algorithm, cipherText, key, ivParameterSpec);
-        System.out.println(plainText);
-        Assertions.assertEquals(input, plainText);
+        byte[] key = "2b7e151628aed2a6abf7158809cf4f3c".getBytes();
+        byte[] p = fillBlock("6bc1bee22e409f96e93d7e117393172a").getBytes();
+        byte[] c = "3ad77bb40d7a3660a89ecaf32466ef97".getBytes();
+
+        AES cipher = new AES(key);
+        var r = cipher.ECB_encrypt(p);
+        System.out.println("c = " + Arrays.toString(c));
+        System.out.println("r = " + Arrays.toString(r));
+        Assertions.assertArrayEquals(c, r);
+    }
+
+    private static String fillBlock(String text) {
+        int spaceNum = text.getBytes().length%16==0?0:16-text.getBytes().length%16;
+        for (int i = 0; i<spaceNum; i++) text += " ";
+        return text;
     }
 }

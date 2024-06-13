@@ -210,6 +210,7 @@ public class AES {
         }
 
         cipher(state[0], state[1]);
+
         for (int i = 0; i < Nb; i++) {
             for (int j = 0; j < 4; j++) {
                 out[i * Nb + j] = (byte) (state[1][j][i] & 0xff);
@@ -437,7 +438,6 @@ public class AES {
         return result;
     }
 
-    // Public methods
     public byte[] ECB_encrypt(byte[] text) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         for (int i = 0; i < text.length; i+=16) {
