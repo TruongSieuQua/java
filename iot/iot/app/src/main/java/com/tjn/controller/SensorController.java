@@ -18,14 +18,19 @@ public class SensorController {
 
     private final SensorService sensorService;
 
-    @GetMapping(value = "", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<SensorResponse> sprinklerDtoStream(){
+    @GetMapping(value = "stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<SensorResponse> sensorStream(){
         return sensorService.temperatureStream();
+    }
+
+    @GetMapping("/{id}")
+    public Mono<ResponseEntity<SensorDto>> getSensor(@PathVariable("id") Integer id){
+        return this.sensorService.getSensor(id).map(s -> ResponseEntity.ok().body(s));
     }
 
     @PatchMapping("/{id}")
     public Mono<ResponseEntity<SensorDto>> updateState(@PathVariable("id") Integer id, @RequestBody SensorDto req) {
-        return this.sensorService.updateSensorState(id, req)
+        return this.sensorService.updateSensor(id, req)
                 .map(s -> ResponseEntity.ok().body(s));
     }
 

@@ -34,8 +34,6 @@ public class SensorService {
 
     private final TemperatureSensorJsonProducer sensorProducer;
 
-    private final Sinks.Many<SensorResponse> sink = Sinks.many().replay().latest();
-
     private final Sinks.Many<ValueHolder<Sensor>> sensorEventSink = Sinks.many().replay().latest();
 
     @PostConstruct
@@ -56,6 +54,7 @@ public class SensorService {
     private void sensorDataToSink() {
         Flux.fromIterable(db.values())
                 .filter(Sensor::getState)
+                //... neu khoi tao co cai true
                 .subscribe();
     }
 
@@ -80,17 +79,23 @@ public class SensorService {
                                     sensor.getForestName(),
                                     fr.temperature()
                             ))
+                            // Send every 1 second
                             .doOnNext(sensorProducer::sendJsonMessage)
                             .takeUntil(response -> !sensor.getState());
                 })
                 .subscribeOn(Schedulers.boundedElastic())
-                .subscribe(sink::tryEmitNext);
-        ;
+                .subscribe();
     }
 
-//    public Flux<SensorResponse> fetchTemperatureStreamAndSendToKafka() {
-//        return sink.asFlux();
-//    }
+    public Mono<SensorDto> get(Integer id) {
+        return Mono.fromSupplier(() -> db.get(id))
+                .flatMap(s -> {
+                    if (s == null) {
+                        return Mono.error(new RuntimeException(String.format("Sensor %d is not found!", id)));
+                    }
+                    return Mono.just(sensorMapper.toSensorDto(s));
+                });
+    }
 
     public Mono<SensorDto> update(Integer id, SensorDto req) {
         return Mono.fromSupplier(() -> db.get(id))

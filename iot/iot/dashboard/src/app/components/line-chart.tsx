@@ -106,9 +106,9 @@ const ChartComponent: React.FC<ChartComponentProps> = ({ data }) => {
       <YAxis />
       <Tooltip />
       <Legend />
-      <Line type="monotone" dataKey="f1" stroke="#8884d8" fill="#8884d8" activeDot={{ r: 8 }}/>
-      <Line type="monotone" dataKey="f2" stroke="#82ca9d" fill="#82ca9d" activeDot={{ r: 8 }}/>
-      <Line type="monotone" dataKey="f3" stroke="#ffc658" fill="#ffc658" activeDot={{ r: 8 }}/>
+      <Line type="monotone" dataKey="f1" stroke="#8884d8" fill="#8884d8" activeDot={{ r: 8 }}  isAnimationActive={false}/>
+      <Line type="monotone" dataKey="f2" stroke="#82ca9d" fill="#82ca9d" activeDot={{ r: 8 }}  isAnimationActive={false}/>
+      <Line type="monotone" dataKey="f3" stroke="#ffc658" fill="#ffc658" activeDot={{ r: 8 }}  isAnimationActive={false}/>
     </LineChart>
   );
 };

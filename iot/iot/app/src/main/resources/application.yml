@@ -12,6 +12,7 @@ spring:
 tjn:
   service:
     forest: 'http://localhost:8080'
+    actuator: 'http://localhost:8081'
 
 rabbitmq:
   exchange:

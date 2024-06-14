@@ -36,6 +36,8 @@ public class DQ_Bai4 {
             }
             if (i < j) {
                 swap(arr, i, j);
+                i++;
+                j--;
             } else break;
         }
         if (arr[i] > pivot) {

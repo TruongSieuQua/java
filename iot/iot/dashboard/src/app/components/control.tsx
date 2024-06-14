@@ -15,8 +15,8 @@ export function ControlBoard(){
     actuator3: false,
   })
   const updateSensorState = (sensorId: number, state: boolean) => {
-    console.log(`http://localhost:8080/sensors/${sensorId}`, state)
-    fetch(`http://localhost:8080/sensors/${sensorId}`, {
+    console.log(`http://localhost:8082/sensors/${sensorId}`, state)
+    fetch(`http://localhost:8082/sensors/${sensorId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -40,8 +40,8 @@ export function ControlBoard(){
   }
 
   const updateActuatorState = (actuatorId: number, state: boolean) => {
-    console.log(`http://localhost:8081/sprinklers/${actuatorId}`, state)
-    fetch(`http://localhost:8081/sprinklers/${actuatorId}`, {
+    console.log(`http://localhost:8082/sprinklers/${actuatorId}`, state)
+    fetch(`http://localhost:8082/sprinklers/${actuatorId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

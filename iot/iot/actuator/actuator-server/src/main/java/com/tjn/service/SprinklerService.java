@@ -16,13 +16,15 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
+import reactor.core.scheduler.Schedulers;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +46,7 @@ public class SprinklerService {
     private final Sinks.Many<SprinklerDto> sprinklerEventSink = Sinks.many().replay().latest();
 
     @PostConstruct
-    public void init() {
+    private void init() {
         this.db = Map.of(
                 1, new Sprinkler(1, "f1", false, 30d, 100d),
                 2, new Sprinkler(2, "f2", false, 30d, 100d),
@@ -54,8 +56,6 @@ public class SprinklerService {
         autoUpdateSprinklerBaseOnTemperature();
         // consumer
         changeForestState();
-        updateSprinkler();
-
     }
 
     private Sprinkler findSpringkerByForestName(String forestName) {
@@ -75,8 +75,8 @@ public class SprinklerService {
     }
 
     @RabbitListener(queues = {"${rabbitmq.queue.actuatorState.name}"})
-    public void consumeSprinklerMessage(SprinklerDto res){
-        System.out.println("consumeSprinklerMessage \n\n\n");
+    private void consumeSprinklerMessage(SprinklerDto res){
+        System.out.println("Receive Message: " + res);
         sprinklerEventSink.tryEmitNext(res);
     }
 
@@ -85,14 +85,16 @@ public class SprinklerService {
                 .asFlux()
                 .doOnNext((sr) -> {
                     Sprinkler sprinkler = this.findSpringkerByForestName(sr.forestName());
-                    Sprinkler prevSprinkler = sprinkler.makeCopy();
-                    if (sr.temperature() > sprinkler.getThreshold()) {
-                        sprinkler.setState(true);
-                    } else if (sr.temperature() < sprinkler.getCutOffThreshold()) {
-                        sprinkler.setState(false);
+
+                    Sprinkler updatedSprinkler = sprinkler.makeCopy();
+
+                    if (sr.temperature() > updatedSprinkler.getThreshold()) {
+                        updatedSprinkler.setState(true);
+                    } else if (sr.temperature() < updatedSprinkler.getCutOffThreshold()) {
+                        updatedSprinkler.setState(false);
                     }
-                    if(prevSprinkler.getState() != sprinkler.getState()){
-                        sprinklerJsonProducer.sendJsonMessage(sprinklerMapper.toSprinklerDto(sprinkler));
+                    if(sprinkler.getState() != updatedSprinkler.getState()){
+                        updateSprinkler(sprinkler.getId(), sprinklerMapper.toSprinklerDto(updatedSprinkler)).subscribe();
                     }
                 }).subscribe();
     }
@@ -100,19 +102,14 @@ public class SprinklerService {
     private void changeForestState() {
         sprinklerEventSink
                 .asFlux()
-//                .filter(dto -> {
-//                    Sprinkler prevSprinkler = this.db.get(dto.id());
-//                    return dto.state() != prevSprinkler.getState() ;
-//                })
                 .doOnNext(s -> {
-                    System.out.println("changeForestState \n\n\n");
+                    System.out.println("changeForestState is called");
+                    var updateForestDto = new UpdateForestStateDto(s.state() ? "extinguish" : "normal");
                     URI url = UriComponentsBuilder
                             .fromHttpUrl(serviceUrlConfig.forest())
                             .path("/forests/{forestName}")
                             .buildAndExpand(s.forestName())
                             .toUri();
-                    var updateForestDto = new UpdateForestStateDto(s.state() ? "extinguish" : "normal");
-
                     webClient.post()
                             .uri(url)
                             .contentType(MediaType.APPLICATION_JSON)
@@ -120,7 +117,6 @@ public class SprinklerService {
                             .retrieve()
                             .bodyToMono(ForestResponse.class)
                             .retry(3)
-                            .doOnNext(System.out::println)
                             .doOnError(e -> {
                                 System.err.println("Error during WebClient call after retries: " + e.getMessage());
                             }).subscribe();
@@ -128,13 +124,35 @@ public class SprinklerService {
                 .subscribe();
     }
 
-    private void updateSprinkler() {
-        sprinklerEventSink.asFlux().doOnNext(dto ->{
-            System.out.println("updateSprinkler");
-            Sprinkler sprinkler = this.db.get(dto.id());
-            if(shouldUpdateSprinkler(dto, sprinkler)){
-                sprinklerMapper.updateSprinklerFromDto(dto, sprinkler);
-            }
-        }).subscribe();
+    public Mono<SprinklerDto> updateSprinkler(Integer id, SprinklerDto dto) {
+        return Mono.fromSupplier(() -> this.db.get(id))
+                .subscribeOn(Schedulers.boundedElastic()) // Offload blocking call to boundedElastic scheduler
+                .flatMap(sprinkler -> {
+                    if (shouldUpdateSprinkler(dto, sprinkler)) {
+                        System.out.println("Update Sprinkler: " + dto);
+                        sprinklerMapper.updateSprinklerFromDto(dto, sprinkler);
+
+                        return Mono.fromRunnable(() -> sprinklerJsonProducer.sendJsonMessage(sprinklerMapper.toSprinklerDto(sprinkler)))
+                                .thenReturn(sprinkler);
+                    }
+                    return Mono.just(sprinkler);
+                })
+                .map(sprinklerMapper::toSprinklerDto)
+                .doOnNext(sprinklerEventSink::tryEmitNext);
+    }
+
+    public Mono<SprinklerDto> getSprinkler(Integer id){
+        return Mono.fromSupplier(() -> db.get(id))
+                .flatMap((s)->{
+                    if(s == null){
+                        return Mono.error(new RuntimeException("Sprinklers id = " + id + " is not found!"));
+                    }
+                    return Mono.just(sprinklerMapper.toSprinklerDto(s));
+                });
+    }
+
+    public Mono<List<SprinklerDto>> getAllSprinklers(){
+        return Mono.fromSupplier(() -> db.values().stream().map(sprinklerMapper::toSprinklerDto).collect(Collectors.toList()))
+                .doOnNext(l -> l.forEach(System.out::println));
     }
 }

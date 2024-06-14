@@ -52,9 +52,8 @@ public class ForestService {
             if (forest == null) {
                 throw new IllegalArgumentException("Forest not found: " + forestName);
             }
+            System.out.printf("\n\n%s\n\n", "Receive "+ req);
             forest.changeState(req.state());
-            System.out.println("changeState jdkjaskdmkmsd");
-            System.out.println(forest);
             return forestMapper.toForestResponse(forest);
         });
     }

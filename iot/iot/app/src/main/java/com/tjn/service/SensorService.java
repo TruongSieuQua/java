@@ -27,7 +27,7 @@ public class SensorService {
 
     private final WebClient webClient;
 
-    @RabbitListener(queues = {"${rabbitmq.queue.sensorTemperature.name}"})
+    @RabbitListener(queues = {"${rabbitmq.queue.sensorTemperature.name}"},  concurrency = "6-10")
     private void consumeSensorTemperatureMessage(SensorResponse res) {
         sensorTemperatureSink.tryEmitNext(res);
     }
@@ -36,7 +36,25 @@ public class SensorService {
         return this.sensorTemperatureSink.asFlux();
     }
 
-    public Mono<SensorDto> updateSensorState(Integer id, SensorDto req){
+    public Mono<SensorDto> getSensor(Integer id){
+        URI url = UriComponentsBuilder
+                .fromHttpUrl(serviceUrlConfig.forest())
+                .path("/sensors/{id}")
+                .buildAndExpand(id)
+                .toUri();
+
+        return webClient.get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(SensorDto.class)
+                .retry(3)
+                .doOnNext(System.out::println)
+                .doOnError(e -> {
+                    System.err.println("Error during WebClient call after retries: " + e.getMessage());
+                });
+    }
+
+    public Mono<SensorDto> updateSensor(Integer id, SensorDto req){
         URI url = UriComponentsBuilder
                 .fromHttpUrl(serviceUrlConfig.forest())
                 .path("/sensors/{id}")
