@@ -1,0 +1,13 @@
+plugins {
+    id 'java-conventions'
+    id 'java-spring-conventions'
+}
+
+group='tjn.ms.twittertokafka'
+version='0.0.1'
+
+dependencies {
+    implementation project(':app-config-data')
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.twitter4j:twitter4j-stream:4.0.7'
+}

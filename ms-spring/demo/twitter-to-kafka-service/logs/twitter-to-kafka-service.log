@@ -1,0 +1,8 @@
+2024-06-16 12:34:17 [main] INFO  t.m.t.TwitterToKafkaServiceApplication - Starting TwitterToKafkaServiceApplication using Java 21.0.2 with PID 5820 (/home/truong/Downloads/projects/ms-spring/demo/twitter-to-kafka-service/build/classes/java/main started by truong in /home/truong/Downloads/projects/ms-spring/demo)
+2024-06-16 12:34:17 [main] INFO  t.m.t.TwitterToKafkaServiceApplication - The following 1 profile is active: "dev"
+2024-06-16 12:34:18 [main] INFO  t.m.t.TwitterToKafkaServiceApplication - Started TwitterToKafkaServiceApplication in 1.697 seconds (process running for 2.8)
+2024-06-16 12:34:18 [main] INFO  t.m.t.TwitterToKafkaServiceApplication - App starts...
+2024-06-16 12:34:18 [main] INFO  t.m.t.TwitterToKafkaServiceApplication - [Java, Microservices, Spring, Kafka, Elasticsearch]
+2024-06-16 12:34:18 [main] INFO  t.m.t.r.impl.MockKafkaStreamRunner - Starting mock filtering twitter streams for keywords [Java, Microservices, Spring, Kafka, Elasticsearch]
+2024-06-16 12:34:19 [pool-1-thread-1] INFO  t.m.t.l.TwitterKafkaStatusListener - Twitter status with text malesuada posuere amet consectetuer adipiscing dolor libero Java purus magna Maecenas magna sit Maecenas
+2024-06-16 12:34:29 [pool-1-thread-1] INFO  t.m.t.l.TwitterKafkaStatusListener - Twitter status with text Lorem ultricies lectus massa sit Java sed amet amet amet

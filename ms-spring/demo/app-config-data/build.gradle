@@ -1,0 +1,11 @@
+plugins{
+    id 'java-library-conventions'
+    id 'java-spring-conventions'
+}
+
+group = 'tjn.ms.config'
+version = '0.0.1'
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot'
+}

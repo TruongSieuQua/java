@@ -1,0 +1,15 @@
+/*
+ *  expose dependencies, and its classes API
+ */
+plugins {
+    id 'java-library'
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+jar {
+    preserveFileTimestamps false
+    reproducibleFileOrder true
+}

@@ -1,0 +1,24 @@
+/*
+ * Reference: https://github.com/GoogleContainerTools/jib/tree/master/jib-gradle-plugin#quickstart
+ */
+plugins {
+    id 'com.google.cloud.tools.jib'
+}
+
+/*
+ * Example for application, spring module
+ */
+//jib {
+//    from {
+//        image = 'gcr.io/distroless/java:17'
+//    }
+//    to {
+//        image = 'tjn/${project.name}:${version}' // Replace with your image name
+//    }
+//    container(({
+//        jvmFlags = ['-Xms512m', '-Xmx512m']
+//        ports = ['8080']
+//        environment = ['SPRING_PROFILES_ACTIVE': 'prod']
+//        mainClass = 'com.example.Main'
+//    } as Class<Object>))
+//}

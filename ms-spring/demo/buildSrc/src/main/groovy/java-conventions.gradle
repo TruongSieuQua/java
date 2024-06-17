@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+    id 'com.github.sherter.google-java-format'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+//    options.verbose = true
+}

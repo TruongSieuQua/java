@@ -7,7 +7,7 @@ interface SensorProps{
   sensorId: number;
 }
 
-export function Sensor({sensorId}: SensorProps){
+export function SensorButton({sensorId}: SensorProps){
   const [sensorState, setSensorState] = useState<boolean>(false);
 
   const getSensorState = useCallback((id: number) => {

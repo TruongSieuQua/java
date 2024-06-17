@@ -1,0 +1,6 @@
+/*
+ * Quickly run application in its directory by using command ./gradlew run
+ */
+plugins {
+    id 'application'
+}
