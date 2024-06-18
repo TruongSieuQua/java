@@ -100,8 +100,9 @@ public class AES {
             this.key[i] = key[i];
         }
 
-        // AES standard (4*32) = 128 bits
+        // AES standard 128 bits data
         Nb = 4;
+
         switch (key.length) {
             // 128 bit key
             case 16:
@@ -363,7 +364,6 @@ public class AES {
             a = a >>> 1; // lowest bit of "a" was used so shift right
         }
         return sum;
-
     }
 
     private static int rotWord(int word) {

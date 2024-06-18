@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ctdlgt.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ctdlgt.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ctdlgt.test.iml" filepath="$PROJECT_DIR$/.idea/modules/ctdlgt.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.example.ctdlgt.main.iml" filepath="$PROJECT_DIR$/.idea/modules/org.example.ctdlgt.main.iml" />
     </modules>
   </component>
 </project>
