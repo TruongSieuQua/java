@@ -18,12 +18,12 @@ public class Bai4_Cay {
     static void solution(Integer[] days){
         Arrays.sort(days, (i1, i2)->  Integer.compare(i2, i1));
         int n = days.length;
-        Integer kq = 0;
         Integer day = 0;
         for (int i = 0; i < n; i++) {
-            day++;
-            kq+= days[i];
+            int t = i+1+days[i];
+            day = t > day ? t: day;
         }
+        System.out.println(day+1);
     }
 
     public static void main(String[] args) {

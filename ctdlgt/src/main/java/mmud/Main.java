@@ -46,7 +46,7 @@ public class Main {
 //            System.out.println("Encryption result matches with c.txt");
 //        } else {
 //            System.out.println("Encryption result does not match with c.txt");
-//        }
+//        }one
     }
 
     // Hàm đọc file từ thư mục resources
