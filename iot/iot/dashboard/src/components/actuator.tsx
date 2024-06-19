@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "./button";
 import { notify } from "./toasify";
 import { useSprinkler } from "@/hooks";
+import clsx from "clsx";
 
 type ActuatorData = {
   id: number;
@@ -10,27 +11,45 @@ type ActuatorData = {
   state: boolean;
 };
 
-type ActuatorsData = {
-  [key: number]: ActuatorData;
-};
-
 export function Actuator() {
-  const {actuatorsData, getAll, update} = useSprinkler();
+  const { actuatorsData, getAll, update } = useSprinkler();
 
   return (
-    <div className="h-80">
+    <div className="">
       <div className="flex justify-center items-center gap-4">
         <h1 className="text-2xl font-bold text-center">Actuator</h1>
         <Button onClick={getAll}>Refresh</Button>
       </div>
       <div className="mb-6"></div>
-      <div className="flex gap-6">
+      <div className="flex justify-center gap-6">
         {Object.entries(actuatorsData).map(([id, sprinklerData]) => (
-          <div key={id} className="flex flex-col items-center">
-            <div className="text-xl font-bold">{sprinklerData.forestName}</div>
-            <div className="text-xl font-bold">{sprinklerData.state ? "ON" : "OFF"}</div>
-            <Button onClick={()=> update({id: sprinklerData.id, state: !sprinklerData.state})}>Sprinkler {sprinklerData.id}</Button>
+          <div className="flex flex-col w-64 h-80 border-2 border-solid border-blue-200 p-4">
+          <div key={id} className="flex-grow flex flex-col justify-center items-center gap-4">
+            <span className="text-xl font-bold">
+              Sprinkler {sprinklerData.id}
+            </span>
+
+            <div
+              className={clsx("rounded-full w-24 h-24 flex justify-center items-center", {
+                "bg-gradient-to-t from-[#08AEEA] to-[#2AF598]":
+                  sprinklerData.state,
+                "bg-gradient-to-t from-[#F12711] to-[#F5AF19]":
+                  !sprinklerData.state,
+              })}
+            >
+              <div className="text-xl font-semibold">
+                {sprinklerData.state ? "ON" : "OFF"}
+              </div>
+            </div>
           </div>
+          <Button
+          onClick={() =>
+            update({ id: sprinklerData.id, state: !sprinklerData.state })
+          }
+        >
+          Turn {sprinklerData.state ? "OFF" : "ON"}
+        </Button>
+        </div>
         ))}
       </div>
     </div>

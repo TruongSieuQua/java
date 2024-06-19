@@ -74,11 +74,11 @@ public class SprinklerService {
         sensorTemperatureSink.tryEmitNext(res);
     }
 
-    @RabbitListener(queues = {"${rabbitmq.queue.actuatorState.name}"})
-    private void consumeSprinklerMessage(SprinklerDto res){
-        System.out.println("Receive Message: " + res);
-        sprinklerEventSink.tryEmitNext(res);
-    }
+//    @RabbitListener(queues = {"${rabbitmq.queue.actuatorState.name}"})
+//    private void consumeSprinklerMessage(SprinklerDto res){
+//        System.out.println("Receive Message: " + res);
+//        sprinklerEventSink.tryEmitNext(res);
+//    }
 
     private void autoUpdateSprinklerBaseOnTemperature() {
         sensorTemperatureSink
