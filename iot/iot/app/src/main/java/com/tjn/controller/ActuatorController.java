@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("sprinklers")
@@ -17,9 +19,22 @@ public class ActuatorController {
 
     private final ActuatorService actuatorService;
 
-    @GetMapping(value = "", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<SprinklerDto> sprinklerDtoStream(){
         return actuatorService.sprinklerStream();
+    }
+
+    @GetMapping("/all")
+    public Mono<ResponseEntity<List<SprinklerDto>>> getAllSprinkers(){
+        return actuatorService.getAllSprinkers().map(
+                sl -> ResponseEntity.ok().body(sl)
+        );
+    }
+
+    @GetMapping("/{id}")
+    public Mono<ResponseEntity<SprinklerDto>> getSpinkler(@PathVariable("id") Integer id){
+        return actuatorService.getSprinkler(id)
+                .map(s -> ResponseEntity.ok().body(s));
     }
 
     @PatchMapping("/{id}")
@@ -27,5 +42,4 @@ public class ActuatorController {
         return actuatorService.updateSprinkler(id, req)
                 .map(s -> ResponseEntity.ok().body(s));
     }
-
 }

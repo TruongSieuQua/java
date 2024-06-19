@@ -152,7 +152,6 @@ public class SprinklerService {
     }
 
     public Mono<List<SprinklerDto>> getAllSprinklers(){
-        return Mono.fromSupplier(() -> db.values().stream().map(sprinklerMapper::toSprinklerDto).collect(Collectors.toList()))
-                .doOnNext(l -> l.forEach(System.out::println));
+        return Mono.fromSupplier(() -> db.values().stream().map(sprinklerMapper::toSprinklerDto).collect(Collectors.toList()));
     }
 }

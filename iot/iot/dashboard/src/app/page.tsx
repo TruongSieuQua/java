@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { MuiLineChart } from "./components/line-chart";
-import { Actuator } from "./components/actuator";
-import { ControlBoard } from "./components/control";
+import { MuiLineChart } from "../components/line-chart";
+import { Actuator } from "../components/actuator";
+import { ControlBoard } from "../components/control";
 import { Bounce, ToastContainer } from "react-toastify";
 
 
