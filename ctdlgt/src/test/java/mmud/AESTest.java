@@ -1,36 +1,65 @@
 package mmud;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+import java.io.IOException;
+import java.util.stream.Stream;
+
+import static mmud.Main.readFileFromResources;
+import static mmud.Main.hexStringToByteArray;
+import static mmud.Main.byteArrayToString;
 
 public class AESTest {
-    @Test
-    void givenString_whenEncrypt_thenSuccess()
-            throws NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException,
-            BadPaddingException, InvalidAlgorithmParameterException, NoSuchPaddingException {
+    static class TestCase {
+        String keyFile;
+        String plaintextFile;
+        String ciphertextFile;
 
-        byte[] key = "2b7e151628aed2a6abf7158809cf4f3c".getBytes();
-        byte[] p = fillBlock("6bc1bee22e409f96e93d7e117393172a").getBytes();
-        byte[] c = "3ad77bb40d7a3660a89ecaf32466ef97".getBytes();
-
-        AES cipher = new AES(key);
-        var r = cipher.ECB_encrypt(p);
-        System.out.println("c = " + Arrays.toString(c));
-        System.out.println("r = " + Arrays.toString(r));
-        Assertions.assertArrayEquals(c, r);
+        TestCase(String keyFile, String plaintextFile, String ciphertextFile) {
+            this.keyFile = keyFile;
+            this.plaintextFile = plaintextFile;
+            this.ciphertextFile = ciphertextFile;
+        }
+    }
+    static Stream<TestCase> testCases() {
+        return Stream.of(
+                new TestCase("key1.txt", "p1.txt", "c1.txt"),
+                new TestCase("key2.txt", "p2.txt", "c2.txt")
+        );
     }
 
-    private static String fillBlock(String text) {
-        int spaceNum = text.getBytes().length%16==0?0:16-text.getBytes().length%16;
-        for (int i = 0; i<spaceNum; i++) text += " ";
-        return text;
+    @ParameterizedTest
+    @MethodSource("testCases")
+    void ECB_Encryption_Test(TestCase testCase) throws IOException {
+        String key = readFileFromResources(testCase.keyFile);
+        String p = readFileFromResources(testCase.plaintextFile);
+        String c = readFileFromResources(testCase.ciphertextFile);
+
+        byte[] keyBytes = hexStringToByteArray(key);
+        byte[] pBytes = hexStringToByteArray(p);
+
+        System.out.println(byteArrayToString(pBytes));
+        AES_ cipher = new AES_(keyBytes);
+        byte[] cBytes = cipher.ECB_encrypt(pBytes);
+
+        System.out.println(byteArrayToString(cBytes));
+        Assertions.assertEquals(c, byteArrayToString(cBytes));
+    }
+
+    @ParameterizedTest
+    @MethodSource("testCases")
+    void ECB_Decryption_Test(TestCase testCase) throws IOException {
+        String key = readFileFromResources(testCase.keyFile);
+        String p = readFileFromResources(testCase.plaintextFile);
+        String c = readFileFromResources(testCase.ciphertextFile);
+
+        byte[] keyBytes = hexStringToByteArray(key);
+        byte[] cBytes = hexStringToByteArray(c);
+
+        AES_ cipher = new AES_(keyBytes);
+        byte[] pBytes = cipher.ECB_decrypt(cBytes);
+        Assertions.assertEquals(p, byteArrayToString(pBytes));
     }
 }
