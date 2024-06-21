@@ -23,7 +23,7 @@ export function Actuator() {
       <div className="mb-6"></div>
       <div className="flex justify-center gap-6">
         {Object.entries(actuatorsData).map(([id, sprinklerData]) => (
-          <div className="flex flex-col w-64 h-80 border-2 border-solid border-blue-200 p-4">
+          <div key={id} className="flex flex-col w-64 h-80 border-2 border-solid border-blue-200 p-4">
           <div key={id} className="flex-grow flex flex-col justify-center items-center gap-4">
             <span className="text-xl font-bold">
               Sprinkler {sprinklerData.id}

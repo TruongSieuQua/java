@@ -8,18 +8,18 @@ import { FcGoogle } from "react-icons/fc";
 interface OAuthLoginFormProps extends PageProps {}
 
 export function OAuthLoginForm({ params: { lng } }: OAuthLoginFormProps) {
-	const { t } = useTranslation(lng, "register-page");
+  const { t } = useTranslation(lng, "register-page");
 
-	return (
-		<div className="flex flex-col gap-3">
-			<div className="btn btn-outline">
-				<FcGoogle className="w-6 h-6" />
-				<span>{t("google-register")}</span>
-			</div>
-			<div className="btn btn-outline">
-				<FaFacebook className="w-6 h-6" />
-				<span>{t("facebook-register")}</span>
-			</div>
-		</div>
-	);
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="btn btn-outline">
+        <FcGoogle className="h-6 w-6" />
+        <span>{t("google-register")}</span>
+      </div>
+      <div className="btn btn-outline">
+        <FaFacebook className="h-6 w-6" />
+        <span>{t("facebook-register")}</span>
+      </div>
+    </div>
+  );
 }

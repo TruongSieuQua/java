@@ -13,8 +13,8 @@ import {
   InputIcon,
 } from "@/components/ui/form";
 import { Text } from "@/components/ui/typography";
-import { Controller, useForm } from "react-hook-form";
-import { valibotResolver } from "@hookform/resolvers/valibot";
+import { Controller } from "react-hook-form";
+import { useForm } from "@/utils/useForm";
 import { LoginData, LoginSchema, RegisterData, RegisterSchema } from "@/schema";
 import { BiSolidJoystickButton } from "react-icons/bi";
 import { PageProps } from "@/interface";
@@ -33,7 +33,7 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
     control,
     formState: { errors },
   } = useForm<RegisterData>({
-    resolver: valibotResolver(RegisterSchema),
+		schema: RegisterSchema,
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -65,7 +65,7 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
                 />
               </FormControl>
               {errors.firstName?.message && (
-                <FormMessage className="text-error mt-1">
+                <FormMessage className="mt-1 text-error">
                   {t(errors.firstName.message, { ns: "errors" })}
                 </FormMessage>
               )}
@@ -86,7 +86,7 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
                 />
               </FormControl>
               {errors.lastName?.message && (
-                <FormMessage className="text-error mt-1">
+                <FormMessage className="mt-1 text-error">
                   {t(errors.lastName.message, { ns: "errors" })}
                 </FormMessage>
               )}
@@ -109,7 +109,7 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
               />
             </FormControl>
             {errors.email?.message && (
-              <FormMessage className="text-error mt-1">
+              <FormMessage className="mt-1 text-error">
                 {t(errors.email.message, { ns: "errors" })}
               </FormMessage>
             )}
@@ -132,7 +132,7 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
                 />
               </FormControl>
               {errors.password?.message && (
-                <FormMessage className="text-error mt-1">
+                <FormMessage className="mt-1 text-error">
                   {t(errors.password.message, { ns: "errors" })}
                 </FormMessage>
               )}
@@ -157,7 +157,7 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
                 />
               </FormControl>
               {errors.confirmedPassword?.message && (
-                <FormMessage className="text-error mt-1">
+                <FormMessage className="mt-1 text-error">
                   {t(errors.confirmedPassword.message, { ns: "errors" })}
                 </FormMessage>
               )}

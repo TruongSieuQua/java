@@ -1,15 +1,15 @@
 import Image from "next/image";
-import {useTranslation} from '@/i18n';
+import { useTranslation } from "@/i18n";
 import { PageProps } from "@/interface";
 
 interface HomePageProps extends PageProps {}
 
-export default async function Home({params: {lng}}: HomePageProps) {
-  const {t} = await useTranslation(lng, ["hello-world-page"]);
+export default async function Home({ params: { lng } }: HomePageProps) {
+  const { t } = await useTranslation(lng, ["hello-world-page"]);
 
   return (
-    <main className="flex w-screen min-h-screen items-center justify-between">
-				{/* <div>
+    <main className="flex min-h-screen w-screen items-center justify-between">
+      {/* <div>
 					<SideBar />
 				</div>
 				<div className="flex-grow">

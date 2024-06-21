@@ -11,8 +11,8 @@ import {
   Input,
 } from "@/components/ui/form";
 import { Text } from "@/components/ui/typography";
-import { Controller, useForm } from "react-hook-form";
-import { valibotResolver } from "@hookform/resolvers/valibot";
+import { Controller } from "react-hook-form";
+import { useForm } from "@/utils/useForm";
 import { LoginData, LoginSchema } from "@/schema";
 import { BiSolidJoystickButton } from "react-icons/bi";
 import { PageProps } from "@/interface";
@@ -29,12 +29,12 @@ export default function LoginForm({ params: { lng } }: LoginFormProps) {
     control,
     formState: { errors },
   } = useForm<LoginData>({
-    resolver: valibotResolver(LoginSchema),
+    schema: LoginSchema,
     defaultValues: {
       email: "",
       password: "",
     },
-		mode:'onChange'
+    mode: "onChange",
   });
 
   function onSubmit(data: LoginData) {
@@ -46,7 +46,7 @@ export default function LoginForm({ params: { lng } }: LoginFormProps) {
       <Controller
         control={control}
         name={"email"}
-        render={({ field, fieldState:{isDirty, error} }) => (
+        render={({ field, fieldState: { isDirty, error } }) => (
           <FormField name="email">
             <FormLabel>{t("email")}</FormLabel>
             <FormControl>
@@ -57,7 +57,7 @@ export default function LoginForm({ params: { lng } }: LoginFormProps) {
               />
             </FormControl>
             {errors.email?.message && (
-              <FormMessage className="text-error mt-1">
+              <FormMessage className="mt-1 text-error">
                 {t(errors.email.message, { ns: "errors" })}
               </FormMessage>
             )}
@@ -68,18 +68,18 @@ export default function LoginForm({ params: { lng } }: LoginFormProps) {
         control={control}
         name="password"
         render={({ field, fieldState: { isDirty, error } }) => {
-					return (
+          return (
             <FormField name="password">
               <FormLabel>{t("password")}</FormLabel>
               <FormControl>
                 <Input
                   type="password"
                   {...field}
-									color={!isDirty ? "primary" : !error ? "success" : "error"}
+                  color={!isDirty ? "primary" : !error ? "success" : "error"}
                 />
               </FormControl>
               {errors.password?.message && (
-                <FormMessage className="text-error mt-1">
+                <FormMessage className="mt-1 text-error">
                   {t(errors.password.message, { ns: "errors" })}
                 </FormMessage>
               )}
@@ -88,16 +88,16 @@ export default function LoginForm({ params: { lng } }: LoginFormProps) {
         }}
       />
 
-      <div className="flex justify-between text-sm mb-4">
+      <div className="mb-4 flex justify-between text-sm">
         <div>
           <label className="label cursor-pointer space-x-2">
             <input type="checkbox" defaultChecked className="checkbox" />
             <span className="label-text whitespace-nowrap">Remember me</span>
           </label>
         </div>
-				<NextLink href={`/${lng}/forgot-password`}>
-						<LinkText>{t("forgot-password")}</LinkText>
-					</NextLink>
+        <NextLink href={`/${lng}/forgot-password`}>
+          <LinkText>{t("forgot-password")}</LinkText>
+        </NextLink>
       </div>
 
       <FormSubmit asChild>

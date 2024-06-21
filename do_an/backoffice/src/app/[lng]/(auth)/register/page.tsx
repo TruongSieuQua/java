@@ -14,8 +14,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params: { lng } }: PageProps) {
   if (languages.indexOf(lng) < 0) lng = fallbackLng;
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const { t } = await useTranslation(lng, "register-page");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { t } = await useTranslation(lng, "register-page");
   return {
     title: t("title"),
   };
@@ -26,7 +26,7 @@ export default async function RegisterPage({ params: { lng } }: PageProps) {
   return (
     <>
       <div>
-        <h3 className="mt-12 text-center text-xl font-semibold lg:mt-18">
+        <h3 className="lg:mt-18 mt-12 text-center text-xl font-semibold">
           {t("register")}
         </h3>
         <h3 className="mt-2 text-center text-sm text-base-content/70">
@@ -37,12 +37,12 @@ export default async function RegisterPage({ params: { lng } }: PageProps) {
         <OAuthLoginForm params={{ lng }} />
         <div className="line" />
         <RegisterForm params={{ lng }} />
-				<div className="text-center mt-8">
-					{t("already_have_account")}
-					<NextLink href={`/${lng}/login`}>
-						<LinkText className="ml-2">{t("login_now")}</LinkText>
-					</NextLink>
-				</div>
+        <div className="mt-8 text-center">
+          {t("already_have_account")}
+          <NextLink href={`/${lng}/login`}>
+            <LinkText className="ml-2">{t("login_now")}</LinkText>
+          </NextLink>
+        </div>
       </div>
     </>
   );

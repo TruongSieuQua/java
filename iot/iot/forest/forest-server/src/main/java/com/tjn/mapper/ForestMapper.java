@@ -1,5 +1,6 @@
 package com.tjn.mapper;
 
+import com.tjn.dto.ForestDto;
 import com.tjn.dto.ForestResponse;
 import com.tjn.model.Forest;
 import org.mapstruct.Mapper;
@@ -11,5 +12,7 @@ public interface ForestMapper {
     ForestMapper INSTANCE = Mappers.getMapper(ForestMapper.class);
 
     ForestResponse toForestResponse(Forest forest);
+
+    ForestDto toForestDto(Forest forest);
 
 }

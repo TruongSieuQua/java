@@ -43,6 +43,10 @@ export const useSprinkler = (initial?: SprinklersData) => {
   };
 
   useEffect(() => {
+    getAll();
+  }, []);
+
+  useEffect(() => {
     const eventSource = sprinklerStream(handleSprinklerStream);
     return () => {
       eventSource.close();

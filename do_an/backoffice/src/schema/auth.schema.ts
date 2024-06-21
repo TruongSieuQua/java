@@ -1,12 +1,12 @@
-import {toTrimmed, endsWith, email, minLength, maxLength, object, Output, string, custom } from 'valibot';
-import { EmailSchema, NameSchema, PasswordSchema } from './schema';
+import {z} from "zod";
+import { EmailSchema, NameSchema, PasswordSchema, OTPSchema as CommonOTPSchema } from './schema';
 
-export const LoginSchema = object({
+export const LoginSchema = z.object({
 	email: EmailSchema,
   password: PasswordSchema,
 })
 
-export const RegisterSchema = object({
+export const RegisterSchema = z.object({
 	firstName: NameSchema,
 	lastName: NameSchema,
 	email: EmailSchema,
@@ -14,27 +14,22 @@ export const RegisterSchema = object({
 	confirmedPassword: PasswordSchema,
 })
 
-export const ForgotPasswordSchema = object({
+export const ForgotPasswordSchema = z.object({
 	email: EmailSchema
 })
 
-export const ResetPasswordSchema = object({
+export const ResetPasswordSchema = z.object({
 	password: PasswordSchema,
 	newPassword: PasswordSchema,
 	confirmPassword: PasswordSchema
 })
 
-export const OTPSchema = object({
-	otp: string([
-		toTrimmed(),
-		minLength(6, "otp_min_length"),
-		maxLength(6, "otp_max_length"),
-		custom((otp) => /^\d+$/.test(otp), "otp_digit_only")
-	])
+export const OTPSchema = z.object({
+	otp: CommonOTPSchema
 })
 
-export type LoginData = Output<typeof LoginSchema>;
-export type RegisterData = Output<typeof RegisterSchema>;
-export type ForgotPasswordData = Output<typeof ForgotPasswordSchema>;
-export type ResetPasswordData = Output<typeof ResetPasswordSchema>;
-export type OTPSchema = Output<typeof OTPSchema>;
+export type LoginData = z.infer<typeof LoginSchema>;
+export type RegisterData = z.infer<typeof RegisterSchema>;
+export type ForgotPasswordData = z.infer<typeof ForgotPasswordSchema>;
+export type ResetPasswordData = z.infer<typeof ResetPasswordSchema>;
+export type OTPData = z.infer<typeof OTPSchema>;

@@ -13,9 +13,9 @@ export default async function Layout({
   children,
 }: LayoutProps) {
   return (
-    <div className="flex justify-center items-center h-screen bg-[url('/images/register-bg.png')] bg-cover relative">
-      <div className="h-fit max-h-[90vh] overflow-y-auto px-16 pt-12 pb-6 rounded-2xl bg-base-100">
-        <div className="flex justify-between items-center">
+    <div className="relative flex h-screen items-center justify-center bg-[url('/images/register-bg.png')] bg-cover">
+      <div className="h-fit max-h-[90vh] overflow-y-auto rounded-2xl bg-base-100 px-16 pb-6 pt-12">
+        <div className="flex items-center justify-between">
           <Link href="/" className="logo">
             Charmpy
           </Link>

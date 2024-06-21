@@ -1,32 +1,32 @@
 import { name, password } from "@/utils/regex";
-import {
-  custom,
-  email,
-  endsWith,
-  maxLength,
-  minLength,
-  string,
-  toTrimmed,
-} from "valibot";
+import {z} from "zod";
 
-export const EmailSchema = string([
-  toTrimmed(),
-  email("invalid_email"),
-  minLength(6, "email_min_length"),
-  maxLength(50, "email_max_length"),
-  endsWith("gmail.com", "email_gmail_only"),
-]);
+export const EmailSchema = z
+  .string()
+  .trim()
+  .email({ message: "invalid_email" })
+  .min(6, { message: "email_min_length" })
+  .max(50, { message: "email_max_length" })
+  .refine((email) => email.endsWith("gmail.com"), {
+    message: "email_gmail_only",
+  });
 
-export const PasswordSchema = string([
-  toTrimmed(),
-  minLength(6, "password_min_length"),
-  maxLength(50, "password_max_length"),
-  custom((p) => password.test(p), "weak_password"),
-]);
+export const PasswordSchema = z
+  .string()
+  .trim()
+  .min(6, { message: "password_min_length" })
+  .max(50, { message: "password_max_length" })
+  .regex(password, { message: "password_invalid" });
 
-export const NameSchema = string([
-  toTrimmed(),
-  minLength(2, "name_min_length"),
-  maxLength(50, "name_max_length"),
-  custom((n) => name.test(n), "name_alpha_only"),
-]);
+export const NameSchema = z
+  .string()
+  .trim()
+  .min(2, { message: "name_min_length" })
+  .max(50, { message: "name_max_length" })
+  .regex(name, { message: "name_alpha_only" });
+
+export const OTPSchema = z
+  .string()
+  .min(6, "otp_min_length")
+  .max(6, "otp_max_length")
+  .regex(/^\d+$/, { message: "otp_digit_only" });

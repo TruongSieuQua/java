@@ -93,8 +93,8 @@ const ChartComponent: React.FC<ChartComponentProps> = ({ data }) => {
   return (
     <LineChart
       id="line-chart"
-      width={1440}
-      height={1080}
+      width={1280}
+      height={960}
       data={data}
       margin={{
         top: 5,

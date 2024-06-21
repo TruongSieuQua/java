@@ -1,16 +1,18 @@
-import { SensorData } from "@/models";
+import { ForestData } from "@/models";
 
-const API_URL = `${process.env.SENSOR_API || "http://localhost:8082"}/sensors`;
+const API_URL = `${process.env.FOREST_API || "http://localhost:8080"}/forests`;
 
-export const getSensor = async(id: number) => {
+export const getAll = async() => {
   try{
-    const response = await fetch(`${API_URL}/${id}`, {
-      method: "GET"
+    const response = await fetch(API_URL, {
+      method: "GET",
+
     });
     if(response.ok){
+      console.log(response);
       return {
         success: true,
-        data: await response.json() as SensorData
+        data: await response.json() as ForestData[]
       }
     }else{
       return {
@@ -25,16 +27,16 @@ export const getSensor = async(id: number) => {
       error: {message: e.message}
     }
   }
-};
+}
 
-export const updateSensor = async(sensorData: SensorData) => {
+export const update = async({name, state}: {name: string, state:string}) => {
   try{
-    const response = await fetch(`${API_URL}/${sensorData.id}`, {
-      method: "PATCH",
+    const response = await fetch(`${API_URL}/${name}`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(sensorData),
+      body: JSON.stringify({state}),
     })
     if(response.ok){
       return {
@@ -54,13 +56,14 @@ export const updateSensor = async(sensorData: SensorData) => {
       error: {message: e.message}
     }
   }
+
 }
 
-export const sensorStream = (consumer: (sensorData: SensorData)=>void) => {
+export const forestStream = (consumer: (forest: ForestData)=>void) => {
   const eventSource = new EventSource(`${API_URL}/stream`);
   eventSource.onmessage = (event: MessageEvent) => {
-    const sensorData = JSON.parse(event.data);
-    consumer(sensorData);
+    const forest = JSON.parse(event.data);
+    consumer(forest);
   };
   eventSource.onerror = (e) => {
     eventSource.close();

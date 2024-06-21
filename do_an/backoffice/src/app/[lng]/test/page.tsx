@@ -1,21 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "@/components/ui/link";
-import { IoIosArrowDown } from "react-icons/io";
 import {
   Navigation,
   NavigationList,
   NavigationListItem,
-	NavigationMenu,
-	NavigationMenuArrow,
-	NavigationMenuContent,
-	NavigationMenuTrigger,
+  NavigationMenu,
+  NavigationMenuArrow,
+  NavigationMenuContent,
+  NavigationMenuTrigger,
 } from "@/components/ui/navbar";
 import {
   Dropdown,
   DropdownContent,
   DropdownTrigger,
 } from "@/components/ui/dropdown";
-import { ScaleAnimation } from "@/components/animations";
 
 export default function TestPage() {
   return (
@@ -30,16 +28,33 @@ export default function TestPage() {
                   <LongContent />
                 </DropdownContent>
               </Dropdown>
-							<NavigationMenu>
-								<NavigationMenuTrigger>Trigger</NavigationMenuTrigger>
-								<NavigationMenuContent>
-									<LongContent />
-									<NavigationMenuArrow className="fill-green-300"/>
-								</NavigationMenuContent>
-							</NavigationMenu>
             </NavigationListItem>
             <NavigationListItem>
-              <Link href="/">Okie</Link>
+              <NavigationMenu>
+                <NavigationMenuTrigger>Trigger</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <LongContent />
+                  <NavigationMenuArrow className="fill-green-300" />
+                </NavigationMenuContent>
+              </NavigationMenu>
+            </NavigationListItem>
+            <NavigationListItem>
+              <NavigationMenu>
+                <NavigationMenuTrigger>Trigger</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <LongContent />
+                  <NavigationMenuArrow className="fill-green-300" />
+                </NavigationMenuContent>
+              </NavigationMenu>
+            </NavigationListItem>
+            <NavigationListItem>
+              <NavigationMenu>
+                <NavigationMenuTrigger>Trigger</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <LongContent />
+                  <NavigationMenuArrow className="fill-green-300" />
+                </NavigationMenuContent>
+              </NavigationMenu>
             </NavigationListItem>
           </NavigationList>
         </Navigation>
@@ -56,7 +71,31 @@ export default function TestPage() {
               </Dropdown>
             </NavigationListItem>
             <NavigationListItem>
-              <Link href="/">Okie</Link>
+              <NavigationMenu>
+                <NavigationMenuTrigger>Trigger</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <LongContent />
+                  <NavigationMenuArrow className="fill-green-300" />
+                </NavigationMenuContent>
+              </NavigationMenu>
+            </NavigationListItem>
+            <NavigationListItem>
+              <NavigationMenu>
+                <NavigationMenuTrigger>Trigger</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <LongContent />
+                  <NavigationMenuArrow className="fill-green-300" />
+                </NavigationMenuContent>
+              </NavigationMenu>
+            </NavigationListItem>
+            <NavigationListItem>
+              <NavigationMenu>
+                <NavigationMenuTrigger>Trigger</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <LongContent />
+                  <NavigationMenuArrow className="fill-green-300" />
+                </NavigationMenuContent>
+              </NavigationMenu>
             </NavigationListItem>
           </NavigationList>
         </Navigation>
@@ -73,7 +112,31 @@ export default function TestPage() {
               </Dropdown>
             </NavigationListItem>
             <NavigationListItem>
-              <Link href="/">Okie</Link>
+              <NavigationMenu>
+                <NavigationMenuTrigger>Trigger</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <LongContent />
+                  <NavigationMenuArrow className="fill-green-300" />
+                </NavigationMenuContent>
+              </NavigationMenu>
+            </NavigationListItem>
+            <NavigationListItem>
+              <NavigationMenu>
+                <NavigationMenuTrigger>Trigger</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <LongContent />
+                  <NavigationMenuArrow className="fill-green-300" />
+                </NavigationMenuContent>
+              </NavigationMenu>
+            </NavigationListItem>
+            <NavigationListItem>
+              <NavigationMenu>
+                <NavigationMenuTrigger>Trigger</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <LongContent />
+                  <NavigationMenuArrow className="fill-green-300" />
+                </NavigationMenuContent>
+              </NavigationMenu>
             </NavigationListItem>
           </NavigationList>
         </Navigation>

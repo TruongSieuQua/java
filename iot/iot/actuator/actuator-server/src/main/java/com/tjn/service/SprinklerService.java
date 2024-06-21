@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
 import reactor.core.scheduler.Schedulers;
@@ -124,6 +125,10 @@ public class SprinklerService {
                 .subscribe();
     }
 
+    public Flux<SprinklerDto> sprinklerStream(){
+        return sprinklerEventSink.asFlux();
+    }
+
     public Mono<SprinklerDto> updateSprinkler(Integer id, SprinklerDto dto) {
         return Mono.fromSupplier(() -> this.db.get(id))
                 .subscribeOn(Schedulers.boundedElastic()) // Offload blocking call to boundedElastic scheduler
@@ -131,13 +136,11 @@ public class SprinklerService {
                     if (shouldUpdateSprinkler(dto, sprinkler)) {
                         System.out.println("Update Sprinkler: " + dto);
                         sprinklerMapper.updateSprinklerFromDto(dto, sprinkler);
-
-                        return Mono.fromRunnable(() -> sprinklerJsonProducer.sendJsonMessage(sprinklerMapper.toSprinklerDto(sprinkler)))
-                                .thenReturn(sprinkler);
                     }
                     return Mono.just(sprinkler);
                 })
                 .map(sprinklerMapper::toSprinklerDto)
+                .doOnNext(sprinklerJsonProducer::sendJsonMessage)
                 .doOnNext(sprinklerEventSink::tryEmitNext);
     }
 

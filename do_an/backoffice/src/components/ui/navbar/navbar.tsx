@@ -50,7 +50,7 @@ export function NavigationList({
   return (
     <ul
       className={clsx(
-        // "menu menu-vertical rounded-box lg:menu-horizontal",
+        "flex flex-row gap-1.5 p-2 bg-white rounded-lg shadow-md border border-gray-200 z-10",
         className,
       )}
       {...rest}
