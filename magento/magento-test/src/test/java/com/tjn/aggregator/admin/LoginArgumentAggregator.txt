@@ -1,0 +1,18 @@
+package com.tjn.aggregator.admin;
+
+//import com.tjn.admin.dto.LoginDto;
+//import com.tjn.aggregator.TestData;
+//import org.junit.jupiter.api.extension.ParameterContext;
+//import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
+//import org.junit.jupiter.params.aggregator.ArgumentsAggregationException;
+//import org.junit.jupiter.params.aggregator.ArgumentsAggregator;
+
+//public class LoginArgumentAggregator implements ArgumentsAggregator {
+//    @Override
+//    public TestData<LoginDto, String> aggregateArguments(ArgumentsAccessor arguments, ParameterContext parameterContext) throws ArgumentsAggregationException {
+//        return new TestData<LoginDto, String>(
+//                new LoginDto(arguments.getString(0), arguments.getString(1)),
+//                arguments.getString(2)
+//        );
+//    }
+//}

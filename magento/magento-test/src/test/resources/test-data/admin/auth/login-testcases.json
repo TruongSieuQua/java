@@ -1,0 +1,10 @@
+[
+  {
+    "id": "login-1",
+    "data": {
+      "username": "admin",
+      "password": "password1"
+    },
+    "expectedResult": "admin"
+  }
+]
