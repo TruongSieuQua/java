@@ -16,10 +16,18 @@ public class DashBoardPage extends AbstractPage {
     }
 
     @Override
+    public void goTo(String url) {
+        this.driver.get(url);
+        this.webDriverWait.until(ExpectedConditions.visibilityOf(accountButton));
+    }
+
+    @Override
     public boolean isAt() {
         this.webDriverWait.until(ExpectedConditions.visibilityOf(accountButton));
         return accountButton.isDisplayed();
     }
+
+
 
     public String getUsername(){
         return accountButton.getText();

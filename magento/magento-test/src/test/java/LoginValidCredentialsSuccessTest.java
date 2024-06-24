@@ -7,8 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
 //@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class LoginValidCredentialsSuccessTest extends BaseTest {
-
+//public class LoginValidCredentialsSuccessTest extends BaseTest {
+//
 //    @ParameterizedTest(name = "Login by username({0}) should return user {2}")
 //    @CsvFileSource(resources = "/test-data/admin/auth/login-successful-test.csv", numLinesToSkip = 1)
 //    @DisplayName("loginValidCredentialsSuccessTest")
@@ -28,5 +28,5 @@ public class LoginValidCredentialsSuccessTest extends BaseTest {
 //        Assertions.assertTrue(dashBoardPage.isAt());
 //        Assertions.assertEquals(expectedResult, dashBoardPage.getUsername());
 //    }
-}
+//}
 

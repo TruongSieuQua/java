@@ -27,6 +27,7 @@ public class LoginPage extends AbstractPage {
         return this.usernameInput.isDisplayed();
     }
 
+    @Override
     public void goTo(String url){
         this.driver.get(url);
         this.webDriverWait.until(ExpectedConditions.visibilityOf(this.usernameInput));

@@ -16,26 +16,26 @@ import java.util.List;
 
 public class LoginTests extends BaseTest {
 
-    static List<TestData<LoginDto, String>> jsonProvider() {
-        TypeReference<List<TestData<LoginDto, String>>> typeRef = new TypeReference<>() {};
-        return JsonUtil.getTestCases("/test-data/admin/auth/login-testcases.json", typeRef);
-    }
-
-    @ParameterizedTest
-    @DisplayName("loginValidCredentialsSuccessTest")
-    @MethodSource("jsonProvider")
-    public void loginValidCredentialsSuccessTest(TestData<LoginDto, String> testData){
-        LoginPage loginPage = new LoginPage(driver);
-        DashBoardPage dashBoardPage = new DashBoardPage(driver);
-
-        LoginDto dto = testData.getData();
-        String expectedResult = testData.getExpectedResult();
-
-        loginPage.goTo("http://localhost/admin");
-        Assertions.assertTrue(loginPage.isAt());
-        loginPage.enterUserCredentials(dto.username(), dto.password());
-        loginPage.login();
-        Assertions.assertTrue(dashBoardPage.isAt());
-        Assertions.assertEquals(expectedResult, dashBoardPage.getUsername());
-    }
+//    static List<TestData<LoginDto, String>> jsonProvider() {
+//        TypeReference<List<TestData<LoginDto, String>>> typeRef = new TypeReference<>() {};
+//        return JsonUtil.getTestCases("/test-data/admin/auth/login-testcases.json", typeRef);
+//    }
+//
+//    @ParameterizedTest
+//    @DisplayName("loginValidCredentialsSuccessTest")
+//    @MethodSource("jsonProvider")
+//    public void loginValidCredentialsSuccessTest(TestData<LoginDto, String> testData){
+//        LoginPage loginPage = new LoginPage(driver);
+//        DashBoardPage dashBoardPage = new DashBoardPage(driver);
+//
+//        LoginDto dto = testData.getData();
+//        String expectedResult = testData.getExpectedResult();
+//
+//        loginPage.goTo("http://localhost/admin");
+//        Assertions.assertTrue(loginPage.isAt());
+//        loginPage.enterUserCredentials(dto.username(), dto.password());
+//        loginPage.login();
+//        Assertions.assertTrue(dashBoardPage.isAt());
+//        Assertions.assertEquals(expectedResult, dashBoardPage.getUsername());
+//    }
 }

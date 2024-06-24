@@ -1,0 +1,10 @@
+[
+  {
+    "id": "register-1",
+    "data": {
+      "email": "truong123456@gmail.com",
+      "password": "Truong123456a@"
+    },
+    "expectedResult": "Truong Nguyen"
+  }
+]
