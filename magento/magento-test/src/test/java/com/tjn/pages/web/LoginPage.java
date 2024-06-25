@@ -20,17 +20,11 @@ public class LoginPage extends AbstractPage implements FormAction<LoginDto> {
     @FindBy(className = "form-login")
     private WebElement formLogin;
 
-    @FindBy(css = ".page.messages")
-    private WebElement pageMessage;
+    @FindBy(className = "message-error")
+    private WebElement errorMessage;
 
     public LoginPage(WebDriver webDriver) {
         super(webDriver);
-    }
-
-    @Override
-    public void goTo(String url) {
-        this.driver.get(url);
-
     }
 
     @Override
@@ -59,6 +53,7 @@ public class LoginPage extends AbstractPage implements FormAction<LoginDto> {
     }
 
     public WebElement getPageErrorMessage(){
-        return pageMessage.findElement(By.id("message-error"));
+        this.webDriverWait.until(ExpectedConditions.visibilityOf(errorMessage));
+        return errorMessage;
     }
 }

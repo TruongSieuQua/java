@@ -24,10 +24,10 @@ public class DashBoardPage extends AbstractPage implements NavigationLink {
         private final String linkText;
     }
 
-    @FindBy(linkText = "My Dashboard")
+    @FindBy(css = ".page-title .base")
     private WebElement pageTitle;
 
-    @FindBy(css = ".customer-name")
+    @FindBy(css = ".customer-name > span")
     private WebElement customerName;
 
     @FindBy(id="search")

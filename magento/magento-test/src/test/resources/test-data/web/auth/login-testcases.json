@@ -1,10 +1,50 @@
 [
   {
-    "id": "register-1",
+    "id": "login-1",
+    "name": "Login with correct credentials",
     "data": {
-      "email": "truong123456@gmail.com",
-      "password": "Truong123456a@"
+      "email": "longqtubqn@gmail.com",
+      "password": "Longtest@123"
     },
-    "expectedResult": "Truong Nguyen"
+    "expectedResult": {
+      "success": true,
+      "message": ""
+    }
+  },
+  {
+    "id": "login-2",
+    "name": "Login with wrong email",
+    "data": {
+      "email": "longqtubqn@gmaill",
+      "password": "Longtest@123"
+    },
+    "expectedResult": {
+      "success": false,
+      "message": ""
+    }
+  },
+  {
+    "id": "login-3",
+    "name": "Login with non-exist email",
+    "data": {
+      "email": "longqtubqn111@gmail.com",
+      "password": "Longtest@123"
+    },
+    "expectedResult": {
+      "success": false,
+      "message": ""
+    }
+  },
+  {
+    "id": "login-4",
+    "name": "Login with wrong email",
+    "data": {
+      "email": "longqtubqn@gmail.com",
+      "password": "Longtest@1"
+    },
+    "expectedResult": {
+      "success": false,
+      "message": ""
+    }
   }
 ]

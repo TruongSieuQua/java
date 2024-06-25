@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-public class Main {
+public class Utils {
     public static void main(String[] args) throws IOException {
         String key = readFileFromResources("key1.txt");
         String p = readFileFromResources("p1.txt");
@@ -13,7 +13,7 @@ public class Main {
         byte[] keyBytes = hexStringToByteArray(key);
         byte[] pBytes = hexStringToByteArray(p);
 
-        AES_ aes = new AES_(keyBytes);
+        AES aes = new AES(keyBytes);
 
         byte[] cBytesResult = aes.ECB_encrypt(pBytes);
         System.out.println(byteArrayToString(cBytesResult));
@@ -29,7 +29,7 @@ public class Main {
 //            System.out.println("Encryption result matches with c1.txt");
 //        } else {
 //            System.out.println("Encryption result does not match with c1.txt");
-//        }one
+//        }
     }
 
     // Hàm đọc file từ thư mục resources

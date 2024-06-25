@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class AES_ {
+public class AES {
 
     private int round;
 
@@ -114,10 +114,10 @@ public class AES_ {
         this.state = new int[2][4][nRow];
         w = expandKey();
     }
-    public AES_(byte[] key){
+    public AES(byte[] key){
         init(key, null);
     }
-    public AES_(byte[] key, byte[] iv){
+    public AES(byte[] key, byte[] iv){
         init(key, iv);
     }
 

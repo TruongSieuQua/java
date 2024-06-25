@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class RegisterPage extends AbstractPage implements FormAction<RegisterDto> {
 
-    @FindBy(css = "h1.page-title")
+    @FindBy(css = ".page-title .base")
     private WebElement pageTitle;
 
     @FindBy(id = "firstname")

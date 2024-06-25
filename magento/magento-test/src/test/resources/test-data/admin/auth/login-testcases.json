@@ -1,6 +1,7 @@
 [
   {
     "id": "login-1",
+    "name": "Login with correct email and password",
     "data": {
       "username": "admin",
       "password": "password1"

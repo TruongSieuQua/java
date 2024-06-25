@@ -26,14 +26,11 @@ public class HomePage extends AbstractPage implements NavigationLink {
         private final String linkText;
     }
 
-    @FindBy(className = "page-title")
+    @FindBy(css = ".page-title .base")
     private WebElement pageTitle;
 
-    @FindBy(css = ".authorization-link")
-    private WebElement loginLink;
-
-    @FindBy(linkText = "Create an Account")
-    private WebElement registerLink;
+    @FindBy(className = "page-header")
+    private WebElement header;
 
     public HomePage(WebDriver webDriver) {
         super(webDriver);
@@ -55,5 +52,10 @@ public class HomePage extends AbstractPage implements NavigationLink {
                     + HomePageLink.class.getSimpleName()
             );
         }
+    }
+
+    public String getCustomerFullName(){
+        this.webDriverWait.until(ExpectedConditions.visibilityOf(header.findElement(By.cssSelector(".customer-name"))));
+        return header.getText();
     }
 }
