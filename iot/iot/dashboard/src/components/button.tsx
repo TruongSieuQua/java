@@ -6,10 +6,10 @@ interface ButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonE
   children: React.ReactNode;
 }
 
-export const Button = ({ children, isOn, ...rest }: ButtonProps) => {
+export const Button = ({ children, isOn, className, ...rest }: ButtonProps) => {
   return (
     <button
-      className={clsx("py-2 px-4 rounded font-semibold ",
+      className={clsx("py-2 px-4 rounded font-semibold ", className,
         {
           "text-white bg-blue-500 hover:bg-blue-600": isOn,
           "bg-transparent hover:bg-blue-200 border border-blue-500 hover:border-transparent": !isOn

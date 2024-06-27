@@ -10,9 +10,8 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center gap-6 p-24">
       <Forest />
-      <Actuator />
-      <MuiLineChart />
       <ControlBoard/>
+      <Actuator />
       <ToastContainer
           position="bottom-right"
           autoClose={5000}

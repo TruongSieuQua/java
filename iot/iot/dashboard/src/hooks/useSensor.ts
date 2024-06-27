@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import {getSensor, updateSensor, sensorStream} from "@/apis";
+import {fetchSensor, updateSensor as update, sensorStream} from "@/apis";
 import { SensorData } from "@/models";
 
 export type DataSet = {
@@ -11,7 +11,28 @@ export type DataSet = {
 
 export function useSensor(){
   const [chartData, setChartData] = useState<DataSet[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [info, setInfo] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
+  const getSensor = useCallback(async(id: number) => {
+    const response = await fetchSensor(id);
+    if(response.success){
+      return await response.data as SensorData;
+    }else{
+      setError(response.error.message);
+    }
+  }, []);
+
+  const updateSensor = useCallback((sensorId: number, state: boolean) => {
+    update({id: sensorId, state}).then((response) => {
+      if(response.success){
+        setInfo("Sensor updated successfully");
+      }else {
+        setError(response.error.message);
+      }
+    });
+  }, []);
   const handleSensorStream = useCallback((sensorData:SensorData) => {
     const {timestamp, forestName, temperature} = sensorData;
     if(timestamp === undefined || forestName === undefined || temperature === undefined){
@@ -39,5 +60,5 @@ export function useSensor(){
     };
   }, []);
 
-  return {chartData, getSensor, updateSensor};
+  return {chartData, getSensor, update, updateSensor, error, info};
 }

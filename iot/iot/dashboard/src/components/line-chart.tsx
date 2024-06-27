@@ -32,47 +32,7 @@ interface ChartData {
 }
 
 export const MuiLineChart = () => {
-  const {chartData, getSensor, updateSensor} = useSensor();
-  // const [chartData, setChartData] = useState<DataSet[]>([]);
-
-  // const temperatureStream = (setChartData: React.Dispatch<React.SetStateAction<ChartData[]>>): EventSource => {
-  //   const eventSource = new EventSource("http://localhost:8082/sensors");
-
-  //   eventSource.onmessage = (event: MessageEvent) => {
-  //     const sensorData: SensorData = JSON.parse(event.data);
-  //     const second = Math.floor(sensorData.timestamp / 1000);
-  //     const hh_mm_ss = new Date(sensorData.timestamp + 7 * 3600 * 1000).toLocaleTimeString();
-  //     const forestName = sensorData.forestName;
-  //     const temperature = sensorData.temperature;
-
-  //     setChartData((prevChartData) => {
-  //       const len = prevChartData.length;
-  //       if (len === 0 || prevChartData[len - 1].second < second) {
-  //         return [...prevChartData, { second, label: hh_mm_ss, [forestName]: temperature }];
-  //       } else {
-  //         const last = { ...prevChartData[len - 1], [forestName]: temperature };
-  //         return [...prevChartData.slice(0, len - 1), last].slice(-10);
-  //       }
-  //     });
-  //   };
-  //   eventSource.onerror = (e) => {
-  //     notify("Error fetching temperature stream! Try again.");
-  //     eventSource.close();
-  //   };
-
-  //   return eventSource;
-  // };
-
-  // const tryAgain = () => {
-  //   temperatureStream(setChartData);
-  // }
-
-  // useEffect(() => {
-  //   const eventSource = temperatureStream(setChartData);
-  //   return () => {
-  //     eventSource.close();
-  //   };
-  // }, []);
+  const {chartData} = useSensor();
 
   return (
     <div>
@@ -94,7 +54,7 @@ const ChartComponent: React.FC<ChartComponentProps> = ({ data }) => {
     <LineChart
       id="line-chart"
       width={1280}
-      height={960}
+      height={820}
       data={data}
       margin={{
         top: 5,

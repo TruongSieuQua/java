@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 export function useForest(){
   const [forestData, setForestData] = useState<ForestData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   const getForest = useCallback(async () => {
     const response = await getAll();
@@ -12,7 +13,7 @@ export function useForest(){
       const data = response.data as ForestData[];
       setForestData(data);
     }else{
-      throw new Error(response.error.message);
+      setError(response.error.message);
     }
     setLoading(false);
   }, []);
@@ -53,5 +54,5 @@ export function useForest(){
     };
   }, []);
 
-  return {forestData, loading, updateForest};
+  return {forestData, loading, updateForest, error};
 }

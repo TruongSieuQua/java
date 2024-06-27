@@ -11,19 +11,20 @@ export function Forest() {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="flex gap-4 w-60 h-80 p-4">
+        <div className="flex gap-4 p-4">
           {forestData.map((forest) => (
-            <div key={forest.name} className="border-solid border-2 border-blue-400">
-              <div className="flex flex-row gap-2">
-                <p className="text-lg font-semibold text-center">
-                  {forest.name}
+            <div key={forest.name} className="border-solid border-2 border-blue-400 p-4">
+              <div className="flex flex-col gap-2">
+                <p className="text-lg font-semibold">
+                  Name: {forest.name}
                 </p>
-                <p className="text-lg font-semibold text-center">
-                  {forest.state}
+                <p className="text-lg font-semibold">
+                  State: {forest.state}
                 </p>
               </div>
               <div className="flex justify-between">
                 <Button
+                className="w-full"
                   onClick={() =>
                     updateForest({ name: forest.name, state: "fired" })
                   }
