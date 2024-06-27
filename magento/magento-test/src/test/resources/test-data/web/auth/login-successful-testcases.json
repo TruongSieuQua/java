@@ -1,0 +1,14 @@
+[
+  {
+    "id": "login-1",
+    "name": "Login with correct credentials",
+    "data": {
+      "email": "truong123@gmail.com",
+      "password": "Truong123456a@"
+    },
+    "expectedResult": {
+      "success": true,
+      "message": ""
+    }
+  }
+]

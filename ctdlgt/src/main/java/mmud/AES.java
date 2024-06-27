@@ -133,6 +133,7 @@ public class AES {
         // 43, 51, 59
         w = new int[nRow*(nRound+1)];
         int temp, i = 0;
+        // initial w[0], w[1], w[2], w[3] from key[]
         while (i < nCol) {
             w[i] = 0x00000000;
             w[i] |= key[4 * i] << 24;
@@ -198,6 +199,7 @@ public class AES {
     }
     private void shiftRows(int[][] state) {
         int temp1, temp2, temp3, i;
+        //row 0, ko dich
 
         // row 1, left shift 1 byte
         temp1 = state[1][0];
@@ -276,18 +278,25 @@ public class AES {
                 out[i][j] = in[i][j];
             }
         }
-        int r = 0;
-        addRoundKey(out, r);
-        for (r = 1; r < nRound; r++) {
 
+        int r = 0;
+
+        // Round 0
+        addRoundKey(out, r); // Data XOR w[0]-w[3]
+
+        // Round 1 -> Round 9
+        for (r = 1; r < nRound; r++) {
             subBytes(out);
-            shiftRows(out);
-            mixColumns(out);
+            shiftRows(out); //dịch byte
+            mixColumns(out); //nhan
             addRoundKey(out, r);
         }
+
+        // Round 10
         subBytes(out);
         shiftRows(out);
         addRoundKey(out, nRound);
+
         return out;
     }
     public byte[] encrypt(byte[] text) {

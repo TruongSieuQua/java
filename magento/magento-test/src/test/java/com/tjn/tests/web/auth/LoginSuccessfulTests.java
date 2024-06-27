@@ -17,16 +17,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 
-public class LoginTests extends BaseTest {
+public class LoginSuccessfulTests extends BaseTest {
     static List<TestCase<LoginDto, TestResult>> jsonProvider() {
         TypeReference<List<TestCase<LoginDto, TestResult>>> typeRef = new TypeReference<>() {};
-        return JsonUtil.getTestCases("/test-data/web/auth/login-testcases.json", typeRef);
+        return JsonUtil.getTestCases("/test-data/web/auth/login-successful-testcases.json", typeRef);
     }
 
     @ParameterizedTest
-    @DisplayName("Login Feature Test")
+    @DisplayName("Login Successful Test")
     @MethodSource("jsonProvider")
-    public void loginTests(TestCase<LoginDto, TestResult> testCase){
+    public void loginSuccessfulTests(TestCase<LoginDto, TestResult> testCase){
         LoginPage loginPage = new LoginPage(driver);
         HomePage homePage = new HomePage(driver);
         DashBoardPage dashBoardPage = new DashBoardPage(driver);
@@ -47,4 +47,6 @@ public class LoginTests extends BaseTest {
             Assertions.assertTrue(loginPage.getPageErrorMessage().isDisplayed());
         }
     }
+
+
 }

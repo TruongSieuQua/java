@@ -21,11 +21,11 @@ public class AESTest {
         byte[] keyBytes = hexStringToByteArray(key);
         byte[] pBytes = hexStringToByteArray(p);
 
-        System.out.println(byteArrayToString(pBytes));
+        System.out.println("m = " +  byteArrayToString(pBytes));
         AES cipher = new AES(keyBytes);
         byte[] cBytes = cipher.ECB_encrypt(pBytes);
 
-        System.out.println(byteArrayToString(cBytes));
+        System.out.println("c = " + byteArrayToString(cBytes));
         Assertions.assertEquals(c, byteArrayToString(cBytes));
     }
 

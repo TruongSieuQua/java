@@ -1,0 +1,14 @@
+[
+  {
+    "id": "login-3",
+    "name": "Login with non-exist email",
+    "data": {
+      "email": "longqtubqn111@gmail.com",
+      "password": "Longtest@123"
+    },
+    "expectedResult": {
+      "success": false,
+      "message": ""
+    }
+  }
+]

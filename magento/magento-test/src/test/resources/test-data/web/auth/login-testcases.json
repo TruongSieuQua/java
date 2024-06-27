@@ -3,8 +3,8 @@
     "id": "login-1",
     "name": "Login with correct credentials",
     "data": {
-      "email": "longqtubqn@gmail.com",
-      "password": "Longtest@123"
+      "email": "truong123@gmail.com",
+      "password": "Truong123456a@"
     },
     "expectedResult": {
       "success": true,

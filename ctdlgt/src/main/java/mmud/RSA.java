@@ -12,13 +12,13 @@ public class RSA {
     */
 
 
-    private long n;
+    private BigInteger n;
 
-    private long On;
+    private BigInteger On;
 
-    private long e;
+    private BigInteger e;
 
-    private long d;
+    private BigInteger d;
 
     public RSA(long p, long q){
         init(p, q);
@@ -28,80 +28,65 @@ public class RSA {
 
     public RSA(long p, long q, long e){
         init(p, q);
-        if(!isEValid(e, this.On)){
+        if(!isEValid(BigInteger.valueOf(e), this.On)){
             throw new ArithmeticException("e is not valid!");
         }
-        this.e = e;
+        this.e = BigInteger.valueOf(e);
         this.d = caculateD(On);
     }
 
     private void init(long p, long q){
-        if(p <= 0 || q <= 0 || p > Long.MAX_VALUE/q){
-            throw new ArithmeticException("Invalid p and q or overflow occurred");
+        if(p < 2 || q < 2){
+            throw new ArithmeticException("p or q is not prime number.");
         }
-        this.n = p*q;
-        this.On = (p-1)*(q-1);
+        this.n = BigInteger.valueOf(p*q);
+        this.On = BigInteger.valueOf((p-1)*(q-1));
     }
 
-    private boolean isEValid(long e, long phiN){
-        if( e < 2){
-          throw new ArithmeticException("e is lower than 2");
-        } else if(e > Integer.MAX_VALUE){
-            throw new ArithmeticException("e is larger than Interger.MAX_VALUE");
-        }else if(gcd(e, phiN)!=1){
+    private boolean isEValid(BigInteger e, BigInteger phiN){
+        if(e.longValue() < 2){
+            throw new ArithmeticException("e is not a prime number!");
+        }else if(!phiN.gcd(e).equals(BigInteger.ONE)){
             throw new ArithmeticException("e not satisfy gcd(e, O(n)) = 1");
-
         }
         return true;
     }
 
-    private long calculateE(long phiN){
-        long i;
-        for(i=2; i < phiN; i++){
-            if(gcd(i, phiN)==1){
+    private BigInteger calculateE(BigInteger phiN){
+        BigInteger i;
+        for(i= BigInteger.TWO; !phiN.equals(i); i=i.add(BigInteger.ONE)){
+            if( phiN.gcd(i).equals(BigInteger.ONE)){
                 break;
             }
         }
-        if(i == phiN || i > Integer.MAX_VALUE){
+        if(phiN.equals(i)){
             throw new ArithmeticException("Not exist e so that gcd(e, phiN)=1");
         }
-       return i;
+        return i;
     }
 
-    private long caculateD(long phiN){
-        long j;
-        for(j=2; j<phiN; j++){
-
-            BigInteger e_times_d = BigInteger.valueOf(e*j);
-            BigInteger remainder = e_times_d.mod(BigInteger.valueOf(phiN));
-
+    private BigInteger caculateD(BigInteger phiN){
+        BigInteger j;
+        for(j=BigInteger.TWO; !phiN.equals(j); j=j.add(BigInteger.ONE)){
+            BigInteger remainder = (e.multiply(j)).mod(phiN);
             if(remainder.equals(BigInteger.ONE)){
                 break;
             }
         }
-        if(j == phiN || j > Integer.MAX_VALUE) {
+        if(phiN.equals(j)) {
             throw new ArithmeticException("Not exist d so that (e*d)mod(phiN)=1");
         }
         return j;
     }
 
     public long encrypt(long m){
-        return BigInteger.valueOf(m).modPow(BigInteger.valueOf(e), BigInteger.valueOf(n)).longValue();
+        return BigInteger.valueOf(m).modPow(this.e, this.n).longValue();
 
     }
 
     public long decrypt(long c){
-        return BigInteger.valueOf(c).modPow(BigInteger.valueOf(d), BigInteger.valueOf(n)).longValue();
+        return BigInteger.valueOf(c).modPow(this.d, this.n).longValue();
     }
-
-//    static long gcd1(long a, long b)
-//    {
-//        // Lay b lam phan du
-//        if (b == 0)
-//            return a;
-//
-//        return gcd(b,a%b);
-//    }
 
     static long gcd(long a, long b)
     {
