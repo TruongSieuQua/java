@@ -1,0 +1,2 @@
+- Lien quan den interface chi chua phuong thuc
+- Vd: lop Rectangle (gom thuoc tinh w, h), va Square (can thuoc tinh size)

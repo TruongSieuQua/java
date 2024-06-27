@@ -1,0 +1,12 @@
+- Nen su dung cau truc thu muc
+    - impl
+        XMLFormatter.java
+        JSONFormatter.java
+    Formatter.java
+
+- Mot lop muon su dung Formatter thi:
+    +) Lop Util
+        Input them tham so "Formatter formatter"
+    +) Lop nhieu phuong thuc
+        - Them thuoc tinh Formatter formatter
+

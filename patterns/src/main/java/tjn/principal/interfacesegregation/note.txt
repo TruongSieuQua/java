@@ -1,0 +1,5 @@
+-  Khong nen khai bao nhieu ham trong interface de roi class khac implements ma co vai ham khong trien khai
+-  Han che class co cac method throws UnsupportedOperationException tuc la ko trien khai
+
+- Lien quan den Generic Interface nhu JpaRepository<T, U> hay PersistenceService<T>
+- chi duoc phep tao cac method tu T, U trong interface

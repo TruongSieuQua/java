@@ -1,0 +1,18 @@
+// const Input = forwardRef((props: InputProps, ref) => {
+//   const { tvProps, className, children, ...rest } = extractTvProps<
+//     InputProps,
+//     InputVariantsType
+//   >(props, ...inputVariantKeys);
+
+//   if (children) {
+//     return (
+//       <label className={inputVariants({ ...tvProps, className })}>
+//         {children}
+//       </label>
+//     );
+//   }
+
+//   return (
+//     <input className={inputVariants({ ...tvProps, className })} {...rest} />
+//   );
+// });

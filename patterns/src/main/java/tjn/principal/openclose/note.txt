@@ -1,0 +1,2 @@
+- Lien quan den abstract class
+- Cac phan
