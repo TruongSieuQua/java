@@ -1,26 +1,38 @@
-"use client";
 
-import { extractTvProps } from "@/utils";
-import * as Form from "@radix-ui/react-form";
-import { twMerge } from "tailwind-merge";
+import { HTMLAttributes, LabelHTMLAttributes } from "react";
 import { VariantProps, tv } from "tailwind-variants";
 
 /* -----------------------------------------------------------------------------------------
  * Form Root
  * ----------------------------------------------------------------------------------------*/
-function FormRoot({children, className, ...rest}: Form.FormProps){
-	return <Form.Root className={twMerge("", className)} {...rest}>
+interface FormRootProps extends HTMLAttributes<HTMLFormElement> {}
+function FormRoot({children, ...rest}: FormRootProps){
+	return <form {...rest}>
 		{children}
-	</Form.Root>
+	</form>
 }
 export {FormRoot as Form};
 /* -----------------------------------------------------------------------------------------
  * Form Field
  * ----------------------------------------------------------------------------------------*/
-export function FormField({children, className, ...rest}:  Form.FormFieldProps){
-	return <Form.Field className={twMerge("grid mb-[10px]", className)} {...rest}>
+const formFieldVariants = tv({
+	base: "",
+	variants: {
+		display: {
+			grid: "grid",
+			flex: "flex flex-col",
+		}
+	},
+	defaultVariants: {
+		display: "grid",
+	}
+})
+type FormFieldVariantsType = VariantProps<typeof formFieldVariants>;
+interface FormFieldProps extends FormFieldVariantsType, Omit<HTMLAttributes<HTMLDivElement>, keyof FormFieldVariantsType> {}
+export function FormField({display, className, children, ...rest}:  FormFieldProps){
+	return <div className={formFieldVariants({display, className})} {...rest}>
 		{children}
-	</Form.Field>
+	</div>
 }
 /* -----------------------------------------------------------------------------------------
  * Form Label
@@ -39,23 +51,24 @@ const labelVariants = tv({
 		size: "md",
 	}
 });
-const labelVariantKeys = ["size"];
 type LabelVariantsType = VariantProps<typeof labelVariants>;
-interface FormLabelProps extends LabelVariantsType, Omit<Form.FormLabelProps, keyof LabelVariantsType> {}
-
-export function FormLabel(props: FormLabelProps){
-	const {tvProps, className, children, ...rest} = extractTvProps<FormLabelProps, LabelVariantsType>(props, ...labelVariantKeys);
-
-	return <Form.Label className={labelVariants({...tvProps, className})} {...rest}>
+interface FormLabelProps extends LabelVariantsType, Omit<LabelHTMLAttributes<HTMLLabelElement>, keyof LabelVariantsType> {}
+export function FormLabel({
+	size,
+	className,
+	children,
+    ...rest
+}: FormLabelProps){
+	return <label className={labelVariants({size, className})} {...rest}>
 		{children}
-	</Form.Label>
+	</label>
 }
 
 /* -----------------------------------------------------------------------------------------
  * Form Message
  * ----------------------------------------------------------------------------------------*/
 const messageVariants = tv({
-	base: "text-[13px] opacity-[0.8]",
+	base: "text-[13px] opacity-[0.8] my-1",
 	variants: {
 		size:{
 			xs: "text-[0.625rem] leading-3",
@@ -79,31 +92,29 @@ const messageVariants = tv({
 	},
 });
 type MessageVariantsType = VariantProps<typeof messageVariants>;
-const messageVariantKeys = ["size", "color"];
-interface FormMessageProps extends MessageVariantsType, Omit<Form.FormMessageProps, keyof MessageVariantsType> {}
-
-export function FormMessage(props: FormMessageProps){
-	const {tvProps, className, children, ...rest} = extractTvProps<FormMessageProps, MessageVariantsType>(props, ...messageVariantKeys);
-
-	return <Form.Message className={messageVariants({...tvProps, className})} {...rest}>
+interface FormMessageProps extends MessageVariantsType, Omit<HTMLAttributes<HTMLDivElement>, keyof MessageVariantsType> {}
+export function FormMessage({
+	size,
+	color,
+	className,
+	children,
+	...rest
+}: FormMessageProps){
+	return <div className={messageVariants({size, color, className})} {...rest}>
 		{children}
-	</Form.Message>
+	</div>
 }
 
 /* -----------------------------------------------------------------------------------------
  * Form Control
  * ----------------------------------------------------------------------------------------*/
-export function FormControl({children, ...rest}: Form.FormControlProps){
-	return <Form.Control {...rest} asChild>
+const inputVariants = tv({
+	base: "join",
+});
+type InputVariantsType = VariantProps<typeof inputVariants>;
+interface FormInputProps extends InputVariantsType, Omit<HTMLAttributes<HTMLInputElement>, keyof InputVariantsType >{}
+export function FormControl({className, children, ...rest}: FormInputProps){
+	return <div className={inputVariants({className})} {...rest}>
 		{children}
-	</Form.Control>
-}
-
-/* -----------------------------------------------------------------------------------------
- * Form Submit
- * ----------------------------------------------------------------------------------------*/
-export function FormSubmit({children, className, ...rest}: Form.FormSubmitProps){
-	return <Form.Submit className={twMerge("w-full inline-flex items-center justify-center", className)} {...rest}>
-		{children}
-	</Form.Submit>
+	</div>
 }

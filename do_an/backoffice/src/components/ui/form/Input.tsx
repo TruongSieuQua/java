@@ -60,10 +60,11 @@ interface InputProps
  * Input is a component that renders an input element.
  * It accepts all the props that an input element accepts.
  */
-const Input = forwardRef(
-  ({ size, color, width, className, ...rest }: InputProps, ref) => {
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ size, color, width, className, ...rest }, ref) => {
     return (
       <input
+				ref={ref}
         className={input({ size, color, width, className })}
         {...rest}
       />
@@ -78,7 +79,7 @@ interface InputTextLabelProps extends InputProps {
   label: string;
 }
 
-export function InputTextLabel({
+const InputTextLabel = forwardRef<HTMLInputElement, InputTextLabelProps>(({
   size,
   color,
   width,
@@ -86,16 +87,16 @@ export function InputTextLabel({
   children,
   label,
   ...rest
-}: InputTextLabelProps) {
+}, ref) => {
   return (
     <label
       className={inputWithText({ size, color, width, className })}
     >
       {label}
-      <input className="grow" {...rest} />
+      <input ref={ref} className="grow" {...rest} />
     </label>
   );
-}
+})
 
 /*
 * InputIcon is a component that renders an icon inside input.
@@ -104,7 +105,7 @@ interface InputIconProps extends InputProps {
 	icon: React.ReactNode;
 	iconPosition?: "left" | "right";
 }
-export function InputIcon({
+const InputIcon = forwardRef<HTMLInputElement, InputIconProps>(({
   size,
   color,
   width,
@@ -113,17 +114,20 @@ export function InputIcon({
 	icon,
   iconPosition="left",
   ...rest
-}: InputIconProps) {
+}, ref) => {
   return (
     <label
       className={inputWithIcon({ size, color, width, className })}
     >
       {iconPosition === "left" && icon}
-      <input className="grow" {...rest} />
+      <input ref={ref} className="grow" {...rest} />
 			{iconPosition === "right" && icon}
     </label>
   );
-}
-Input.displayName = "Input";
+})
 
-export { Input };
+Input.displayName = "Input";
+InputTextLabel.displayName = "InputTextLabel";
+InputIcon.displayName = "InputIcon";
+
+export { Input, InputTextLabel, InputIcon};

@@ -47,10 +47,11 @@ export default function LoginForm({ params: { lng } }: LoginFormProps) {
         control={control}
         name={"email"}
         render={({ field, fieldState: { isDirty, error } }) => (
-          <FormField name="email">
-            <FormLabel>{t("email")}</FormLabel>
+          <FormField>
+            <FormLabel htmlFor="email">{t("email")}</FormLabel>
             <FormControl>
               <Input
+								id="email"
                 type="email"
                 {...field}
                 color={!isDirty ? "primary" : !error ? "success" : "error"}
@@ -69,10 +70,11 @@ export default function LoginForm({ params: { lng } }: LoginFormProps) {
         name="password"
         render={({ field, fieldState: { isDirty, error } }) => {
           return (
-            <FormField name="password">
-              <FormLabel>{t("password")}</FormLabel>
+            <FormField>
+              <FormLabel htmlFor="password">{t("password")}</FormLabel>
               <FormControl>
                 <Input
+									id="password"
                   type="password"
                   {...field}
                   color={!isDirty ? "primary" : !error ? "success" : "error"}

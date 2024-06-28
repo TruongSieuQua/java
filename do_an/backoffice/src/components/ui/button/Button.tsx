@@ -56,11 +56,12 @@ export interface ButtonProps
 			// React.ComponentPropsWithoutRef<"button">,
       keyof ButtonVariantsType
     > {}
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-  const { tvProps, className, children, type="button", ...rest } = extractTvProps<ButtonProps, ButtonVariantsType>(props, ...buttonVariantKeys);
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
+	size, rounded, width, color, variant, className, children, type, ...rest
+}, ref) => {
 
 	return (
-    <button ref={ref} className={buttonVariants({...tvProps, className})} {...rest} type={type}>
+    <button ref={ref} className={buttonVariants({size, rounded, width, color, variant, className})} {...rest} type={type}>
       {children}
     </button>
   );

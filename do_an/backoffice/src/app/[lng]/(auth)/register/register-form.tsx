@@ -15,11 +15,10 @@ import {
 import { Text } from "@/components/ui/typography";
 import { Controller } from "react-hook-form";
 import { useForm } from "@/utils/useForm";
-import { LoginData, LoginSchema, RegisterData, RegisterSchema } from "@/schema";
+import { RegisterData, RegisterSchema } from "@/schema";
 import { BiSolidJoystickButton } from "react-icons/bi";
 import { PageProps } from "@/interface";
 import { useTranslation } from "@/i18n/client";
-import clsx from "clsx";
 import { TfiUser } from "react-icons/tfi";
 import { SiGmail } from "react-icons/si";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -55,7 +54,7 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
           control={control}
           name={"firstName"}
           render={({ field, fieldState: { isDirty, error } }) => (
-            <FormField name="firstName">
+            <FormField>
               <FormControl>
                 <InputIcon
                   {...field}
@@ -76,7 +75,7 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
           control={control}
           name={"lastName"}
           render={({ field, fieldState: { isDirty, error } }) => (
-            <FormField name="lastName">
+            <FormField>
               <FormControl>
                 <InputIcon
                   {...field}
@@ -98,7 +97,7 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
         control={control}
         name={"email"}
         render={({ field, fieldState: { isDirty, error } }) => (
-          <FormField name="email">
+          <FormField>
             <FormControl>
               <InputIcon
                 {...field}
@@ -121,7 +120,7 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
         name="password"
         render={({ field, fieldState: { isDirty, error } }) => {
           return (
-            <FormField name="password">
+            <FormField>
               <FormControl>
                 <InputIcon
                   {...field}
@@ -146,7 +145,7 @@ export default function LoginForm({ params: { lng } }: RegisterFormProps) {
         name="confirmedPassword"
         render={({ field, fieldState: { isDirty, error } }) => {
           return (
-            <FormField name="confirmedPassword">
+            <FormField>
               <FormControl>
                 <InputIcon
                   {...field}
