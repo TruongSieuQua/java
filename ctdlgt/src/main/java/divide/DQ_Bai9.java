@@ -24,22 +24,23 @@ public class DQ_Bai9 {
         sb.append(String.format("Partitioning: left=%d, right=%d\n", l, r));
         joinIntArray(arr, l, r, " ", sb);
         while (true) {
-            while (i < j && arr[i] <= pivot) {
+            while (i <= j && arr[i] <= pivot) {
                 i++;
             }
-            while (i < j && arr[j] > pivot) {
+            while (i <= j && arr[j] > pivot) {
                 j--;
             }
-            if (i < j) {
+            if (i <= j) {
                 swap(arr, i, j);
                 joinIntArray(arr, l, r, " ", sb);
+                i++;
+                j--;
             } else break;
         }
-        i = pivot > arr[i] ? i :i-1;
-        swap(arr, l, i);
+        swap(arr, l, j);
         joinIntArray(arr, l, r, " ", sb);
-        divide(arr, l, i-1, sb);
-        divide(arr, i+1, r, sb);
+        divide(arr, l, j-1, sb);
+        divide(arr, j+1, r, sb);
     }
     public static void joinIntArray(int[] array, int start, int end, String delimiter, StringBuilder sb) {
         for (int k = start; k <= end; k++) {

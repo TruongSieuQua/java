@@ -6,12 +6,12 @@ export function Forest() {
   const { forestData, loading, updateForest } = useForest();
 
   return (
-    <div>
+    <div className="">
       <h1 className="text-2xl font-bold text-center">Forest</h1>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="flex gap-4 p-4">
+        <div className="flex justify-center gap-4 p-4">
           {forestData.map((forest) => (
             <div key={forest.name} className="border-solid border-2 border-blue-400 p-4">
               <div className="flex flex-col gap-2">

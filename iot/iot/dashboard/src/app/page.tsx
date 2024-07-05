@@ -1,30 +1,23 @@
-import Image from "next/image";
-import { MuiLineChart } from "../components/line-chart";
 import { Actuator } from "../components/actuator";
 import { ControlBoard } from "../components/control";
-import { Bounce, ToastContainer } from "react-toastify";
 import { Forest } from "@/components/forest";
-
+import { Authentication } from "@/components/authentication";
+import Header from "@/components/header";
+import { ClientProvider } from "./client-provider";
 
 export default function Home() {
+  console.log("Home page");
+
   return (
     <main className="flex min-h-screen flex-col items-center gap-6 p-24">
-      <Forest />
-      <ControlBoard/>
-      <Actuator />
-      <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-          transition={Bounce}
-        />
+      <ClientProvider>
+        <Authentication>
+          <Header />
+          <Forest />
+          <ControlBoard />
+          <Actuator />
+        </Authentication>
+      </ClientProvider>
     </main>
   );
 }

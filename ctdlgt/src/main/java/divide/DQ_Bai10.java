@@ -24,20 +24,21 @@ public class DQ_Bai10 {
         sb.append(String.format("Partitioning: left=%d, right=%d\n", l, r));
         joinIntArray(arr, l, r, " ", sb);
         while (true) {
-            while (i < j && arr[i] >= pivot) {
+            while (arr[i]>pivot) { // Giam dan
                 i++;
             }
-            while (i < j && arr[j] < pivot) {
+            while (arr[j]<=pivot) {
                 j--;
             }
             if (i < j) {
                 swap(arr, i, j);
                 joinIntArray(arr, l, r, " ", sb);
+                i++;
+                j--;
             } else break;
         }
-        i = pivot > arr[i] ?i :i+1;
         swap(arr, i, r);
-        joinIntArray(arr, l, r, " ", sb);sb.append("\n");
+        joinIntArray(arr, l, r, " ", sb);
         divide(arr, l, i-1, sb);
         divide(arr, i+1, r, sb);
     }

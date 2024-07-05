@@ -27,3 +27,8 @@ rabbitmq:
       key: sensor_temperature_routing_key
     actuatorState:
       key: actuator_state_routing_key
+
+springbootwebfluxjjwt:
+  jjwt:
+    secret: ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave65ByteLength
+    expiration: 28800

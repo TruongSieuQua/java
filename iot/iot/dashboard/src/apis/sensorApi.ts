@@ -5,7 +5,9 @@ const API_URL = `${process.env.SENSOR_API || "http://localhost:8082"}/sensors`;
 export const fetchSensor = async(id: number) => {
   try{
     const response = await fetch(`${API_URL}/${id}`, {
-      method: "GET"
+      method: "GET",
+      headers: {
+      }
     });
     if(response.ok){
       return {
