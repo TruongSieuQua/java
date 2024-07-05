@@ -1,0 +1,3 @@
+interface OAuthButtonProps{
+	placeholder: string;
+}
