@@ -1,4 +1,3 @@
-"use client";
 import { IoLanguageOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { usePathname } from 'next/navigation'

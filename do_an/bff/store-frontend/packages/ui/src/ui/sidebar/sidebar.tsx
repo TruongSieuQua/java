@@ -1,18 +1,16 @@
 "use client";
 
+import type {SideBarProps} from './sidebar.d'; 
 import { useSideBarContext } from "@/context";
+import {useMount} from "@/hooks";
 import { GoSidebarCollapse, GoSidebarExpand } from "react-icons/go";
-import { Button } from "@/components/ui/button";
 import Link, { LinkProps } from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
 
-interface SideBarProps {
-  children: React.ReactNode;
-}
+
 
 export function SideBarToggle() {
   const { isSideBarOpen, toggleSideBar } = useSideBarContext();
-
+	const Comp = asChild ? Slot : 'button';
   return (
     <Button onClick={toggleSideBar}>
       {isSideBarOpen ? <GoSidebarExpand /> : <GoSidebarCollapse />}
@@ -22,16 +20,20 @@ export function SideBarToggle() {
 
 export function SideBar({ children }: SideBarProps) {
   const { isSideBarOpen, toggleSideBar } = useSideBarContext();
+	const { isMounted, handleAnimationEnd } = useMount(isSideBarOpen);
   return (
-    <AnimatePresence>
-      {isSideBarOpen && (
+    <>
+      {isMounted && (
         <>
           <div
             className="sm:absolute sm:inset-0 md:static"
             onClick={toggleSideBar}
           />
           <div className="z-50 overflow-x-hidden sm:fixed md:static">
-            <motion.div
+            {
+							
+						}
+						<motion.div
               layout
               id="sb1"
               initial="hide"
@@ -53,7 +55,7 @@ export function SideBar({ children }: SideBarProps) {
           </div>
         </>
       )}
-    </AnimatePresence>
+    </>
   );
 }
 function SideBarHeader() {

@@ -1,0 +1,13 @@
+{
+  "title": "Charmpy | Login",
+  "login": "Login",
+  "tagline": "Seamless Access, Secure Connection: Your Gateway to a Personalized Experience.",
+  "email": "Email",
+  "password": "Password",
+  "submit": "Login",
+  "google-login": "Login with Google",
+  "facebook-login": "Login with Facebook",
+  "forgot-password": "Forgot Password?",
+  "don't_have_account": "Don't have an account?",
+  "register_now": "Register now!"
+}

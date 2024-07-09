@@ -1,4 +1,9 @@
 "use client";
+import type {
+  ContextType,
+  DropdownOptions,
+  PopoverTriggerProps,
+} from "./dropdown.d";
 import {
   cloneElement,
   createContext,
@@ -20,12 +25,8 @@ import {
   useInteractions,
   useMergeRefs,
   FloatingPortal,
-  FloatingFocusManager
+  FloatingFocusManager,
 } from "@floating-ui/react";
-import { Button } from "../button";
-import { ContextType, DropdownOptions, PopoverTriggerProps } from "./dropdown";
-
-
 
 function useDropdown({
   initialOpen = false,
@@ -102,7 +103,7 @@ const Dropdown = ({
       {children}
     </DropdownContext.Provider>
   );
-}
+};
 
 const DropdownTrigger = forwardRef<
   HTMLElement,
@@ -126,14 +127,14 @@ const DropdownTrigger = forwardRef<
   }
 
   return (
-    <Button
+    <button
       ref={ref}
       color={open ? "primary" : undefined}
       data-state={open ? "open" : "closed"}
       {...getReferenceProps(props)}
     >
       {children}
-    </Button>
+    </button>
   );
 });
 
@@ -144,7 +145,8 @@ const DropdownContent = forwardRef<
   const { open, context: floatingContext, ...context } = useDropdownContext();
   const ref = useMergeRefs([context.refs.setFloating, propRef]);
 
-  return (<>
+  return (
+    <>
       {open && (
         <FloatingPortal>
           <FloatingFocusManager context={floatingContext} modal={context.modal}>

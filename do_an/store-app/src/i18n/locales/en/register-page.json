@@ -1,0 +1,17 @@
+{
+  "title": "Charmpy | Register",
+  "register": "Register",
+  "tagline": "Seamless Access, Secure Connection: Your Gateway to a Personalized Experience.",
+  "first_name": "First Name",
+  "last_name": "Last Name",
+  "email": "Email",
+  "password": "Password",
+  "confirmed_password": "Confirmed Password",
+  "google-register": "Register with Google",
+  "facebook-register": "Register with Facebook",
+  "google_register": "Register with Google",
+  "facebook_register": "Register with Facebook",
+  "submit": "Register",
+  "already_have_account": "Already have account?",
+  "login_now": "Login Now!"
+}
