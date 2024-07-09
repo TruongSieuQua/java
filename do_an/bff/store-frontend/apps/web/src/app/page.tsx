@@ -1,5 +1,5 @@
 "use client"
-import { Button, Navigation, NavigationList, NavigationListItem, NavigationMenu, NavigationMenuPortal, NavigationMenuContent, NavigationMenuTrigger, NavigationMenuArrow } from "@repo/ui";
+import { Button } from "@repo/ui";
 // import "@repo/ui/style.css";
 import "./globals.css";
 

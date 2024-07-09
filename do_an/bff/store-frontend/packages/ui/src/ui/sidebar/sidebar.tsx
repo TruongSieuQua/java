@@ -1,27 +1,29 @@
 "use client";
 
-import type {SideBarProps} from './sidebar.d'; 
-import { useSideBarContext } from "@/context";
+import type {SideBarLinkProps, SideBarProps, SideBarToggleProps} from './sidebar.d';
+import {Slot} from "@/ui";
 import {useMount} from "@/hooks";
+import { useSideBarContext } from '@/context';
 import { GoSidebarCollapse, GoSidebarExpand } from "react-icons/go";
-import Link, { LinkProps } from "next/link";
+import clsx from 'clsx';
 
-
-
-export function SideBarToggle() {
-  const { isSideBarOpen, toggleSideBar } = useSideBarContext();
+export function SideBarToggle({
+	asChild=false
+}: SideBarToggleProps) {
+  const { isOpen, toggleSideBar } = useSideBarContext();
 	const Comp = asChild ? Slot : 'button';
   return (
-    <Button onClick={toggleSideBar}>
-      {isSideBarOpen ? <GoSidebarExpand /> : <GoSidebarCollapse />}
-    </Button>
+    <Comp onClick={toggleSideBar}>
+      {isOpen ? <GoSidebarExpand /> : <GoSidebarCollapse />}
+    </Comp>
   );
 }
 
 export function SideBar({ children }: SideBarProps) {
-  const { isSideBarOpen, toggleSideBar } = useSideBarContext();
-	const { isMounted, handleAnimationEnd } = useMount(isSideBarOpen);
-  return (
+  const { isOpen, toggleSideBar } = useSideBarContext();
+	const { isMounted, handleAnimationEnd } = useMount(isOpen);
+
+	return (
     <>
       {isMounted && (
         <>
@@ -29,29 +31,21 @@ export function SideBar({ children }: SideBarProps) {
             className="sm:absolute sm:inset-0 md:static"
             onClick={toggleSideBar}
           />
-          <div className="z-50 overflow-x-hidden sm:fixed md:static">
-            {
-							
-						}
-						<motion.div
-              layout
-              id="sb1"
-              initial="hide"
-              animate={isSideBarOpen ? "show" : "hide"}
-              exit={"hide"}
-              variants={{
-                show: { transform: "translateX(0px)" },
-                hide: { transform: "translateX(-320px)" },
-              }}
-            >
-              <div className="h-screen w-80 bg-base-100 ">
+          <div className="overflow-x-hidden sm:fixed md:static">
+            <div className={clsx("duration-500", {
+							"translate-x-0": isOpen,
+							"translate-x-[-320px]": !isOpen,
+						})}
+							onAnimationEnd={handleAnimationEnd}
+						>
+							<div className="h-screen w-80 bg-base-100 ">
                 <div className="sticky top-0 z-10 mx-2">
                   <SideBarHeader />
                 </div>
                 <div className="h-4" />
                 <ul className="menu py-0">{children}</ul>
               </div>
-            </motion.div>
+						</div>
           </div>
         </>
       )}
@@ -110,15 +104,12 @@ export function SideBarGroupDropdownContent({ children }: SideBarProps) {
   return <ul>{children}</ul>;
 }
 
-interface SideBarLinkProps extends LinkProps {
-  children: React.ReactNode;
-}
 export function SideBarLink({ children, ...rest }: SideBarLinkProps) {
   return (
     <li>
-      <Link {...rest}>
+      <a {...rest}>
         <div className="group flex items-center gap-2">{children}</div>
-      </Link>
+      </a>
     </li>
   );
 }

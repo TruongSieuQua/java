@@ -14,13 +14,16 @@ import {
   DropdownContent,
   DropdownTrigger,
 } from "@repo/ui";
+import {SideBarToggle} from "@repo/ui";
 import { Button } from "@repo/ui";
 import { IoIosArrowDown } from "react-icons/io";
+import { AdminSideBar } from "../../components/sidebar/Sidebar";
 
 export default function TestPage() {
   return (
-    <div className="p-2">
-      <div className="mb-96 flex flex-row justify-start">
+    <div className="p-2 flex">
+      <AdminSideBar />
+			<div className="flex-grow mb-96 flex flex-row justify-start">
         <Navigation>
           <NavigationList>
             <NavigationListItem>
@@ -83,6 +86,7 @@ export default function TestPage() {
             </NavigationListItem>
           </NavigationList>
         </Navigation>
+				<SideBarToggle/>
       </div>
       <div className="mb-96 flex justify-center">
 

@@ -2,6 +2,9 @@
   "name": "store-app",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "../store-app"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",

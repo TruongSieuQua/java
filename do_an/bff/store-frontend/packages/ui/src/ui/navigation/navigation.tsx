@@ -36,7 +36,7 @@ import {
 	FloatingPortal,
 } from "@floating-ui/react";
 import clsx from "clsx";
-import { Slot } from "../slot";
+import { Slot } from "@/ui";
 
 const Navigation = ({ children, ...rest }: NavigationProps) => {
 	return <div {...rest}>{children}</div>;
