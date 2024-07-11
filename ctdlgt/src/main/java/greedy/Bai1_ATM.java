@@ -17,9 +17,7 @@ public class Bai1_ATM {
             int[] arrtmp = new int[]{0, 0, 0, 0};
             for (int k = menhGia.length - 1; k >= 0; k--) {
                 int tmp = menhGia[k] * (int)Math.pow(10, j);
-                if(tmp > money){
-                    continue;
-                }
+
                 long paperNeeded = money / tmp;
 
                 count += (int)paperNeeded;
@@ -27,7 +25,6 @@ public class Bai1_ATM {
                 if(paperNeeded != 0){
                     arrtmp[k] = 1;
                 }
-
                 money %= tmp;
             }
             if (arrtmp[3] == 1 && arrtmp[2] == 1 && arrtmp[0] == 1) l *= 3;
