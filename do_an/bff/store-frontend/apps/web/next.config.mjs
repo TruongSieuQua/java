@@ -1,6 +1,8 @@
+import withBundleAnalyzer from "@next/bundle-analyzer";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	transpilePackages: ['@repo/ui'],
+	transpilePackages: ['@peonyui'],
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);

@@ -1,9 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "../../packages/ui/src/**/*.{js,ts,jsx,tsx,mdx}",
+    "../../packages/peonyui/src/**/*.{js,ts,jsx,tsx,mdx}",
 		"./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+	daisyui: {
+    themes: ["light", "dark", "cupcake"],
+  },
   plugins: [
     require('daisyui'),
 		require('tailwindcss-animated')

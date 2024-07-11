@@ -4,7 +4,7 @@ import {
   SideBarGroupDropdownTrigger,
   SideBarGroupDropdownContent,
   SideBarLink,
-} from "@repo/ui";
+} from "@peonyui/ui";
 import { TbLayoutDashboard } from "react-icons/tb";
 import {
   PiBook,
