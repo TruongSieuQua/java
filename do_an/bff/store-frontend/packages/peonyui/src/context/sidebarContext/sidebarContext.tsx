@@ -5,10 +5,10 @@ import { createContext, useContext, useState } from "react";
 const SideBarContext = createContext<SideBarContextProps | undefined>(undefined);
 
 const SideBarProvider = ({ children }: SideBarProviderProps) => {
-  const [isOpen, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const toggleSideBar = () => {
-		setOpen(!isOpen);
+		setOpen(!open);
   };
 
   // useEffect(() => {
@@ -25,7 +25,7 @@ const SideBarProvider = ({ children }: SideBarProviderProps) => {
   // }, []);
 
   return (
-    <SideBarContext.Provider value={{ isOpen, toggleSideBar }}>
+    <SideBarContext.Provider value={{ open, toggleSideBar }}>
       {children}
     </SideBarContext.Provider>
   );

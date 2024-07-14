@@ -15,13 +15,14 @@ import { Dropdown, DropdownContent, DropdownTrigger } from "@peonyui/ui";
 import { SideBarToggle } from "@peonyui/ui";
 import { Button } from "@peonyui/ui";
 import { IoIosArrowDown } from "react-icons/io";
+import { GoSidebarExpand } from "react-icons/go";
 import { AdminSideBar } from "../../components/sidebar/Sidebar";
 
 export default function TestPage() {
 	return (
 		<div className="p-2 flex">
 			<AdminSideBar />
-			<div className="flex-grow mb-96 flex flex-row justify-start">
+			<div className="flex-grow mb-96 flex flex-row justify-start relative">
 				<Navigation>
 					<NavigationList>
 						<NavigationListItem>
@@ -41,7 +42,23 @@ export default function TestPage() {
 						</NavigationListItem>
 						<NavigationListItem>
 							<NavigationMenu>
-								<NavigationMenuTrigger asChild>
+								<NavigationMenuTrigger asChild={true}>
+									<Button>
+										Trigger
+										<IoIosArrowDown className="duration-500 group-data-[state=open]:rotate-180" />
+									</Button>
+								</NavigationMenuTrigger>
+								<NavigationMenuPortal>
+									<NavigationMenuContent>
+										<LongContent />
+									</NavigationMenuContent>
+									<NavigationMenuArrow className="fill-green-300" />
+								</NavigationMenuPortal>
+							</NavigationMenu>
+						</NavigationListItem>
+						<NavigationListItem>
+							<NavigationMenu>
+								<NavigationMenuTrigger asChild={true}>
 									<Button>
 										Trigger
 										<IoIosArrowDown className="duration-500 group-data-[state=open]:rotate-180" />
@@ -72,26 +89,13 @@ export default function TestPage() {
 							</NavigationMenu>
 						</NavigationListItem>
 						<NavigationListItem>
-							<NavigationMenu>
-								<NavigationMenuTrigger asChild={true}>
-									<Button>
-										Trigger
-										<IoIosArrowDown className="duration-500 group-data-[state=open]:rotate-180" />
-									</Button>
-								</NavigationMenuTrigger>
-								<NavigationMenuPortal>
-									<NavigationMenuContent>
-										<LongContent />
-									</NavigationMenuContent>
-									<NavigationMenuArrow className="fill-green-300" />
-								</NavigationMenuPortal>
-							</NavigationMenu>
+							<SideBarToggle className="btn">
+								<GoSidebarExpand className="duration-500 group-data-[state=open]:rotate-180" />
+							</SideBarToggle>
 						</NavigationListItem>
 					</NavigationList>
 				</Navigation>
-				<SideBarToggle />
 			</div>
-			<div className="mb-96 flex justify-center"></div>
 		</div>
 	);
 }

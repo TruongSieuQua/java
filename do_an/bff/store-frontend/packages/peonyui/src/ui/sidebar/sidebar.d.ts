@@ -1,10 +1,11 @@
-import type {DetailedHTMLProps, HTMLAttributes, ReactNode, HTMLLinkElement, AnchorHTMLAttributes} from 'react';
+import type {ButtonHTMLAttributes, HTMLButtonElement, DetailedHTMLProps, HTMLAttributes, ReactNode, HTMLLinkElement, AnchorHTMLAttributes} from 'react';
 
 interface SideBarProps {
   children: ReactNode;
 }
 
-interface SideBarToggleProps extends DetailedHTMLProps<React.HTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+interface SideBarToggleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+	children?: ReactNode | DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>>;
 	asChild?: boolean;
 }
 

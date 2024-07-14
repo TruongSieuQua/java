@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 
 const useAnimation = (open: boolean) => {
-  const [isMounted, setMounted] = useState<boolean>(false);
+  const [shouldMount, setShouldMount] = useState<boolean>(false);
 
   useEffect(() => {
-    if (open) setMounted(true);
+    if (open) setShouldMount(true);
   }, [open]);
 
   const handleAnimationEnd = () => {
-    if (!open) setMounted(false);
+    if (!open) setShouldMount(false);
   };
 
-  return { isMounted, handleAnimationEnd };
+  return { shouldMount, handleAnimationEnd };
 };
 
 export {useAnimation};

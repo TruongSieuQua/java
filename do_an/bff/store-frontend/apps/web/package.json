@@ -9,8 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next/bundle-analyzer": "^14.2.5",
-    "@repo/ui": "*",
     "next": "*",
     "react": "*",
     "react-dom": "*"
@@ -19,17 +17,14 @@
     "@repo/config": "*",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
-    "@types/node": "^20",
     "@types/react": "*",
     "@types/react-dom": "*",
-    "autoprefixer": "^10.4.19",
-    "daisyui": "^4.12.10",
-    "eslint": "^8",
-    "eslint-config-next": "15.0.0-rc.0",
-    "postcss": "^8.4.39",
-    "postcss-import": "^16.1.0",
-    "tailwindcss": "^3.4.4",
-    "tailwindcss-animated": "^1.1.2",
-    "typescript": "^5"
+    "autoprefixer": "*",
+    "eslint": "*",
+    "eslint-config-next": "*",
+    "postcss": "*",
+    "postcss-import": "*",
+    "tailwindcss": "*",
+    "typescript": "*"
   }
 }

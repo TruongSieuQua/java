@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 type SideBarContextProps = {
-	isOpen: boolean;
+	open: boolean;
 	toggleSideBar: () => void;
 }
 

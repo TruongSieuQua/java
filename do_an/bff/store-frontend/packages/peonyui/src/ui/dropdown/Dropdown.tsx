@@ -32,14 +32,15 @@ import {
 	FloatingArrow,
 } from "@floating-ui/react";
 import clsx from "clsx";
+import { useAnimation } from "@peonyui/hooks";
 
 /* *********************************************************************************
  * Global variables
  * *********************************************************************************
  */
-const GAP = 3;
-const ARROW_WIDTH = 7;
-const ARROW_HEIGHT = 7;
+const GAP = 2;
+const ARROW_WIDTH = 8;
+const ARROW_HEIGHT = 8;
 const DropdownContext = createContext<ContextType>(null);
 
 function useDropdown({
@@ -150,9 +151,10 @@ React.HTMLProps<HTMLDivElement>
 >(function DropdownContent({ children, style, ...props }, propRef) {
 const { open, context: floatingContext, ...context } = useDropdownContext();
 const ref = useMergeRefs([context.refs.setFloating, propRef]);
+const {shouldMount, handleAnimationEnd} = useAnimation(open);
 
 return (<>
-		{open && (
+		{shouldMount && (
 			<FloatingPortal>
 				<FloatingFocusManager context={floatingContext} modal={context.modal}>
 					<div
@@ -160,7 +162,12 @@ return (<>
 						style={{ ...context.floatingStyles, ...style }}
 						{...context.getFloatingProps(props)}
 					>
-						{children}
+							<div
+								className={open ? "animate__animated animate__bounceIn" : "animate__animated animate__bounceOut"}
+								onAnimationEnd={handleAnimationEnd}
+							>
+								{children}
+							</div>
 					</div>
 				</FloatingFocusManager>
 			</FloatingPortal>

@@ -12,7 +12,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant,
       className,
       children,
-      type,
+      type="button",
       ...rest
     },
     ref

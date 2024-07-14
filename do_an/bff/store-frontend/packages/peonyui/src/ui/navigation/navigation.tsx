@@ -15,7 +15,6 @@ import {
 	useRef,
 	useMemo,
 	forwardRef,
-	useEffect,
 } from "react";
 import {
 	autoUpdate,
@@ -37,6 +36,7 @@ import {
 } from "@floating-ui/react";
 import { Slot } from "@peonyui/ui";
 import clsx from "clsx";
+import { useAnimation } from "@peonyui/hooks";
 
 const Navigation = ({ children, ...rest }: NavigationProps) => {
 	return <div {...rest}>{children}</div>;
@@ -50,7 +50,7 @@ const NavigationList = ({
 	return (
 		<ul
 			className={clsx(
-				"flex flex-row gap-1.5 p-2 bg-white rounded-lg shadow-md border border-gray-200 z-10",
+				"flex flex-row gap-1.5 p-2 bg-white rounded-lg shadow-md border border-gray-200",
 				className,
 			)}
 			{...rest}
@@ -68,9 +68,9 @@ const NavigationListItem = ({ children, ...rest }: NavigationListItemProps) => {
  * Global variables
  * *********************************************************************************
  */
-const GAP = 3;
-const ARROW_WIDTH = 7;
-const ARROW_HEIGHT = 7;
+const GAP = 2;
+const ARROW_WIDTH = 8;
+const ARROW_HEIGHT = 8;
 
 function useNavigationMenu({ ...props }: UseFloatingOptions) {
 	const [open, setIsOpen] = useState<boolean>(false);
@@ -181,19 +181,11 @@ const NavigationMenuPortal = forwardRef<
 	const { open, getFloatingProps, floatingStyles, refs } =
 		useNaviagtionContext();
 	const ref = useMergeRefs([refs.setFloating, propRef]);
-	const [shouldRender, setRender] = useState(false);
-
-	useEffect(() => {
-		if (open) setRender(true);
-	}, [open]);
-
-	const handleonAnimationEnd = () => {
-		if (!open) setRender(false);
-	};
+	const {shouldMount, handleAnimationEnd} = useAnimation(open);
 
 	return (
 		<>
-			{shouldRender && (
+			{shouldMount && (
 				<FloatingPortal>
 					<div
 						ref={ref}
@@ -201,17 +193,12 @@ const NavigationMenuPortal = forwardRef<
 						style={{ ...floatingStyles, ...style }}
 						{...props}
 					>
-						{shouldRender && (
 							<div
-								className={clsx("animate-duration-500", {
-									"animate-jump-in": open,
-									"animate-jump-out": !open,
-								})}
-								onAnimationEnd={handleonAnimationEnd}
+								className={open ? "animate__animated animate__bounceIn" : "animate__animated animate__bounceOut"}
+								onAnimationEnd={handleAnimationEnd}
 							>
 								{children}
 							</div>
-						)}
 					</div>
 				</FloatingPortal>
 			)}

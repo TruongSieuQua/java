@@ -31,7 +31,7 @@ export function ThemeToggle() {
 			</div>
 			<ul
 				tabIndex={0}
-				className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-fit"
+				className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-fit"
 			>
 				{["light", "dark", "cupcake"].map((theme, index) => (
 					<li key={index}>
