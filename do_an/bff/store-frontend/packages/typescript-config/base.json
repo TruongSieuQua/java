@@ -21,7 +21,9 @@
     "target": "ES2022",
     "outDir": "dist",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@peonyui/*": ["../../packages/peonyui/src/*"]
+
     }
   },
   "include": ["src"],

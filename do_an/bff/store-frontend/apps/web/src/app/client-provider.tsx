@@ -1,5 +1,5 @@
 "use client";
-import { UIStateProvider } from "@repo/ui";
+import { UIStateProvider } from "@peonyui/context";
 import { ReactNode } from "react";
 
 export const ClientProvider = ({ children }: { children: ReactNode }) => {

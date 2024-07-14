@@ -1,5 +1,4 @@
 "use client"
-import { Button } from "@repo/ui";
 // import "@repo/ui/style.css";
 import "./globals.css";
 
@@ -7,7 +6,6 @@ export default function Home() {
   return (
     <div>
       <main>
-        <Button className="">Hello</Button>
         <h1>Hellooooo</h1>
 				<div className="flex justify-center">
 					<div className="w-96">

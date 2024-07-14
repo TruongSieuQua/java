@@ -52,6 +52,7 @@ function mergeReactProps(parentProps: AnyProps, childProps: AnyProps) {
 
 	return {...parentProps, ...overrideProps};
 }
+Slot.displayName = "Slot"
 
 function setRef<TInstance>(ref: React.Ref<TInstance>, instance: TInstance) {
 	if (ref instanceof Function) {
@@ -72,6 +73,6 @@ function combinedRef<TInstance>(refs: React.Ref<TInstance>[]) {
  * @param refs The refs that should receive the instance.
  * @returns The combined ref.
  */
-function useMultipleRefs<TInstance>(...refs: React.Ref<TInstance>[]) {
-	return useCallback(combinedRef(refs), refs);
-}
+// function useMultipleRefs<TInstance>(...refs: React.Ref<TInstance>[]) {
+// 	return useCallback(combinedRef(refs), refs);
+// }

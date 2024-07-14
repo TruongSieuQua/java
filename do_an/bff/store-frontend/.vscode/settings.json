@@ -1,0 +1,9 @@
+{
+    "cSpell.words": [
+        "peonyui",
+        "tailwindcss"
+    ],
+    "tailwindCSS.experimental.classRegex": [
+      ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]
+    ]
+}

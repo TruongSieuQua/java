@@ -19,8 +19,8 @@ import {
   offset,
 	safePolygon,
 } from "@floating-ui/react";
-import { Slot, Slottable } from "@radix-ui/react-slot";
 import { createPortal } from "react-dom";
+import { Slot } from "../slot";
 /*
  * PortalContextProvider
  */
@@ -105,7 +105,7 @@ export const PortalTrigger = ({
   const Comp = asChild ? Slot : "button";
   return (
     <Comp ref={refs.setReference} {...getReferenceProps()} {...rest}>
-      <Slottable>{children}</Slottable>
+      <>{children}</>
     </Comp>
   );
 };

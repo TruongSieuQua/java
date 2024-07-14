@@ -6,9 +6,6 @@
         "name": "next"
       }
     ],
-    "paths": {
-      "@/*": ["../../packages/ui/src/*"]
-    }
   },
   "include": [
     "next-env.d.ts",
