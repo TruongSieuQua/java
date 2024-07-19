@@ -1,6 +1,7 @@
-import {formFieldVariants} from "./form-variants";
-import type { VariantProps } from "tailwind-variants";
 import type { HTMLAttributes, LabelHTMLAttributes  } from "react";
+import type { VariantProps } from "tailwind-variants";
+
+import {formFieldVariants} from "./form-variants";
 
 interface FormRootProps extends HTMLAttributes<HTMLFormElement> {}
 

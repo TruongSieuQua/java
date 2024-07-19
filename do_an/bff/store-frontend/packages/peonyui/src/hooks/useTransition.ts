@@ -11,7 +11,6 @@ export function useTransition(
 	const [enter, setEnter] = useState<boolean>(open);
 	const [shouldMount, setShouldMount] = useState<boolean>(open);
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
 	useEffect(() => {
 		if (open) {
 			setShouldMount(true);
@@ -30,6 +29,6 @@ export function useTransition(
 				clearTimeout(timeoutRef.current);
 			}
 		};
-	}, [open]);
+	}, [open, timeUnmount]);
 	return { enter, shouldMount };
 }

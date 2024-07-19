@@ -1,12 +1,23 @@
 "use client";
-import type {
-	ContextType,
-	DropdownContentProps,
-	DropdownOptions,
-	DropdownProps,
-	DropdownTriggerProps,
-} from "./dropdown";
+import {
+	arrow,
+	autoUpdate,
+	flip,
+	FloatingArrow,
+	FloatingFocusManager,
+	FloatingPortal,
+	offset,
+	shift,
+	useClick,
+	useDismiss,
+	useFloating,
+	useInteractions,
+	useMergeRefs,
+	useRole,
+} from "@floating-ui/react";
+import { useAnimation } from "@peonyui/hooks";
 import { Slot } from "@peonyui/ui";
+import clsx from "clsx";
 import {
 	createContext,
 	forwardRef,
@@ -15,24 +26,14 @@ import {
 	useRef,
 	useState,
 } from "react";
-import {
-	useFloating,
-	autoUpdate,
-	offset,
-	flip,
-	shift,
-	useClick,
-	useDismiss,
-	useRole,
-	useInteractions,
-	useMergeRefs,
-	FloatingPortal,
-	FloatingFocusManager,
-	arrow,
-	FloatingArrow,
-} from "@floating-ui/react";
-import clsx from "clsx";
-import { useAnimation } from "@peonyui/hooks";
+
+import type {
+	ContextType,
+	DropdownContentProps,
+	DropdownOptions,
+	DropdownProps,
+	DropdownTriggerProps,
+} from "./dropdown.d";
 
 /* *********************************************************************************
  * Global variables
@@ -221,4 +222,4 @@ DropdownContent.displayName = "DropdownContent";
 DropdownClose.displayName = "DropdownClose";
 DropdownArrow.displayName = "DropdownArrow";
 
-export { Dropdown, DropdownTrigger, DropdownPortal, DropdownContent, DropdownClose, DropdownArrow };
+export { Dropdown, DropdownArrow,DropdownClose, DropdownContent, DropdownPortal, DropdownTrigger };

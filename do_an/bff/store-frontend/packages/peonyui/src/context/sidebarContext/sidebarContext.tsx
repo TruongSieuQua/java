@@ -1,6 +1,7 @@
 "use client";
-import type { SideBarContextProps, SideBarProviderProps } from './sidebarContext.d';
 import { createContext, useContext, useState } from "react";
+
+import type { SideBarContextProps, SideBarProviderProps } from './sidebarContext.d';
 
 const SideBarContext = createContext<SideBarContextProps | undefined>(undefined);
 

@@ -14,15 +14,16 @@ import {
 import { Dropdown, DropdownContent, DropdownTrigger } from "@peonyui/ui";
 import { SideBarToggle } from "@peonyui/ui";
 import { Button } from "@peonyui/ui";
-import { IoIosArrowDown } from "react-icons/io";
 import { GoSidebarExpand } from "react-icons/go";
+import { IoIosArrowDown } from "react-icons/io";
+
 import { AdminSideBar } from "../../components/sidebar/Sidebar";
 
 export default function TestPage() {
 	return (
-		<div className="p-2 flex">
+		<div className="flex p-2">
 			<AdminSideBar />
-			<div className="flex-grow mb-96 flex flex-row justify-start relative">
+			<div className="relative mb-96 flex grow flex-row justify-start">
 				<Navigation>
 					<NavigationList>
 						<NavigationListItem>
@@ -111,7 +112,7 @@ function LongContent() {
 				<Link href={""}>
 					<div
 						className="focus:shadow-violet7 from-purple9 to-indigo9 flex
-				h-full w-full select-none flex-col justify-end rounded-[6px] bg-gradient-to-b p-[25px] no-underline outline-none focus:shadow-[0_0_0_2px]"
+				size-full select-none flex-col justify-end rounded-[6px] bg-gradient-to-b p-[25px] no-underline outline-none focus:shadow-[0_0_0_2px]"
 					>
 						<svg
 							aria-hidden

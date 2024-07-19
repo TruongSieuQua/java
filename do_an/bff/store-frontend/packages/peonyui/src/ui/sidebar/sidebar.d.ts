@@ -1,4 +1,4 @@
-import type {ButtonHTMLAttributes, HTMLButtonElement, DetailedHTMLProps, HTMLAttributes, ReactNode, HTMLLinkElement, AnchorHTMLAttributes} from 'react';
+import type {AnchorHTMLAttributes,ButtonHTMLAttributes, DetailedHTMLProps, HTMLAttributes, HTMLButtonElement, HTMLLinkElement, ReactNode} from 'react';
 
 interface SideBarProps {
   children: ReactNode;

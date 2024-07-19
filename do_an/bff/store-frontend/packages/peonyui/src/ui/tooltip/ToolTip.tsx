@@ -1,19 +1,18 @@
-import * as React from "react";
+import type { Placement } from "@floating-ui/react";
 import {
-  useFloating,
   autoUpdate,
-  offset,
   flip,
+  FloatingPortal,
+  offset,
   shift,
-  useHover,
-  useFocus,
   useDismiss,
-  useRole,
+  useFloating,
+  useFocus,
+  useHover,
   useInteractions,
   useMergeRefs,
-  FloatingPortal
-} from "@floating-ui/react";
-import type { Placement } from "@floating-ui/react";
+  useRole} from "@floating-ui/react";
+import * as React from "react";
 
 interface TooltipOptions {
   initialOpen?: boolean;

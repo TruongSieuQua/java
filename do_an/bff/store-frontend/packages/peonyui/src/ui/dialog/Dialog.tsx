@@ -1,13 +1,15 @@
-import type {
-  DialogCloseButtonProps,
-  DialogContentProps,
-  DialogContextType,
-  DialogDescriptionProps,
-  DialogHeadingProps,
-  DialogOptions,
-  DialogProps,
-  DialogTriggerProps,
-} from "./dialog.d";
+import {
+  FloatingFocusManager,
+  FloatingOverlay,
+  FloatingPortal,
+  useClick,
+  useDismiss,
+  useFloating,
+  useId,
+  useInteractions,
+  useMergeRefs,
+  useRole,
+} from "@floating-ui/react";
 import {
   cloneElement,
   createContext,
@@ -18,18 +20,17 @@ import {
   useMemo,
   useState,
 } from "react";
-import {
-  useFloating,
-  useClick,
-  useDismiss,
-  useRole,
-  useInteractions,
-  useMergeRefs,
-  FloatingPortal,
-  FloatingFocusManager,
-  FloatingOverlay,
-  useId,
-} from "@floating-ui/react";
+
+import type {
+  DialogCloseButtonProps,
+  DialogContentProps,
+  DialogContextType,
+  DialogDescriptionProps,
+  DialogHeadingProps,
+  DialogOptions,
+  DialogProps,
+  DialogTriggerProps,
+} from "./dialog.d";
 
 export function useDialog({
   initialOpen = false,

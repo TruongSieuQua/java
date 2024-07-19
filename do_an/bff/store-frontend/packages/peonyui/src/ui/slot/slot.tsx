@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client";
 import { cloneElement, forwardRef, isValidElement, useCallback } from "react";
 
@@ -17,7 +18,7 @@ export const Slot = forwardRef<HTMLElement, SlotProps>(
       ref: combinedRef([forwardedRef, (children as any).ref]),
     } as any);
 });
-
+Slot.displayName = "Slot";
 type AnyProps = Record<string, any>;
 
 function mergeReactProps(parentProps: AnyProps, childProps: AnyProps) {

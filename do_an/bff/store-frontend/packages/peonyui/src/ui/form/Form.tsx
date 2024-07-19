@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 import type {
 	FormControlProps,
 	FormFieldProps,
@@ -12,7 +14,6 @@ import {
 	labelVariants,
 	messageVariants,
 } from "./form-variants";
-import clsx from "clsx";
 
 /* -----------------------------------------------------------------------------------------
  * Form Root
@@ -100,7 +101,7 @@ export function FormSubmit({
   return (
     <button
       className={clsx(
-        "w-full inline-flex items-center justify-center",
+        "inline-flex w-full items-center justify-center",
         className
       )}
       {...rest}

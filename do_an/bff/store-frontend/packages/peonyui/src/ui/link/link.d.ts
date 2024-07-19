@@ -1,6 +1,7 @@
-import { link } from "./link-variants";
 import type { HTMLAttributes } from "react";
 import type { VariantProps } from "tailwind-variants";
+
+import { link } from "./link-variants";
 
 type LinkType = VariantProps<typeof link>;
 
