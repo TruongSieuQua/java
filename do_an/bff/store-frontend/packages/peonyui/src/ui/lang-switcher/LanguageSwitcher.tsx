@@ -1,6 +1,6 @@
-import { IoLanguageOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { usePathname } from 'next/navigation'
+import { IoLanguageOutline } from "react-icons/io5";
 
 export function LanguageSwitcher() {
 	const router = useRouter();
@@ -18,7 +18,7 @@ export function LanguageSwitcher() {
 			<div tabIndex={0} className="btn btn-ghost">
 				<IoLanguageOutline />
 			</div>
-			<ul tabIndex={0} className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-fit">
+			<ul tabIndex={0} className="menu dropdown-content bg-base-100 rounded-box z-[1] w-fit p-2 shadow">
 				<li>
 					<div className="btn btn-ghost" onClick={()=>changeLanguage("en")}>En</div>
 				</li>

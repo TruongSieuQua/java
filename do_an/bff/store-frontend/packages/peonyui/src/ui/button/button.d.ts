@@ -1,5 +1,6 @@
-import { buttonVariants } from "./button-variants";
 import { type VariantProps } from "tailwind-variants";
+
+import { buttonVariants } from "./button-variants";
 
 type ButtonVariantsType = VariantProps<typeof buttonVariants>;
 interface ButtonProps

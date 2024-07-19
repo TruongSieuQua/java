@@ -1,5 +1,6 @@
-import type { InputProps, InputTextLabelProps, InputIconProps } from "./input.d";
 import { forwardRef } from "react";
+
+import type { InputIconProps,InputProps, InputTextLabelProps } from "./input.d";
 import { input, inputWithIcon, inputWithText } from "./input-variants";
 
 
@@ -69,4 +70,4 @@ Input.displayName = "Input";
 InputTextLabel.displayName = "InputTextLabel";
 InputIcon.displayName = "InputIcon";
 
-export { Input, InputTextLabel, InputIcon};
+export { Input, InputIcon,InputTextLabel};

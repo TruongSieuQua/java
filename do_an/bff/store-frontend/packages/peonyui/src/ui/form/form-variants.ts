@@ -14,13 +14,13 @@ export const formFieldVariants = tv({
 })
 
 export const labelVariants = tv({
-	base: "font-medium text-heading",
+	base: "text-heading font-medium",
 	variants: {
 		size: {
 			xs: "text-xs leading-7",
 			sm: "text-sm leading-8",
 			md: "text-base leading-9",
-			lg: "text-lg leading-11",
+			lg: "leading-11 text-lg",
 		},
 	},
 	defaultVariants:  {
@@ -33,7 +33,7 @@ export const formControlVariants = tv({
 });
 
 export const messageVariants = tv({
-	base: "text-[13px] opacity-[0.8] my-1",
+	base: "my-1 text-[13px] opacity-80",
 	variants: {
 		size:{
 			xs: "text-[0.625rem] leading-3",

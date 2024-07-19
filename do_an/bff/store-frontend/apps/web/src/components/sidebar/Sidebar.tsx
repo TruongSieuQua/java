@@ -1,11 +1,21 @@
 import {
   SideBar,
   SideBarGroupDropdown,
-  SideBarGroupDropdownTrigger,
   SideBarGroupDropdownContent,
+  SideBarGroupDropdownTrigger,
   SideBarLink,
 } from "@peonyui/ui";
-import { TbLayoutDashboard } from "react-icons/tb";
+import { AiOutlineSchedule } from "react-icons/ai";
+import { FcStatistics } from "react-icons/fc";
+import {
+  GrAdd,
+  GrAnalytics,
+  GrDocumentPerformance,
+  GrShieldSecurity,
+  GrUserAdmin,
+} from "react-icons/gr";
+import { HiDocumentReport } from "react-icons/hi";
+import { IoHelpCircleOutline, IoSettingsOutline } from "react-icons/io5";
 import {
   PiBook,
   PiBookBookmarkFill,
@@ -17,18 +27,8 @@ import {
   PiStudent,
   PiUserFill,
 } from "react-icons/pi";
-import { HiDocumentReport } from "react-icons/hi";
-import { AiOutlineSchedule } from "react-icons/ai";
-import {
-  GrAdd,
-  GrAnalytics,
-  GrDocumentPerformance,
-  GrShieldSecurity,
-  GrUserAdmin,
-} from "react-icons/gr";
-import { FcStatistics } from "react-icons/fc";
 import { RiAccountBoxLine, RiSettings3Fill } from "react-icons/ri";
-import { IoHelpCircleOutline, IoSettingsOutline } from "react-icons/io5";
+import { TbLayoutDashboard } from "react-icons/tb";
 
 export function AdminSideBar() {
   return (

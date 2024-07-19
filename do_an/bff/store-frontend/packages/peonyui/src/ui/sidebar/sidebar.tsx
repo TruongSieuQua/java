@@ -1,16 +1,17 @@
 "use client";
 
+import { useSideBarContext } from "@peonyui/context";
+import { useTransition } from "@peonyui/hooks";
+import { Slot } from "@peonyui/ui";
+import clsx from "clsx";
+import { forwardRef } from "react";
+import { GoSidebarExpand } from "react-icons/go";
+
 import type {
 	SideBarLinkProps,
 	SideBarProps,
 	SideBarToggleProps,
 } from "./sidebar.d";
-import { Slot } from "@peonyui/ui";
-import { useSideBarContext } from "@peonyui/context";
-import { useTransition } from "@peonyui/hooks";
-import clsx from "clsx";
-import { forwardRef } from "react";
-import { GoSidebarExpand } from "react-icons/go";
 
 export const SideBarToggle = forwardRef<HTMLButtonElement, SideBarToggleProps>(
 	(
@@ -51,7 +52,7 @@ export function SideBar({ children }: SideBarProps) {
 						className="sm:absolute sm:inset-0 md:static"
 						onClick={toggleSideBar}
 					/>
-					<div className="overflow-x-hidden sm:fixed sm:left-0 md:static z-50">
+					<div className="z-50 overflow-x-hidden sm:fixed sm:left-0 md:static">
 						<div
 							className={clsx("duration-500 ease-in-out", {
 								"translate-x-0 sm:right-full md:w-80": enter,
@@ -59,7 +60,7 @@ export function SideBar({ children }: SideBarProps) {
 									!enter,
 							})}
 						>
-							<div className="h-screen sm:w-screen md:w-80 bg-base-100">
+							<div className="bg-base-100 h-screen sm:w-screen md:w-80">
 								<div className="sticky top-0 mx-2">
 									<SideBarHeader />
 								</div>
@@ -76,7 +77,7 @@ export function SideBar({ children }: SideBarProps) {
 function SideBarHeader() {
 	return (
 		<div className="flex w-full">
-			<div className="flex flex-grow items-center">
+			<div className="flex grow items-center">
 				<a href="/" className="text-primary-500 text-2xl font-bold">
 					Logo
 				</a>
@@ -118,7 +119,7 @@ export function SideBarGroupDropdown({ children }: SideBarProps) {
 }
 export function SideBarGroupDropdownTrigger({ children }: SideBarProps) {
 	return (
-		<summary className="group font-semibold text-base-content/80">
+		<summary className="text-base-content/80 group font-semibold">
 			{children}
 		</summary>
 	);

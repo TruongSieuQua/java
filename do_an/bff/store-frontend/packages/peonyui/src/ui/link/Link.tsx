@@ -1,5 +1,5 @@
 
-import type {LinkProps, LinkTextProps} from "./link";
+import type {LinkProps, LinkTextProps} from "./link.d";
 import { link } from "./link-variants";
 
 /*

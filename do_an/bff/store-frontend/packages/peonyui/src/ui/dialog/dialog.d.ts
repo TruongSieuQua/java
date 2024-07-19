@@ -1,4 +1,4 @@
-import type {HTMLProps, ButtonHTMLAttributes, Dispatch, ReactNode, SetStateAction} from "react";
+import type {ButtonHTMLAttributes, Dispatch, HTMLProps, ReactNode, SetStateAction} from "react";
 
 interface DialogOptions {
     initialOpen?: boolean;

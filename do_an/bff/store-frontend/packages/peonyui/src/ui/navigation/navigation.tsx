@@ -1,42 +1,43 @@
 "use client";
-import type {
-	NavigationProps,
-	NavigationListProps,
-	NavigationListItemProps,
-	NavigationMenuProps,
-	NavigationMenuTriggerProps,
-	NavigationMenuPortalProps,
-	NavigationMenuContentProps,
-} from "./navigation.d";
 import {
-	createContext,
-	useContext,
-	useState,
-	useRef,
-	useMemo,
-	forwardRef,
-} from "react";
-import {
+	arrow,
 	autoUpdate,
-	useFloating,
-	useHover,
-	useInteractions,
-	UseFloatingOptions,
+	flip,
+	FloatingArrow,
+	FloatingPortal,
 	offset,
 	safePolygon,
-	FloatingArrow,
-	arrow,
 	shift,
-	flip,
-	useFocus,
 	useDismiss,
-	useRole,
+	useFloating,
+	UseFloatingOptions,
+	useFocus,
+	useHover,
+	useInteractions,
 	useMergeRefs,
-	FloatingPortal,
+	useRole,
 } from "@floating-ui/react";
+import { useAnimation } from "@peonyui/hooks";
 import { Slot } from "@peonyui/ui";
 import clsx from "clsx";
-import { useAnimation } from "@peonyui/hooks";
+import {
+	createContext,
+	forwardRef,
+	useContext,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
+
+import type {
+	NavigationListItemProps,
+	NavigationListProps,
+	NavigationMenuContentProps,
+	NavigationMenuPortalProps,
+	NavigationMenuProps,
+	NavigationMenuTriggerProps,
+	NavigationProps,
+} from "./navigation.d";
 
 const Navigation = ({ children, ...rest }: NavigationProps) => {
 	return <div {...rest}>{children}</div>;
@@ -50,7 +51,7 @@ const NavigationList = ({
 	return (
 		<ul
 			className={clsx(
-				"flex flex-row gap-1.5 p-2 bg-white rounded-lg shadow-md border border-gray-200",
+				"flex flex-row gap-1.5 rounded-lg border border-gray-200 bg-white p-2 shadow-md",
 				className,
 			)}
 			{...rest}
@@ -253,8 +254,8 @@ export {
 	NavigationList,
 	NavigationListItem,
 	NavigationMenu,
-	NavigationMenuTrigger,
-	NavigationMenuPortal,
-	NavigationMenuContent,
 	NavigationMenuArrow,
+	NavigationMenuContent,
+	NavigationMenuPortal,
+	NavigationMenuTrigger,
 };

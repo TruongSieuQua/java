@@ -1,4 +1,4 @@
-import type {	HTMLAttributes, ReactNode, DetailedHTMLProps, ButtonHTMLAttributes, HTMLButtonElement } from "react";
+import type {	ButtonHTMLAttributes, DetailedHTMLProps, HTMLAttributes, HTMLButtonElement,ReactNode } from "react";
 
 interface NavigationProps extends HTMLAttributes<HTMLDivElement> {}
 

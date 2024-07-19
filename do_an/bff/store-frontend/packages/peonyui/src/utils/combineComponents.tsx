@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { FC, ReactNode } from 'react';
 
 export const combineComponents = (...components: FC<{children: ReactNode}>[]): FC<{children: ReactNode}> => {

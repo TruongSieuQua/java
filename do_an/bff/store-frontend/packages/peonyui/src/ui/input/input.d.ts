@@ -1,4 +1,5 @@
 import type { VariantProps } from "tailwind-variants";
+
 import { input, inputWithIcon, inputWithText } from "./input-variants";
 
 type InputVariantsType = VariantProps<typeof input>;
