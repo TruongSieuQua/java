@@ -1,0 +1,14 @@
+{
+  "name": "deploy-test",
+  "version": "1.0.0",
+  "description": "Test if just dist folder is enought for deployment process",
+  "main": "index.js",
+  "scripts": {
+    "start": "next start"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "next": "^14.2.5"
+  }
+}
