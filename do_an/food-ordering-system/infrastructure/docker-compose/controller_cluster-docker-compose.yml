@@ -1,0 +1,80 @@
+services:
+  kafka-controller-1:
+    image: confluentinc/cp-kafka:${KAFKA_VERSION}
+    profiles:
+      - controllers
+    hostname: controller-1
+    container_name: controller-1
+    ports:
+      - "9091:9093"
+      - "9101:9101"
+    environment:
+      # cat /proc/sys/kernel/random/uuid | tr -d '-' | base64 | cut -b 1-22
+      CLUSTER_ID: "MTk1OTU3OTNmMTlkNDMxOT"
+      KAFKA_PROCESS_ROLES: "controller"
+      KAFKA_NODE_ID: 1
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@controller-1:9093,2@controller-2:9093,3@controller-3:9093"
+      KAFKA_LISTENERS: "CONTROLLER://controller-1:9093"
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_NUM_PARTITIONS: "6"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "3"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "3"
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "2"
+    volumes:
+      - "./volumes/kafka/controller-1:/var/lib/kafka/data"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+
+  kafka-controller-2:
+    image: confluentinc/cp-kafka:${KAFKA_VERSION}
+    profiles:
+      - controllers
+    hostname: controller-2
+    container_name: controller-2
+    ports:
+      - "9092:9093"
+      - "9102:9101"
+    environment:
+      CLUSTER_ID: "MTk1OTU3OTNmMTlkNDMxOT"
+      KAFKA_PROCESS_ROLES: "controller"
+      KAFKA_NODE_ID: 2 # change
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_LISTENERS: "CONTROLLER://controller-2:9093" # change
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@controller-1:9093,2@controller-2:9093,3@controller-3:9093"
+      KAFKA_NUM_PARTITIONS: "6"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "3"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "3"
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "2"
+    volumes:
+      - "./volumes/kafka/controller-2:/var/lib/kafka/data"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+
+  kafka-controller-3:
+    image: confluentinc/cp-kafka:${KAFKA_VERSION}
+    profiles:
+      - controllers
+    hostname: controller-3
+    container_name: controller-3
+    ports:
+      - "9093:9093"
+      - "9103:9101"
+    environment:
+      CLUSTER_ID: "MTk1OTU3OTNmMTlkNDMxOT"
+      KAFKA_PROCESS_ROLES: "controller"
+      KAFKA_NODE_ID: 3 # change
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_LISTENERS: "CONTROLLER://controller-3:9093" # change
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@controller-1:9093,2@controller-2:9093,3@controller-3:9093"
+      KAFKA_NUM_PARTITIONS: "6"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "3"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "3"
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "2"
+    volumes:
+      - "./volumes/kafka/controller-3:/var/lib/kafka/data"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+
+networks:
+  food-ordering-system:
+    driver: bridge

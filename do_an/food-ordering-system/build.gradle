@@ -1,18 +1,4 @@
-group = 'com.foodordersystem'
-version = '1.0-SNAPSHOT'
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springbootVersion}")
-    }
-}
-
 subprojects {
-    group = 'com.foodordersystem'
-    repositories {
-        mavenCentral()
-    }
+    group = 'com.foodorderingsystem'
+    version = "${projectVersion}"
 }

@@ -1,0 +1,110 @@
+services:
+  kafka-1:
+    image: confluentinc/cp-kafka:${KAFKA_VERSION}
+    hostname: kafka-1
+    container_name: kafka-1
+    ports:
+      - "9092:9092"
+      - "19091:19092"
+      - "9111:9101"
+    environment:
+      CLUSTER_ID: "MTk1OTU3OTNmMTlkNDMxOT"
+      KAFKA_PROCESS_ROLES: "controller,broker"
+      KAFKA_NODE_ID: 1
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+      KAFKA_LISTENERS: "CONTROLLER://kafka-1:9093,PLAINTEXT://kafka-1:9092,PLAINTEXT_HOST://localhost:19092"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka-1:9092,PLAINTEXT_HOST://localhost:19092"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
+      KAFKA_LOG_DIRS: "/tmp/kraft-combined-logs"
+      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: localhost
+    volumes:
+      - "kafka-1-volume:/var/lib/kafka/data"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+
+  kafka-2:
+    image: confluentinc/cp-kafka:${KAFKA_VERSION}
+    hostname: kafka-2 # Change
+    container_name: kafka-2 # Change
+    ports:
+      - "19092:19092" #Change
+      - "9112:9101" #Change
+    environment:
+      CLUSTER_ID: "MTk1OTU3OTNmMTlkNDMxOT"
+      KAFKA_PROCESS_ROLES: "controller,broker"
+      KAFKA_NODE_ID: 2 #Change
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+      KAFKA_LISTENERS: "CONTROLLER://kafka-2:9093,PLAINTEXT://kafka-2:9092,PLAINTEXT_HOST://localhost:19092" #Change
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka-2:9092,PLAINTEXT_HOST://localhost:19092" #Change
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
+      KAFKA_LOG_DIRS: "/tmp/kraft-combined-logs"
+      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: localhost
+    volumes:
+      - "kafka-2-volume:/var/lib/kafka/data"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+
+  kafka-3:
+    image: confluentinc/cp-kafka:${KAFKA_VERSION}
+    hostname: kafka-3 # Change
+    container_name: kafka-3 # Change
+    ports:
+      - "19093:19092" #Change
+      - "9113:9101" #Change
+    environment:
+      CLUSTER_ID: "MTk1OTU3OTNmMTlkNDMxOT"
+      KAFKA_PROCESS_ROLES: "controller,broker"
+      KAFKA_NODE_ID: 3 #Change
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+      KAFKA_LISTENERS: "CONTROLLER://kafka-3:9093,PLAINTEXT://kafka-3:9092,PLAINTEXT_HOST://localhost:19092" #Change
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka-3:9092,PLAINTEXT_HOST://localhost:19092" #Change
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
+      KAFKA_LOG_DIRS: "/tmp/kraft-combined-logs"
+      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: localhost
+    volumes:
+      - "kafka-3-volume:/var/lib/kafka/data"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+
+  redpanda-console:
+    image: redpandadata/console:latest
+    ports:
+      - "9000:8080"
+    environment:
+      - KAFKA_BROKERS=host.docker.internal:9092
+    restart: always
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+
+volumes:
+  kafka-1-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/kafka/kafka-1
+  kafka-2-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/kafka/kafka-2
+  kafka-3-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/kafka/kafka-3
+
+networks:
+  food-ordering-system:
+    driver: bridge

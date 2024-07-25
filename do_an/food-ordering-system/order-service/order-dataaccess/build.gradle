@@ -1,7 +1,12 @@
 plugins {
     id 'java-library-conventions'
 }
-
 dependencies {
+    implementation project(':common:common-domain')
+    implementation project(':common:common-dataaccess')
     implementation project(':order-service:order-domain:order-application-service')
+    implementation 'org.springframework:spring-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    runtimeOnly 'org.postgresql:postgresql'
 }

@@ -1,8 +1,11 @@
 plugins {
     id 'java-library-conventions'
 }
-
 dependencies {
     implementation project(":common:common-domain")
-    implementation "org.springframework.boot:spring-boot-starter-logging:${springbootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+tasks.named('test') {
+    useJUnitPlatform()
 }

@@ -1,14 +1,14 @@
 plugins {
     id 'java-library-conventions'
 }
-
 dependencies {
     implementation project(':common:common-domain')
     implementation project(':order-service:order-domain:order-domain-core')
-    implementation "org.springframework.boot:spring-boot-starter-validation:${springbootVersion}"
-    implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisVersion}"
-    testImplementation "org.mockito:mockito-core:${mockitoCoreVersion}"
-    testImplementation "org.springframework.boot:spring-boot-starter-test:${springbootVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework:spring-tx'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-core'
 }
 tasks.named('test') {
     useJUnitPlatform()

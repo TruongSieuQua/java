@@ -1,0 +1,14 @@
+description = 'Order service'
+
+subprojects {
+    apply {
+        plugin 'io.spring.dependency-management'
+    }
+    group = 'com.foodorderingsystem.orderservice'
+    dependencyManagement {
+        dependencies {
+            dependency "org.mockito:mockito-core:${mockitoCoreVersion}"
+            dependency "javax.annotation:javax.annotation-api:${javaxAnnotationVersion}"
+        }
+    }
+}

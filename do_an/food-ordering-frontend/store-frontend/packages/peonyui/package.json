@@ -1,0 +1,74 @@
+{
+  "name": "@repo/peonyui",
+  "version": "0.0.0",
+  "description": "UI components for React",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TruongSieuQua/java/tree/main/do_an/bff/store-frontend",
+    "directory": "packages/peonyui"
+  },
+  "type": "module",
+  "exports": {
+    "./styles/peonyui.css": {
+      "import": "./dist/styles/peonyui.css"
+    },
+    ".": {
+      "import": "./dist/src/index.js",
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    }
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist/**",
+    "public/**",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "npm run build:ts && npm run build:css",
+    "build:ts": "tsc --project tsconfig.build.json --outDir dist",
+    "build:css": "postcss public/styles/styles.css -o dist/styles/peonyui.css",
+    "dev": "concurrently \"npm run dev:ts\" \"npm run dev:css\"",
+    "dev:ts": "tsc --watch --project tsconfig.build.json --outDir dist",
+    "dev:css": "postcss public/styles/styles.css -o dist/styles/peonyui.css --watch",
+    "clean": "rm -rf .turbo && rm -rf && rm -rf node_modules && rm -rf dist",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix .",
+    "test": "cypress run --component --browser=chrome",
+    "test:gui": "cypress open --component --browser chrome",
+    "type-check": "tsc --noEmit",
+    "publish": "npm publish --access public"
+  },
+  "devDependencies": {
+    "@eslint/migrate-config": "^1.1.2",
+    "@floating-ui/react": "^0.26.19",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@repo/eslint-config": "*",
+    "@repo/prettier-config": "*",
+    "@repo/tailwind-config": "*",
+    "@repo/typescript-config": "*",
+    "@testing-library/cypress": "^10.0.2",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "clsx": "^2.1.1",
+    "concurrently": "^8.2.2",
+    "cssnano": "^7.0.4",
+    "cypress": "^13.13.0",
+    "daisyui": "^4.12.10",
+    "eslint": "^9.7.0",
+    "postcss": "^8.4.39",
+    "postcss-cli": "^11.0.0",
+    "postcss-import": "^16.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.2.1",
+    "react-select": "^5.8.0",
+    "tailwind-variants": "^0.2.1",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.5.3"
+  }
+}

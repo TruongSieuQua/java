@@ -1,0 +1,79 @@
+services:
+  kafka-broker-1:
+    image: confluentinc/cp-kafka:${KAFKA_VERSION}
+    hostname: broker-1
+    container_name: broker-1
+    ports:
+      - "19091:19092"
+      - "9111:9101"
+    environment:
+      CLUSTER_ID: "MTk1OTU3OTNmMTlkNDMxOT"
+      KAFKA_PROCESS_ROLES: "broker"
+      KAFKA_NODE_ID: 4
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@controller-1:9093,2@controller-2:9093,3@controller-3:9093"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+      KAFKA_LISTENERS: "PLAINTEXT://broker-1:9092,PLAINTEXT_HOST://localhost:19092"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://broker-1:9092,PLAINTEXT_HOST://localhost:19092"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
+      KAFKA_LOG_DIRS: "/tmp/kraft-combined-logs"
+      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: localhost
+    volumes:
+      - "./volumes/kafka/broker-1:/var/lib/kafka/data"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+
+  kafka-broker-2:
+    image: confluentinc/cp-kafka:${KAFKA_VERSION}
+    hostname: broker-2 # Change
+    container_name: broker-2 # Change
+    ports:
+      - "19092:19092" #Change
+      - "9112:9101" #Change
+    environment:
+      CLUSTER_ID: "MTk1OTU3OTNmMTlkNDMxOT"
+      KAFKA_PROCESS_ROLES: "broker"
+      KAFKA_NODE_ID: 5 #Change
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@controller-1:9093,2@controller-2:9093,3@controller-3:9093"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+      KAFKA_LISTENERS: "PLAINTEXT://broker-2:9092,PLAINTEXT_HOST://localhost:19092" #Change
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://broker-2:9092,PLAINTEXT_HOST://localhost:19092" #Change
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
+      KAFKA_LOG_DIRS: "/tmp/kraft-combined-logs"
+      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: localhost
+    volumes:
+      - "./volumes/kafka/broker-2:/var/lib/kafka/data"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+
+  kafka-broker-3:
+    image: confluentinc/cp-kafka:${KAFKA_VERSION}
+    hostname: broker-3 # Change
+    container_name: broker-3 # Change
+    ports:
+      - "19093:19092" #Change
+      - "9113:9101" #Change
+    environment:
+      CLUSTER_ID: "MTk1OTU3OTNmMTlkNDMxOT"
+      KAFKA_PROCESS_ROLES: "broker"
+      KAFKA_NODE_ID: 6 #Change
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@controller-1:9093,2@controller-2:9093,3@controller-3:9093"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+      KAFKA_LISTENERS: "PLAINTEXT://broker-3:9092,PLAINTEXT_HOST://localhost:19092" #Change
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://broker-3:9092,PLAINTEXT_HOST://localhost:19092" #Change
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
+      KAFKA_LOG_DIRS: "/tmp/kraft-combined-logs"
+      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: localhost
+    volumes:
+      - "./volumes/kafka/broker-3:/var/lib/kafka/data"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+
+networks:
+  food-ordering-system:
+    driver: bridge
