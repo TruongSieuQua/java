@@ -1,0 +1,11 @@
+plugins{
+    id 'java-library-conventions'
+}
+dependencies {
+    implementation project(":common:common-domain")
+    implementation project(":infrastructure:kafka:kafka-config-data")
+    implementation project(":infrastructure:kafka:kafka-model")
+    implementation 'javax.annotation:javax.annotation-api'
+    implementation 'io.confluent:kafka-avro-serializer'
+    implementation 'org.springframework.kafka:spring-kafka'
+}

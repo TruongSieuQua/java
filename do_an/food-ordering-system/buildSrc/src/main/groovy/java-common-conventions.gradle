@@ -1,17 +1,29 @@
 plugins {
     id 'java'
-    id 'checkstyle'
-    id 'com.github.spotbugs'
+//    id 'checkstyle'
+//    id 'org.sonarqube'
+//    id 'com.github.spotbugs'
+    id 'io.spring.dependency-management'
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of("${javaVersion}")
     }
 }
-
 repositories {
     mavenCentral()
+    gradlePluginPortal()
+}
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springbootVersion}"
+        mavenBom "org.junit:junit-bom:${junitBomVersion}"
+    }
+    dependencies {
+        dependency "javax.annotation:javax.annotation-api:${javaxAnnotationVersion}"
+        dependency "org.springframework:spring-tx:${springTxVersion}"
+    }
 }
 dependencies {
     compileOnly "org.projectlombok:lombok:${lombokVersion}"

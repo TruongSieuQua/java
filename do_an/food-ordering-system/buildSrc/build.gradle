@@ -1,13 +1,12 @@
 plugins {
     id 'groovy-gradle-plugin'
 }
-
 repositories {
     gradlePluginPortal()
+    mavenCentral()
 }
-
 dependencies {
-    implementation 'com.github.spotbugs.snom:spotbugs-gradle-plugin:5.2.1'
-    testImplementation platform("org.spockframework:spock-bom:2.2-groovy-3.0")
-    testImplementation 'org.spockframework:spock-core'
+//    implementation 'com.github.spotbugs.snom:spotbugs-gradle-plugin:6.0.19'
+//    implementation 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:5.1.0.4882'
+    implementation 'io.spring.gradle:dependency-management-plugin:1.0.15.RELEASE'
 }
