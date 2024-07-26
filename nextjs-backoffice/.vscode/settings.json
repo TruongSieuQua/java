@@ -1,8 +1,0 @@
-{
-    "cSpell.words": [
-        "clsx"
-    ],
-    "tailwindCSS.experimental.classRegex": [
-      ["tv\\((([^()]*|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
-    ]
-}
